@@ -11,6 +11,6 @@ export type ContentItem = {
   draft: boolean,
   list?: {
     collection: string,
-    itemsPerPage: number,
+    itemsPerPage?: number,
   },
 };

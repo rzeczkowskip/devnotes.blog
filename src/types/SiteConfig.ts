@@ -4,6 +4,11 @@ export type NavLink = {
   newWindow?: boolean,
 };
 
+export type Pagination = {
+  pageUrlPart: string,
+  itemsPerPage: number,
+};
+
 export type Site = {
   title: string,
   contentDir?: string,
@@ -11,6 +16,7 @@ export type Site = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params?: Record<string, any>,
   taxonomyCollections?: Record<string, string>,
+  pagination?: Pagination,
 };
 
 export type SiteConfig = {

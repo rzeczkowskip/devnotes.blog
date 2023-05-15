@@ -1,5 +1,7 @@
 import { Site, SiteConfig } from '@/types/SiteConfig';
 
+const itemsPerPage = 10;
+
 const pl: Site = {
   title: 'Notatki Deva',
   contentDir: 'content/pl',
@@ -10,6 +12,10 @@ const pl: Site = {
   taxonomyCollections: {
     categories: '/kategorie',
     tags: '/tagi',
+  },
+  pagination: {
+    pageUrlPart: 'strona',
+    itemsPerPage,
   },
 };
 
@@ -23,6 +29,10 @@ const en: Site = {
   taxonomyCollections: {
     categories: '/categories',
     tags: '/tags',
+  },
+  pagination: {
+    pageUrlPart: 'page',
+    itemsPerPage,
   },
 };
 

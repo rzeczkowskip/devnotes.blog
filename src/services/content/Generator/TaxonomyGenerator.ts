@@ -1,18 +1,19 @@
+import ContentGenerator from '@/services/content/ContentGenerator';
 import ContentProcessor from '@/services/content/ContentProcessor';
 import ContentRepository from '@/services/content/ContentRepository';
 import { ContentItem } from '@/types/Content';
 
-export default class TaxonomyGenerator {
+export default class TaxonomyGenerator implements ContentGenerator {
   readonly #contentProcessor: ContentProcessor;
 
   constructor(contentProcessor: ContentProcessor) {
     this.#contentProcessor = contentProcessor;
   }
 
-  public generateMissingTaxonomies(repository: ContentRepository): ContentItem[] {
+  public generate(repository: ContentRepository): ContentItem[] {
     const taxonomies: ContentItem[] = [];
 
-    Object.values(repository.items).forEach((item) => {
+    repository.items.forEach((item) => {
       taxonomies.push(...this.getMissingTaxonomiesFromItem(item, repository));
     });
 
@@ -41,7 +42,12 @@ export default class TaxonomyGenerator {
 
     return this.#contentProcessor.process({
       path,
-      content: `---\ncollection: ${collection}\ntitle: ${title}\n---`,
+      content: `---
+collection: ${collection}
+title: ${title}
+list:
+  collection: posts
+---`,
     });
   }
 }

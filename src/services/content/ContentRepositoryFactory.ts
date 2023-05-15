@@ -1,7 +1,7 @@
+import ContentGenerator from '@/services/content/ContentGenerator';
 import ContentLoader from '@/services/content/ContentLoader';
 import ContentProcessor from '@/services/content/ContentProcessor';
 import ContentRepository from '@/services/content/ContentRepository';
-import TaxonomyGenerator from '@/services/content/TaxonomyGenerator';
 import { ContentItem } from '@/types/Content';
 
 type ContentRepositoryFactoryOptions = {
@@ -13,19 +13,19 @@ export default class ContentRepositoryFactory {
 
   readonly #processor: ContentProcessor;
 
-  readonly #taxonomyGenerator: TaxonomyGenerator;
+  readonly #generators: ContentGenerator[];
 
   readonly #options: ContentRepositoryFactoryOptions;
 
   constructor(
     loader: ContentLoader,
     processor: ContentProcessor,
-    taxonomyGenerator: TaxonomyGenerator,
+    generators: ContentGenerator[],
     options: ContentRepositoryFactoryOptions,
   ) {
     this.#loader = loader;
     this.#processor = processor;
-    this.#taxonomyGenerator = taxonomyGenerator;
+    this.#generators = generators;
     this.#options = options;
   }
 
@@ -37,7 +37,9 @@ export default class ContentRepositoryFactory {
 
     const repository = new ContentRepository(items);
 
-    repository.add(...this.#taxonomyGenerator.generateMissingTaxonomies(repository));
+    this.#generators.forEach((generator) => {
+      repository.add(...generator.generate(repository));
+    });
 
     return repository;
   }

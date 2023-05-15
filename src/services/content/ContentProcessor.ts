@@ -102,10 +102,13 @@ export default class ContentProcessor {
     }
 
     const hasItemsPerPage = 'itemsPerPage' in metadataListConfig && Number.isSafeInteger(metadataListConfig.itemsPerPage);
+    const itemsPerPage = hasItemsPerPage
+      ? Math.abs(metadataListConfig.itemsPerPage as number)
+      : undefined;
 
     return {
       collection: metadataListConfig.collection,
-      itemsPerPage: hasItemsPerPage ? metadataListConfig.itemsPerPage as number : 10,
+      itemsPerPage,
     };
   }
 }
