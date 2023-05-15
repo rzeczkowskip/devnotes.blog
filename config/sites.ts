@@ -2,7 +2,7 @@ import { Site, SiteConfig } from '@/types/SiteConfig';
 
 const pl: Site = {
   title: 'Notatki Deva',
-  contentPath: 'content/pl',
+  contentDir: 'content/pl',
   nav: [
     { url: '/', label: 'Blog' },
     { url: '/o-mnie', label: 'O mnie' },
@@ -15,7 +15,7 @@ const pl: Site = {
 
 const en: Site = {
   title: 'Dev Notes',
-  contentPath: 'content/en',
+  contentDir: 'content/en',
   nav: [
     { url: '/', label: 'Blog' },
     { url: '/about-me', label: 'About me' },

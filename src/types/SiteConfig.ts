@@ -6,7 +6,7 @@ export type NavLink = {
 
 export type Site = {
   title: string,
-  contentPath?: string,
+  contentDir?: string,
   nav?: NavLink[],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params?: Record<string, any>,
