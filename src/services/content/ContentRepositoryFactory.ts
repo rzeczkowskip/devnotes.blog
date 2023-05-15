@@ -1,54 +1,43 @@
-import ContentGenerator from '@/services/content/ContentGenerator';
 import ContentLoader from '@/services/content/ContentLoader';
 import ContentProcessor from '@/services/content/ContentProcessor';
 import ContentRepository from '@/services/content/ContentRepository';
-import { ContentItem } from '@/types/Content';
-
-type ContentRepositoryFactoryOptions = {
-  includeDrafts?: boolean,
-};
+import RepositoryItemsGenerator from '@/services/content/RepositoryItemsGenerator';
+import RepositoryItemsPreprocessor from '@/services/content/RepositoryItemsPreprocessor';
 
 export default class ContentRepositoryFactory {
   readonly #loader: ContentLoader;
 
-  readonly #processor: ContentProcessor;
+  readonly #contentProcessor: ContentProcessor;
 
-  readonly #generators: ContentGenerator[];
+  readonly #preprocessors: RepositoryItemsPreprocessor[];
 
-  readonly #options: ContentRepositoryFactoryOptions;
+  readonly #generators: RepositoryItemsGenerator[];
 
   constructor(
     loader: ContentLoader,
-    processor: ContentProcessor,
-    generators: ContentGenerator[],
-    options: ContentRepositoryFactoryOptions,
+    contentProcessor: ContentProcessor,
+    preprocessors: RepositoryItemsPreprocessor[],
+    generators: RepositoryItemsGenerator[],
   ) {
     this.#loader = loader;
-    this.#processor = processor;
+    this.#contentProcessor = contentProcessor;
+    this.#preprocessors = preprocessors;
     this.#generators = generators;
-    this.#options = options;
   }
 
   public createRepository(): ContentRepository {
     const loadedContent = this.#loader.loadContent();
-    const items = this.filterOutDrafts(
-      loadedContent.map((item) => this.#processor.process(item)),
-    );
+    const items = loadedContent.map((item) => this.#contentProcessor.process(item));
 
-    const repository = new ContentRepository(items);
+    const preprocessedItems = this.#preprocessors
+      .reduce((previous, preprocessor) => preprocessor.preprocess(previous), items);
+
+    const repository = new ContentRepository(preprocessedItems);
 
     this.#generators.forEach((generator) => {
       repository.add(...generator.generate(repository));
     });
 
     return repository;
-  }
-
-  private filterOutDrafts(items: ContentItem[]): ContentItem[] {
-    if (this.#options.includeDrafts) {
-      return items;
-    }
-
-    return items.filter((item) => !item.draft);
   }
 }

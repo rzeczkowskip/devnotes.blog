@@ -1,13 +1,16 @@
 import path from 'path';
 import Container from 'dinjectease';
 import sitesConfig from './sites';
-import ContentGenerator from '@/services/content/ContentGenerator';
 import ContentLoader from '@/services/content/ContentLoader';
 import ContentProcessor from '@/services/content/ContentProcessor';
 import ContentRepositoryFactory from '@/services/content/ContentRepositoryFactory';
-import ListingGenerator from '@/services/content/Generator/ListingGenerator';
-import NullGenerator from '@/services/content/Generator/NullGenerator';
-import TaxonomyGenerator from '@/services/content/Generator/TaxonomyGenerator';
+import RepositoryItemsGenerator from '@/services/content/RepositoryItemsGenerator';
+import ListingGenerator from '@/services/content/RepositoryItemsGenerator/ListingGenerator';
+import NullGenerator from '@/services/content/RepositoryItemsGenerator/NullGenerator';
+import TaxonomyGenerator from '@/services/content/RepositoryItemsGenerator/TaxonomyGenerator';
+import RepositoryItemsPreprocessor from '@/services/content/RepositoryItemsPreprocessor';
+import ExcludeDraftsPreprocessor from '@/services/content/RepositoryItemsPreprocessor/ExcludeDraftsPreprocessor';
+import SortPreprocessor from '@/services/content/RepositoryItemsPreprocessor/SortPreprocessor';
 import SlugGenerator from '@/services/content/SlugGenerator';
 import { Site } from '@/types/SiteConfig';
 
@@ -28,10 +31,8 @@ container.set('content.repository', (c) => {
   const factory = new ContentRepositoryFactory(
     c.get<ContentLoader>('content.loader'),
     c.get<ContentProcessor>('content.processor'),
-    c.get<ContentGenerator[]>('content.generators'),
-    {
-      includeDrafts: process.env.NODE_ENV !== 'production',
-    },
+    c.get<RepositoryItemsPreprocessor[]>('content.repository.preprocessors'),
+    c.get<RepositoryItemsGenerator[]>('content.repository.generators'),
   );
 
   return factory.createRepository();
@@ -50,11 +51,11 @@ container.set('content.processor', (c) => {
 
 container.set('content.slug_generator', () => new SlugGenerator());
 
-container.set('content.generator.taxonomy', (c) => new TaxonomyGenerator(
+container.set('content.repository_generator.taxonomy', (c) => new TaxonomyGenerator(
   c.get<ContentProcessor>('content.processor'),
 ));
 
-container.set('content.generator.listing', (c) => {
+container.set('content.repository_generator.listing', (c) => {
   const { taxonomyCollections, pagination } = c.get<Site>('params.site_config');
 
   if (!pagination) {
@@ -64,7 +65,19 @@ container.set('content.generator.listing', (c) => {
   return new ListingGenerator(pagination, taxonomyCollections ? Object.keys(taxonomyCollections) : []);
 });
 
-container.set('content.generators', (c) => [
-  c.get<TaxonomyGenerator>('content.generator.taxonomy'),
-  c.get<TaxonomyGenerator>('content.generator.listing'),
-] as ContentGenerator[]);
+container.set('content.repository.generators', (c) => [
+  c.get<TaxonomyGenerator>('content.repository_generator.taxonomy'),
+  c.get<ListingGenerator>('content.repository_generator.listing'),
+] as RepositoryItemsGenerator[]);
+
+container.set(
+  'content.repository_preprocessor.exclude_drafts',
+  () => new ExcludeDraftsPreprocessor(process.env.NODE_ENV === 'production'),
+);
+
+container.set('content.repository_preprocessor.sort', () => new SortPreprocessor());
+
+container.set('content.repository.preprocessors', (c) => [
+  c.get<ExcludeDraftsPreprocessor>('content.repository_preprocessor.exclude_drafts'),
+  c.get<SortPreprocessor>('content.repository_preprocessor.sort'),
+] as RepositoryItemsPreprocessor[]);

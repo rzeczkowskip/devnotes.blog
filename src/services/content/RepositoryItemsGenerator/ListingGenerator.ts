@@ -1,9 +1,9 @@
-import ContentGenerator from '@/services/content/ContentGenerator';
 import ContentRepository from '@/services/content/ContentRepository';
+import RepositoryItemsGenerator from '@/services/content/RepositoryItemsGenerator';
 import { ContentItem } from '@/types/Content';
 import { Pagination } from '@/types/SiteConfig';
 
-export default class ListingGenerator implements ContentGenerator {
+export default class ListingGenerator implements RepositoryItemsGenerator {
   readonly #config: Pagination;
 
   readonly #taxonomies: string[];
