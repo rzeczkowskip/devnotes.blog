@@ -7,9 +7,12 @@ export type NavLink = {
 export type Site = {
   title: string,
   contentPath?: string,
-  locale: string,
   nav?: NavLink[],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params?: Record<string, any>,
-  routingPrefixes?: Record<string, string>,
+  taxonomyCollections?: Record<string, string>,
+};
+
+export type SiteConfig = {
+  sites: Record<'default' | string, Site>
 };

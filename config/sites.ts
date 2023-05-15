@@ -1,34 +1,34 @@
-import { Site } from '@/types/SiteConfig';
+import { Site, SiteConfig } from '@/types/SiteConfig';
+
+const pl: Site = {
+  title: 'Notatki Deva',
+  contentPath: 'content/pl',
+  nav: [
+    { url: '/', label: 'Blog' },
+    { url: '/o-mnie', label: 'O mnie' },
+  ],
+  taxonomyCollections: {
+    categories: '/kategorie',
+    tags: '/tagi',
+  },
+};
+
+const en: Site = {
+  title: 'Dev Notes',
+  contentPath: 'content/en',
+  nav: [
+    { url: '/', label: 'Blog' },
+    { url: '/about-me', label: 'About me' },
+  ],
+  taxonomyCollections: {
+    categories: '/categories',
+    tags: '/tags',
+  },
+};
 
 export default {
-  default: {
-    title: 'Notatki Deva',
-    contentPath: 'pl',
-    locale: 'pl',
-    nav: [
-      { label: 'Blog', url: '/' },
-      { label: 'Kategorie', url: '/kategorie' },
-      { label: 'O mnie', url: '/o-mnie' },
-    ],
-    routingPrefixes: {
-      categories: '/kategorie',
-      tags: '/tagi',
-      posts: '/posty',
-    },
+  sites: {
+    default: pl,
+    en,
   },
-  en: {
-    title: 'Dev Notes',
-    contentPath: 'en',
-    locale: 'en',
-    nav: [
-      { label: 'Blog', url: '/' },
-      { label: 'Categories', url: '/categories' },
-      { label: 'About me', url: '/about-me' },
-    ],
-    routingPrefixes: {
-      categories: '/categories',
-      tags: '/tags',
-      posts: '/posts',
-    },
-  },
-} as Record<'default' | string, Site>;
+} as SiteConfig;
