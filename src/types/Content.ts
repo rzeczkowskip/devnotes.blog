@@ -13,4 +13,10 @@ export type ContentItem = {
     collection: string,
     itemsPerPage?: number,
   },
+  pagination?: NonNullable<ContentItem['list']> & {
+    page: number,
+    totalPages: number,
+    hasNext: boolean,
+    hasPrevious: boolean,
+  }
 };

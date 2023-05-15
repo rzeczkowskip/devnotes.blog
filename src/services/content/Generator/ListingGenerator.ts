@@ -48,6 +48,7 @@ export default class ListingGenerator implements ContentGenerator {
             ...item.metadata,
           },
           pagination: {
+            ...item.list,
             page: i,
             totalPages: pageCount,
             hasNext: i < pageCount,
@@ -63,6 +64,7 @@ export default class ListingGenerator implements ContentGenerator {
           ...item.metadata,
         },
         pagination: {
+          ...item.list,
           page: 1,
           totalPages: pageCount,
           hasNext: pageCount > 1,
