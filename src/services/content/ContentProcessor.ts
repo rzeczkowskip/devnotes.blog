@@ -85,7 +85,7 @@ export default class ContentProcessor {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private extractAdditionalMetadata(metadata: Record<string, any>): Record<string, any> {
     const filteredEntries = Object.entries(metadata)
-      .filter(([key]) => key in this.#taxonomyCollections || key in ['title', 'date', 'draft', 'collection', 'list']);
+      .filter(([key]) => !(key in this.#taxonomyCollections) && !['title', 'date', 'draft', 'collection', 'list'].includes(key));
 
     return Object.fromEntries(filteredEntries);
   }
