@@ -1,4 +1,3 @@
-import { meta } from '@typescript-eslint/parser';
 import matter from 'gray-matter';
 import SlugGenerator from '@/services/content/SlugGenerator';
 import { LoadedContent } from '@/services/content/types';
@@ -38,6 +37,7 @@ export default class ContentProcessor {
       title,
       date: metadata?.date instanceof Date ? metadata.date.toISOString() : undefined,
       taxonomies,
+      list: this.extractListingData(metadata),
       metadata: this.extractAdditionalMetadata(metadata),
     };
   }
@@ -85,8 +85,27 @@ export default class ContentProcessor {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private extractAdditionalMetadata(metadata: Record<string, any>): Record<string, any> {
     const filteredEntries = Object.entries(metadata)
-      .filter(([key]) => key in this.#taxonomyCollections || key in ['title', 'date', 'draft', 'collection']);
+      .filter(([key]) => key in this.#taxonomyCollections || key in ['title', 'date', 'draft', 'collection', 'list']);
 
     return Object.fromEntries(filteredEntries);
+  }
+
+  private extractListingData(metadata: Record<string, unknown>): ContentItem['list'] {
+    if (!('list' in metadata) || typeof metadata.list !== 'object' || !metadata.list) {
+      return undefined;
+    }
+
+    const metadataListConfig = metadata.list;
+
+    if (!('collection' in metadataListConfig) || typeof metadataListConfig.collection !== 'string') {
+      return undefined;
+    }
+
+    const hasItemsPerPage = 'itemsPerPage' in metadataListConfig && Number.isSafeInteger(metadataListConfig.itemsPerPage);
+
+    return {
+      collection: metadataListConfig.collection,
+      itemsPerPage: hasItemsPerPage ? metadataListConfig.itemsPerPage as number : 10,
+    };
   }
 }

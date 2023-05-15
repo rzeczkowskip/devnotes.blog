@@ -9,4 +9,8 @@ export type ContentItem = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   metadata: Record<string, any>,
   draft: boolean,
+  list?: {
+    collection: string,
+    itemsPerPage: number,
+  },
 };
