@@ -22,6 +22,7 @@
     "paths": {
       "@app/*": ["./app/*"],
       "@assets/*": ["./assets/*"],
+      "@translations/*": ["./translations/*"],
       "@/*": ["./src/*"]
     }
   },

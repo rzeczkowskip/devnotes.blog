@@ -13,6 +13,7 @@ import ExcludeDraftsProcessor from '@/services/content/RepositoryItemsPreprocess
 import SortPostprocessor from '@/services/content/RepositoryItemsPreprocessor/SortPostprocessor';
 import RepositoryItemsProcessor from '@/services/content/RepositoryItemsProcessor';
 import SlugGenerator from '@/services/content/SlugGenerator';
+import Translator from '@/services/translation/Translator';
 import { Site } from '@/types/SiteConfig';
 
 const container = new Container();
@@ -27,6 +28,8 @@ container.set('params.content_dir', (c) => {
   const { contentDir } = c.get('params.site_config');
   return path.normalize(path.join(process.cwd(), contentDir));
 });
+
+container.set('translator', (c) => new Translator(c.get<Site>('params.site_config').translations || {}));
 
 container.set('content.repository', (c) => {
   const factory = new ContentRepositoryFactory(

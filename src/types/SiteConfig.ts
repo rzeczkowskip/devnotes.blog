@@ -13,6 +13,8 @@ export type Site = {
   title: string,
   baseUrl: string,
   contentDir?: string,
+  locale?: string,
+  translations?: Record<string, string>,
   nav?: NavLink[],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params?: Record<string, any>,
