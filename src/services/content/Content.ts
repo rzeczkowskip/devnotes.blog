@@ -32,6 +32,36 @@ export default class Content {
     return this.#cache[itemUri];
   }
 
+  public getPageWithFallback(uri: string | string[], fallback: Page): Page {
+    try {
+      return this.getPage(uri);
+    } catch (e) {
+      if (e instanceof Error && e.message.endsWith(' not found.')) {
+        return fallback;
+      }
+
+      throw e;
+    }
+  }
+
+  public getDummyPage(collection: string, title: string, uri: string): Page {
+    return {
+      contentItem: {
+        title,
+        uri,
+        canonicalUri: uri,
+        baseUri: uri,
+        collection,
+        content: '',
+        taxonomies: {},
+        metadata: {},
+        draft: false,
+      },
+      listItems: [],
+      taxonomies: {},
+    };
+  }
+
   private getListItems(root: ContentItem): Page[] {
     if (!root.pagination) {
       return [];
