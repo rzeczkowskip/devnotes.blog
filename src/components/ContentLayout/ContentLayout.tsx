@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react';
+import ArticleContent from '@/components/ArticleContent';
 import Hero from '@/components/Hero';
+import Section from '@/components/Section';
 import { Page } from '@/types/Content';
 
 type ContentLayoutProps = PropsWithChildren<{
@@ -22,6 +24,10 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
       />
 
       { children }
+
+      <Section.Section paddingY={ 'bottom' }>
+        { contentItem.content && <ArticleContent markdown={ contentItem.content } /> }
+      </Section.Section>
     </>
   );
 };
