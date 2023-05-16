@@ -9,9 +9,9 @@ import RepositoryItemsGenerator from '@/services/content/RepositoryItemsGenerato
 import ListingGenerator from '@/services/content/RepositoryItemsGenerator/ListingGenerator';
 import NullGenerator from '@/services/content/RepositoryItemsGenerator/NullGenerator';
 import TaxonomyGenerator from '@/services/content/RepositoryItemsGenerator/TaxonomyGenerator';
-import RepositoryItemsPreprocessor from '@/services/content/RepositoryItemsPreprocessor';
-import ExcludeDraftsPreprocessor from '@/services/content/RepositoryItemsPreprocessor/ExcludeDraftsPreprocessor';
-import SortPreprocessor from '@/services/content/RepositoryItemsPreprocessor/SortPreprocessor';
+import ExcludeDraftsProcessor from '@/services/content/RepositoryItemsPreprocessor/ExcludeDraftsProcessor';
+import SortPostprocessor from '@/services/content/RepositoryItemsPreprocessor/SortPostprocessor';
+import RepositoryItemsProcessor from '@/services/content/RepositoryItemsProcessor';
 import SlugGenerator from '@/services/content/SlugGenerator';
 import { Site } from '@/types/SiteConfig';
 
@@ -32,7 +32,8 @@ container.set('content.repository', (c) => {
   const factory = new ContentRepositoryFactory(
     c.get<ContentLoader>('content.loader'),
     c.get<ContentProcessor>('content.processor'),
-    c.get<RepositoryItemsPreprocessor[]>('content.repository.preprocessors'),
+    c.get<RepositoryItemsProcessor[]>('content.repository.preprocessors'),
+    c.get<RepositoryItemsProcessor[]>('content.repository.postprocessors'),
     c.get<RepositoryItemsGenerator[]>('content.repository.generators'),
   );
 
@@ -73,15 +74,18 @@ container.set('content.repository.generators', (c) => [
 
 container.set(
   'content.repository_preprocessor.exclude_drafts',
-  () => new ExcludeDraftsPreprocessor(process.env.NODE_ENV === 'production'),
+  () => new ExcludeDraftsProcessor(process.env.NODE_ENV === 'production'),
 );
 
-container.set('content.repository_preprocessor.sort', () => new SortPreprocessor());
+container.set('content.repository_preprocessor.sort', () => new SortPostprocessor());
 
 container.set('content.repository.preprocessors', (c) => [
-  c.get<ExcludeDraftsPreprocessor>('content.repository_preprocessor.exclude_drafts'),
-  c.get<SortPreprocessor>('content.repository_preprocessor.sort'),
-] as RepositoryItemsPreprocessor[]);
+  c.get<ExcludeDraftsProcessor>('content.repository_preprocessor.exclude_drafts'),
+] as RepositoryItemsProcessor[]);
+
+container.set('content.repository.postprocessors', (c) => [
+  c.get<SortPostprocessor>('content.repository_preprocessor.sort'),
+] as RepositoryItemsProcessor[]);
 
 container.set('content', (c) => {
   const { taxonomyCollections } = c.get<Site>('params.site_config');

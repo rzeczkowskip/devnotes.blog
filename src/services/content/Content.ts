@@ -37,21 +37,24 @@ export default class Content {
     return this.#cache[itemUri];
   }
 
-  private getListItems(item: ContentItem): Page[] {
-    if (!item.pagination) {
+  private getListItems(root: ContentItem): Page[] {
+    if (!root.pagination) {
       return [];
     }
 
-    const isTaxonomy = this.#taxonomyCollections.includes(item.collection);
-    const taxonomyFilter: [string, string] | undefined = isTaxonomy ? [item.collection, item.uri] : undefined;
+    const isTaxonomy = this.#taxonomyCollections.includes(root.collection);
+    const taxonomyFilter: [string, string] | undefined = isTaxonomy ? [root.collection, root.uri] : undefined;
 
     const items = this.#repository.findCollectionPageItems(
-      item.pagination.collection,
-      item.pagination.page,
-      item.pagination.itemsPerPage || 0,
+      root.pagination.collection,
+      root.pagination.page,
+      root.pagination.itemsPerPage || 0,
       taxonomyFilter,
     );
 
-    return items.map((v) => this.getPage(v));
+    return items
+      .map((item) => this.getPage(item))
+      .filter((item) => !item?.contentItem?.metadata?.canonicalUri
+        || item?.contentItem?.metadata?.canonicalUri !== item.contentItem.uri);
   }
 }

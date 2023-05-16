@@ -1,7 +1,7 @@
-import RepositoryItemsPreprocessor from '@/services/content/RepositoryItemsPreprocessor';
+import RepositoryItemsProcessor from '@/services/content/RepositoryItemsProcessor';
 import { ContentItem } from '@/types/Content';
 
-export default class ExcludeDraftsPreprocessor implements RepositoryItemsPreprocessor {
+export default class ExcludeDraftsProcessor implements RepositoryItemsProcessor {
   readonly #excludeDrafts: boolean;
 
   constructor(excludeDrafts: boolean) {

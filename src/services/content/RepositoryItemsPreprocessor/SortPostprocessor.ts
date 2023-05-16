@@ -1,11 +1,15 @@
-import RepositoryItemsPreprocessor from '@/services/content/RepositoryItemsPreprocessor';
+import RepositoryItemsProcessor from '@/services/content/RepositoryItemsProcessor';
 import { ContentItem } from '@/types/Content';
 
-export default class SortPreprocessor implements RepositoryItemsPreprocessor {
+export default class SortPostprocessor implements RepositoryItemsProcessor {
   public preprocess(items: ContentItem[]): ContentItem[] {
     const itemsCopy = [...items];
 
     itemsCopy.sort((a, b) => {
+      console.log(a.collection, b.collection);
+      if (a.collection === 'categories' && b.collection === 'categories') {
+        console.log({ a: { title: a.title, draft: a.draft }, b: { title: b.title, draft: b.draft }, dateDiff: this.getItemTime(b) - this.getItemTime(a) });
+      }
       if (a.draft !== b.draft) {
         return (b.draft ? 1 : 0) - (a.draft ? 1 : 0);
       }
