@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import Hero from '@/components/Hero';
 import { Page } from '@/types/Content';
 
-type ContentLayoutProps = {
+type ContentLayoutProps = PropsWithChildren<{
   page: Page,
-};
+}>;
 
-const ContentLayout: React.FC<ContentLayoutProps> = (
-  { page: { contentItem, taxonomies } },
-) => {
+const ContentLayout: React.FC<ContentLayoutProps> = ({
+  page: { contentItem, taxonomies },
+  children,
+}) => {
   const title = `${contentItem.collection === 'tags' ? '#' : ''}${contentItem.title}`;
 
   return (
@@ -19,6 +20,8 @@ const ContentLayout: React.FC<ContentLayoutProps> = (
         date={ contentItem.date }
         links={ taxonomies?.categories?.slice(0, 1) }
       />
+
+      { children }
     </>
   );
 };

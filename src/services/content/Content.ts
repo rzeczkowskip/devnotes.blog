@@ -44,7 +44,7 @@ export default class Content {
     }
   }
 
-  public getDummyPage(collection: string, title: string, uri: string): Page {
+  public getDummyPage(collection: string, title: string, uri: string, other?: Partial<ContentItem>): Page {
     return {
       contentItem: {
         title,
@@ -53,9 +53,10 @@ export default class Content {
         baseUri: uri,
         collection,
         content: '',
-        taxonomies: {},
-        metadata: {},
         draft: false,
+        ...(other || {}),
+        taxonomies: other?.taxonomies || {},
+        metadata: other?.metadata || {},
       },
       listItems: [],
       taxonomies: {},
