@@ -11,6 +11,7 @@ export type Pagination = {
 
 export type Site = {
   title: string,
+  baseUrl: string,
   contentDir?: string,
   nav?: NavLink[],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
