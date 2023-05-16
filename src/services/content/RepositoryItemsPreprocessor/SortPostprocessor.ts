@@ -6,10 +6,6 @@ export default class SortPostprocessor implements RepositoryItemsProcessor {
     const itemsCopy = [...items];
 
     itemsCopy.sort((a, b) => {
-      console.log(a.collection, b.collection);
-      if (a.collection === 'categories' && b.collection === 'categories') {
-        console.log({ a: { title: a.title, draft: a.draft }, b: { title: b.title, draft: b.draft }, dateDiff: this.getItemTime(b) - this.getItemTime(a) });
-      }
       if (a.draft !== b.draft) {
         return (b.draft ? 1 : 0) - (a.draft ? 1 : 0);
       }

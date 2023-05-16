@@ -29,7 +29,6 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
         : item.list.itemsPerPage;
 
       const isTaxonomy = this.#taxonomies.includes(item.collection);
-
       const pageCount = this.getPageCount(
         repository,
         item.list.collection,
@@ -37,32 +36,28 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
         isTaxonomy ? [item.collection, item.uri] : undefined,
       );
 
-      for (let i = 1; i <= pageCount; i += 1) {
-        const uri = this.getPageUrl(item.uri, i);
+      if (itemsPerPage !== 0) {
+        for (let i = 1; i <= pageCount; i += 1) {
+          const uri = this.getPageUrl(item.uri, i);
 
-        listingItems.push({
-          ...item,
-          uri,
-          metadata: {
+          listingItems.push({
+            ...item,
+            uri,
             canonicalUri: uri,
-            ...item.metadata,
-          },
-          pagination: {
-            ...item.list,
-            page: i,
-            totalPages: pageCount,
-            hasNext: i < pageCount,
-            hasPrevious: i > 1,
-          },
-        } as ContentItem);
+            pagination: {
+              ...item.list,
+              page: i,
+              totalPages: pageCount,
+              hasNext: i < pageCount,
+              hasPrevious: i > 1,
+            },
+          } as ContentItem);
+        }
       }
 
       listingItems.push({
         ...item,
-        metadata: {
-          canonicalUri: this.getPageUrl(item.uri, 1),
-          ...item.metadata,
-        },
+        canonicalUri: this.getPageUrl(item.uri, 1),
         pagination: {
           ...item.list,
           page: 1,

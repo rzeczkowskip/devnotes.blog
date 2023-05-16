@@ -1,11 +1,5 @@
 import ContentRepository from '@/services/content/ContentRepository';
-import { ContentItem, TaxonomyRelation } from '@/types/Content';
-
-type Page = {
-  contentItem: ContentItem,
-  taxonomies: TaxonomyRelation[],
-  listItems: Page[],
-};
+import { ContentItem, Page, TaxonomyRelation } from '@/types/Content';
 
 export default class Content {
   readonly #repository: ContentRepository;
@@ -26,11 +20,12 @@ export default class Content {
     if (!this.#cache?.[itemUri]) {
       const item = this.#repository.get(itemUri);
       const listItems = this.getListItems(item);
+      const taxonomies = this.getTaxonomyRelations(item);
 
       this.#cache[itemUri] = {
         contentItem: item,
         listItems,
-        taxonomies: [],
+        taxonomies,
       };
     }
 
@@ -54,7 +49,27 @@ export default class Content {
 
     return items
       .map((item) => this.getPage(item))
-      .filter((item) => !item?.contentItem?.metadata?.canonicalUri
-        || item?.contentItem?.metadata?.canonicalUri !== item.contentItem.uri);
+      .filter((item) => item.contentItem.canonicalUri === item.contentItem.uri);
+  }
+
+  private getTaxonomyRelations(root: ContentItem): Record<string, TaxonomyRelation[]> {
+    const entries = this.#taxonomyCollections.map((collection) => {
+      const links = Object.keys(root.taxonomies?.[collection] || {});
+      const relations: TaxonomyRelation[] = links.map((link) => {
+        const taxonomy = this.#repository.get(link);
+
+        return {
+          date: taxonomy.date,
+          metadata: taxonomy.metadata,
+          title: taxonomy.title,
+          uri: taxonomy.uri,
+          collection: taxonomy.collection,
+        };
+      });
+
+      return [collection, relations];
+    });
+
+    return Object.fromEntries(entries);
   }
 }

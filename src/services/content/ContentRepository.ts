@@ -46,7 +46,7 @@ export default class ContentRepository {
       }
 
       const [taxonomy, value] = taxonomyFilter;
-      return (item.taxonomies?.[taxonomy] || []).includes(value);
+      return Object.keys(item.taxonomies?.[taxonomy] || {}).includes(value);
     }).map((value) => value.uri);
   }
 

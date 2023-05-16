@@ -33,6 +33,7 @@ export default class ContentProcessor {
       draft: metadata?.draft === true,
       collection: typeof metadata?.collection === 'string' ? metadata.collection : this.#defaultCollection,
       uri,
+      canonicalUri: typeof metadata?.canonicalUrl === 'string' ? metadata?.canonicalUrl : uri,
       baseUri,
       title,
       date: metadata?.date instanceof Date ? metadata.date.toISOString() : undefined,
@@ -65,7 +66,7 @@ export default class ContentProcessor {
       .replace(/^\/|\/$/, '');
   }
 
-  private getTaxonomyUrisFromMetadata(metadata: Record<string, unknown>): Record<string, string[]> {
+  private getTaxonomyUrisFromMetadata(metadata: Record<string, unknown>): Record<string, Record<string, string>> {
     const entries = Object.entries(this.#taxonomyCollections).map(([taxonomy, uriPrefix]) => {
       const taxonomyValuesIsArray = Array.isArray(metadata?.[taxonomy]);
 
@@ -74,9 +75,9 @@ export default class ContentProcessor {
       }
 
       const rawValues: string[] = (metadata[taxonomy] as unknown[]).filter((v) => typeof v === 'string') as string[];
-      const uriValues = rawValues.map((value) => `${uriPrefix}/${value}`);
+      const values = rawValues.map((value) => [`${uriPrefix}/${this.#slugGenerator.slugify(value)}`, value]);
 
-      return [taxonomy, uriValues];
+      return [taxonomy, Object.fromEntries(values)];
     });
 
     return Object.fromEntries(entries);
