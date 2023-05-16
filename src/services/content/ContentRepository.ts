@@ -35,7 +35,7 @@ export default class ContentRepository {
     });
   }
 
-  public findCollectionItems(collection: string, taxonomyFilter?: [string, string]): ContentItem[] {
+  public findCollectionItems(collection: string, taxonomyFilter?: [string, string]): string[] {
     return Object.values(this.items).filter((item) => {
       if (item.collection !== collection) {
         return false;
@@ -47,6 +47,21 @@ export default class ContentRepository {
 
       const [taxonomy, value] = taxonomyFilter;
       return (item.taxonomies?.[taxonomy] || []).includes(value);
-    });
+    }).map((value) => value.uri);
+  }
+
+  public findCollectionPageItems(
+    collection: string,
+    page: number,
+    itemsPerPage: number,
+    taxonomyFilter?: [string, string],
+  ): string[] {
+    const items = this.findCollectionItems(collection, taxonomyFilter);
+
+    if (itemsPerPage === 0) {
+      return items;
+    }
+
+    return items.slice((page - 1) * itemsPerPage, page * itemsPerPage);
   }
 }

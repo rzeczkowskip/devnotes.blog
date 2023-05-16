@@ -20,3 +20,5 @@ export type ContentItem = {
     hasPrevious: boolean,
   }
 };
+
+export type TaxonomyRelation = Pick<ContentItem, 'collection' | 'uri' | 'title' | 'date' | 'metadata'>;

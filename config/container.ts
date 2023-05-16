@@ -1,6 +1,7 @@
 import path from 'path';
 import Container from 'dinjectease';
 import sitesConfig from './sites';
+import Content from '@/services/content/Content';
 import ContentLoader from '@/services/content/ContentLoader';
 import ContentProcessor from '@/services/content/ContentProcessor';
 import ContentRepositoryFactory from '@/services/content/ContentRepositoryFactory';
@@ -81,3 +82,9 @@ container.set('content.repository.preprocessors', (c) => [
   c.get<ExcludeDraftsPreprocessor>('content.repository_preprocessor.exclude_drafts'),
   c.get<SortPreprocessor>('content.repository_preprocessor.sort'),
 ] as RepositoryItemsPreprocessor[]);
+
+container.set('content', (c) => {
+  const { taxonomyCollections } = c.get<Site>('params.site_config');
+
+  return new Content(c.get('content.repository'), taxonomyCollections ? Object.keys(taxonomyCollections) : []);
+});
