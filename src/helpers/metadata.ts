@@ -10,23 +10,23 @@ const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator =
   const { baseUrl, title: siteTitle } = container.get<Site>('params.site_config');
 
   return async ({ params } = {}): Promise<Metadata> => {
-    try {
-      const { contentItem } = container.get<Content>('content').getPage(uri || params?.path || '') || {};
+    const { contentItem } = container.get<Content>('content').getPage(uri || params?.path || '') || {};
 
-      const title = contentItem?.title || fallbackTitle;
+    const title = contentItem?.title || fallbackTitle;
 
-      return {
-        title: title && title !== siteTitle ? `${title} | ${siteTitle}` : siteTitle,
-        metadataBase: new URL(contentItem?.uri || '/', baseUrl),
-        robots: !contentItem || contentItem.draft ? 'noindex,nofollow' : undefined,
-        alternates: {
-          canonical: contentItem?.metadata?.canonicalUri,
-        },
-      };
-    } catch (e) {
-      notFound();
-      return {};
-    }
+    return {
+      title: title && title !== siteTitle ? `${title} | ${siteTitle}` : siteTitle,
+      robots: !contentItem || contentItem.draft ? 'noindex,nofollow' : undefined,
+      alternates: {
+        canonical: contentItem.canonicalUri.includes('://')
+          ? contentItem.canonicalUri
+          : new URL(contentItem.canonicalUri, baseUrl).toString(),
+      },
+      other: {
+        base: 'new URL(contentItem.baseUri || \'/\', baseUrl).toString()',
+      },
+
+    };
   };
 };
 
