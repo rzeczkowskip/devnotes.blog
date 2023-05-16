@@ -34,7 +34,10 @@ export default class TaxonomyGenerator implements RepositoryItemsGenerator {
     return taxonomies;
   }
 
-  private filterOutExistingTaxonomies(values: Record<string, string>, repository: ContentRepository): Record<string, string> {
+  private filterOutExistingTaxonomies(
+    values: Record<string, string>,
+    repository: ContentRepository,
+  ): Record<string, string> {
     const filteredEntries = Object.entries(values).filter(([uri]) => !repository.has(uri));
 
     return Object.fromEntries(filteredEntries);
@@ -46,8 +49,6 @@ export default class TaxonomyGenerator implements RepositoryItemsGenerator {
       content: `---
 collection: ${collection}
 title: ${title}
-list:
-  collection: posts
 ---`,
     });
   }

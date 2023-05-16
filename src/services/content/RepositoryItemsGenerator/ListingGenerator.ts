@@ -20,18 +20,24 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
     const listingItems: ContentItem[] = [];
 
     repository.items.forEach((item) => {
-      if (!item?.list) {
+      const isTaxonomy = this.#taxonomies.includes(item.collection);
+
+      if (!isTaxonomy && !item?.list) {
         return;
       }
 
-      const itemsPerPage = item.list.itemsPerPage === undefined
-        ? this.#config.itemsPerPage
-        : item.list.itemsPerPage;
+      const listConfig = {
+        collection: 'posts',
+        ...(item.list || {}),
+      };
 
-      const isTaxonomy = this.#taxonomies.includes(item.collection);
+      const itemsPerPage = listConfig.itemsPerPage === undefined
+        ? this.#config.itemsPerPage
+        : listConfig.itemsPerPage;
+
       const pageCount = this.getPageCount(
         repository,
-        item.list.collection,
+        listConfig.collection,
         itemsPerPage,
         isTaxonomy ? [item.collection, item.uri] : undefined,
       );
@@ -45,7 +51,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
             uri,
             canonicalUri: uri,
             pagination: {
-              ...item.list,
+              ...listConfig,
               page: i,
               totalPages: pageCount,
               hasNext: i < pageCount,
@@ -59,7 +65,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
         ...item,
         canonicalUri: this.getPageUrl(item.uri, 1),
         pagination: {
-          ...item.list,
+          ...listConfig,
           page: 1,
           totalPages: pageCount,
           hasNext: pageCount > 1,
