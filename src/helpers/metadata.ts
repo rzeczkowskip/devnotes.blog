@@ -1,10 +1,9 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import container from '../../config/container';
 import Content from '@/services/content/Content';
 import { Site } from '@/types/SiteConfig';
 
-type Generator = (params?: { params?: { path?: string | string[] } }) => Promise<Metadata>;
+type Generator = (params: { params?: { path?: string | string[] } }) => Promise<Metadata>;
 
 const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator => {
   const { baseUrl, title: siteTitle } = container.get<Site>('params.site_config');
@@ -22,10 +21,6 @@ const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator =
           ? contentItem.canonicalUri
           : new URL(contentItem.canonicalUri, baseUrl).toString(),
       },
-      other: {
-        base: 'new URL(contentItem.baseUri || \'/\', baseUrl).toString()',
-      },
-
     };
   };
 };
