@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import ArticleContent from '@/components/ArticleContent';
+import ArticleList from '@/components/ArticleList';
+import Container from '@/components/Container';
 import Hero from '@/components/Hero';
 import Section from '@/components/Section';
 import { Page } from '@/types/Content';
@@ -9,7 +11,7 @@ type ContentLayoutProps = PropsWithChildren<{
 }>;
 
 const ContentLayout: React.FC<ContentLayoutProps> = ({
-  page: { contentItem, taxonomies },
+  page: { contentItem, listItems, taxonomies },
   children,
 }) => {
   const title = `${contentItem.collection === 'tags' ? '#' : ''}${contentItem.title}`;
@@ -25,9 +27,21 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
 
       { children }
 
-      <Section.Section paddingY={ 'bottom' }>
-        { contentItem.content && <ArticleContent markdown={ contentItem.content } /> }
-      </Section.Section>
+        { contentItem.content && (
+          <Section.Section paddingY={ children ? 'both' : 'bottom' }>
+            <Container>
+              <ArticleContent markdown={ contentItem.content } />
+            </Container>
+          </Section.Section>
+        ) }
+
+        { listItems?.length > 0 && (
+          <Section.Section background={ 'gray' }>
+            <Container>
+              <ArticleList items={ listItems } pagination={ contentItem.pagination } />
+            </Container>
+          </Section.Section>
+        ) }
     </>
   );
 };

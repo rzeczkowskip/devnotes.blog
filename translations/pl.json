@@ -1,4 +1,8 @@
 {
   "not_found_title": "Nie znaleziono strony",
-  "not_found_subtitle": "Nie wiem skąd masz ten link, ale coś poszło nie tak i nic tu nie ma..."
+  "not_found_subtitle": "Nie wiem skąd masz ten link, ale coś poszło nie tak i nic tu nie ma...",
+  "pagination_next": "Następna strona",
+  "pagination_previous": "Poprzednia strona",
+  "pagination_next_posts": "Starsze posty",
+  "pagination_previous_posts": "Nowsze posty",
 }
