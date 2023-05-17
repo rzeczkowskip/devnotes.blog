@@ -20,8 +20,14 @@ export type ContentItem = {
     totalPages: number,
     hasNext: boolean,
     hasPrevious: boolean,
+    links: {
+      next?: string,
+      previous?: string,
+    },
   }
 };
+
+export type Pagination = NonNullable<ContentItem['pagination']>;
 
 export type TaxonomyRelation = Pick<ContentItem, 'collection' | 'uri' | 'title' | 'date' | 'metadata'>;
 

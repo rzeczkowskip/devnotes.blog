@@ -46,17 +46,24 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
         for (let i = 1; i <= pageCount; i += 1) {
           const uri = this.getPageUrl(item.uri, i);
 
+          const hasNext = i < pageCount;
+          const hasPrevious = i > 1;
+
           listingItems.push({
             ...item,
             uri,
-            canonicalUri: uri,
+            canonicalUri: i === 1 ? item.uri : uri,
             isPaginationPage: true,
             pagination: {
               ...listConfig,
               page: i,
               totalPages: pageCount,
-              hasNext: i < pageCount,
-              hasPrevious: i > 1,
+              hasNext,
+              hasPrevious,
+              links: {
+                next: hasNext ? this.getPageUrl(item.uri, i + 1) : undefined,
+                previous: hasPrevious ? this.getPageUrl(item.uri, i - 1) : undefined,
+              },
             },
           } as ContentItem);
         }
@@ -64,13 +71,15 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
 
       listingItems.push({
         ...item,
-        canonicalUri: this.getPageUrl(item.uri, 1),
         pagination: {
           ...listConfig,
           page: 1,
           totalPages: pageCount,
           hasNext: pageCount > 1,
           hasPrevious: false,
+          links: {
+            next: pageCount > 1 ? this.getPageUrl(item.uri, 2) : undefined,
+          },
         },
       });
     });
