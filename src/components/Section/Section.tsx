@@ -3,14 +3,14 @@ import React, { PropsWithChildren } from 'react';
 type SectionProps = PropsWithChildren<{
   background?: 'white' | 'gray',
   paddingY?: 'bottom' | 'both',
-  tag?: 'article' | 'section',
+  as?: 'article' | 'section',
 }>;
 
 const Section: React.FC<SectionProps> = ({
   children,
   background,
   paddingY = 'both',
-  tag: SectionTag = 'section',
+  as: SectionTag = 'section',
 }) => (
     <SectionTag className={ `
       ${!paddingY || paddingY === 'both' ? 'py-20' : ''}
