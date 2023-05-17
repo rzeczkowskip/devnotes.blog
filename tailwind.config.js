@@ -8,14 +8,22 @@ const textFillPlugin = require('tailwindcss-text-fill');
 
 const textColor = colors.neutral[900];
 
-const linkStyles = (theme) => ({
-  color: theme('colors.lead.500'),
-  textDecoration: 'underline',
-  fontWeight: theme('fontWeight.medium'),
-  '&:hover': {
-    color: textColor,
-  },
-});
+const linkStyles = (theme, reverseColors = false) => {
+  let linkColor = theme('colors.lead.500');
+  let hoverColor = 'inherit';
+
+  if (reverseColors) {
+    [linkColor, hoverColor] = [hoverColor, linkColor];
+  }
+
+  return {
+    color: linkColor,
+    '&:hover': {
+      color: hoverColor,
+      textDecoration: 'underline',
+    },
+  };
+};
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -35,19 +43,17 @@ module.exports = {
           500: '#258',
           800: '#123',
         },
-        text: textColor,
       },
 
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            maxWidth: '74ch',
             'h1,h2,h3,h4,h5,h6': {
               marginTop: '1.5em',
               marginBottom: '1rem',
-              fontWeight: 600,
+              fontWeight: 800,
             },
-            color: textColor,
+            color: 'currentColor',
             a: linkStyles(theme),
             strong: {
               fontWeight: theme('fontWeight.bold'),
@@ -70,8 +76,14 @@ module.exports = {
         '.content-links': {
           a: linkStyles(theme),
         },
+        '.content-links-reverse': {
+          a: linkStyles(theme, true),
+        },
         '.container-lg': {
           maxWidth: theme('screens.lg'),
+        },
+        '.container-prose': {
+          maxWidth: theme('maxWidth.prose'),
         },
       });
     }),
