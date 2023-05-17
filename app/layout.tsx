@@ -1,5 +1,6 @@
 import './globals.css';
 import { Mulish } from 'next/font/google';
+import React from 'react';
 import container from '../config/container';
 import Header from '@/components/Header';
 import { Site } from '@/types/SiteConfig';
@@ -20,8 +21,8 @@ const RootLayout = async ({
 
   return (
     <html lang="en">
-    <body className={ `${mulish.className} bg-neutral-50` }>
-    <Header title={ title } nav={ nav } />
+    <body className={ `${mulish.className} bg-neutral-50 text-neutral-900` }>
+      <Header title={ title } nav={ nav } />
       {children}
     </body>
     </html>
