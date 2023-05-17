@@ -50,6 +50,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
             ...item,
             uri,
             canonicalUri: uri,
+            isPaginationPage: true,
             pagination: {
               ...listConfig,
               page: i,

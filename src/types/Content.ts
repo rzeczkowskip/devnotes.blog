@@ -14,6 +14,7 @@ export type ContentItem = {
     collection: string,
     itemsPerPage?: number,
   },
+  isPaginationPage: boolean,
   pagination?: NonNullable<ContentItem['list']> & {
     page: number,
     totalPages: number,
@@ -27,5 +28,7 @@ export type TaxonomyRelation = Pick<ContentItem, 'collection' | 'uri' | 'title' 
 export type Page = {
   contentItem: ContentItem,
   taxonomies: Record<string, TaxonomyRelation[]>,
-  listItems: Page[],
+  listItems: ListItem[],
 };
+
+export type ListItem = Pick<Page, 'contentItem' | 'taxonomies'>;

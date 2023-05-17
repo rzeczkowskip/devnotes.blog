@@ -1,12 +1,24 @@
 import ContentRepository from '@/services/content/ContentRepository';
-import { ContentItem, Page, TaxonomyRelation } from '@/types/Content';
+import {
+  ContentItem, ListItem, Page, TaxonomyRelation,
+} from '@/types/Content';
+
+type Cache = {
+  contentItem: Record<string, ContentItem>,
+  listItems: Record<string, ListItem[]>,
+  taxonomies: Record<string, Record<string, TaxonomyRelation[]>>
+};
 
 export default class Content {
   readonly #repository: ContentRepository;
 
   readonly #taxonomyCollections: string[];
 
-  readonly #cache: Record<string, Page> = {};
+  readonly #cache: Cache = {
+    contentItem: {},
+    listItems: {},
+    taxonomies: {},
+  };
 
   constructor(repository: ContentRepository, taxonomyCollections: string[]) {
     this.#repository = repository;
@@ -17,19 +29,15 @@ export default class Content {
     const uriString = (Array.isArray(uri) ? `/${uri.join('/')}` : uri);
     const itemUri = `/${uriString.replace(/^\/|\/$/, '')}`;
 
-    if (!this.#cache?.[itemUri]) {
-      const item = this.#repository.get(itemUri);
-      const listItems = this.getListItems(item);
-      const taxonomies = this.getTaxonomyRelations(item);
+    const contentItem = this.getContentItem(itemUri);
+    const taxonomies = this.getTaxonomyRelations(contentItem);
+    const listItems = this.getListItems(contentItem);
 
-      this.#cache[itemUri] = {
-        contentItem: item,
-        listItems,
-        taxonomies,
-      };
-    }
-
-    return this.#cache[itemUri];
+    return {
+      contentItem,
+      taxonomies,
+      listItems,
+    };
   }
 
   public getPageWithFallback(uri: string | string[], fallback: Page): Page {
@@ -47,6 +55,7 @@ export default class Content {
   public getDummyPage(collection: string, title: string, uri: string, other?: Partial<ContentItem>): Page {
     return {
       contentItem: {
+        isPaginationPage: false,
         title,
         uri,
         canonicalUri: uri,
@@ -63,44 +72,66 @@ export default class Content {
     };
   }
 
-  private getListItems(root: ContentItem): Page[] {
-    if (!root.pagination) {
-      return [];
-    }
-
-    const isTaxonomy = this.#taxonomyCollections.includes(root.collection);
-    const taxonomyFilter: [string, string] | undefined = isTaxonomy ? [root.collection, root.uri] : undefined;
-
-    const items = this.#repository.findCollectionPageItems(
-      root.pagination.collection,
-      root.pagination.page,
-      root.pagination.itemsPerPage || 0,
-      taxonomyFilter,
-    );
-
-    return items
-      .map((item) => this.getPage(item))
-      .filter((item) => item.contentItem.canonicalUri === item.contentItem.uri);
+  private getContentItem(path: string): ContentItem {
+    return this.#repository.get(path);
   }
 
   private getTaxonomyRelations(root: ContentItem): Record<string, TaxonomyRelation[]> {
-    const entries = this.#taxonomyCollections.map((collection) => {
-      const links = Object.keys(root.taxonomies?.[collection] || {});
-      const relations: TaxonomyRelation[] = links.map((link) => {
-        const taxonomy = this.#repository.get(link);
+    if (!this.#cache.taxonomies?.[root.canonicalUri]) {
+      const entries = this.#taxonomyCollections.map((collection) => {
+        const links = Object.keys(root.taxonomies?.[collection] || {});
+        const relations: TaxonomyRelation[] = links.map((link) => {
+          const taxonomy = this.#repository.get(link);
 
-        return {
-          date: taxonomy.date,
-          metadata: taxonomy.metadata,
-          title: taxonomy.title,
-          uri: taxonomy.uri,
-          collection: taxonomy.collection,
-        };
+          return {
+            date: taxonomy.date,
+            metadata: taxonomy.metadata,
+            title: taxonomy.title,
+            uri: taxonomy.uri,
+            collection: taxonomy.collection,
+          };
+        });
+
+        return [collection, relations];
       });
 
-      return [collection, relations];
-    });
+      this.#cache.taxonomies[root.canonicalUri] = Object.fromEntries(entries);
+    }
 
-    return Object.fromEntries(entries);
+    return this.#cache.taxonomies[root.canonicalUri];
+  }
+
+  private getListItems(root: ContentItem): ListItem[] {
+    if (!this.#cache.listItems?.[root.canonicalUri]) {
+      if (!root.pagination) {
+        this.#cache.listItems[root.canonicalUri] = [];
+        return [];
+      }
+
+      const isTaxonomy = this.#taxonomyCollections.includes(root.collection);
+      const taxonomyFilter: [string, string] | undefined = isTaxonomy
+        ? [root.collection, root.baseUri]
+        : undefined;
+
+      const paths = this.#repository.findCollectionPageItems(
+        root.pagination.collection,
+        root.pagination.page,
+        root.pagination.itemsPerPage || 0,
+        taxonomyFilter,
+      );
+
+      this.#cache.listItems[root.canonicalUri] = paths
+        .map((path) => {
+          const contentItem = this.getContentItem(path);
+
+          return {
+            contentItem,
+            taxonomies: this.getTaxonomyRelations(contentItem),
+          };
+        })
+        .filter((item) => !item.contentItem.isPaginationPage);
+    }
+
+    return this.#cache.listItems[root.canonicalUri];
   }
 }

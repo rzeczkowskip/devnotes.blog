@@ -39,6 +39,7 @@ export default class ContentProcessor {
       date: metadata?.date instanceof Date ? metadata.date.toISOString() : undefined,
       taxonomies,
       list: this.extractListingData(metadata),
+      isPaginationPage: false,
       metadata: this.extractAdditionalMetadata(metadata),
     };
   }
