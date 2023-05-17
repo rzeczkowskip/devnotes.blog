@@ -4,6 +4,7 @@ import ArticleList from '@/components/ArticleList';
 import Container from '@/components/Container';
 import Hero from '@/components/Hero';
 import Section from '@/components/Section';
+import TagList from '@/components/TagList';
 import { Page } from '@/types/Content';
 
 type ContentLayoutProps = PropsWithChildren<{
@@ -38,7 +39,15 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
         { listItems?.length > 0 && (
           <Section.Section background={ 'gray' }>
             <Container>
-              <ArticleList items={ listItems } pagination={ contentItem.pagination } />
+              { contentItem.pagination?.collection === 'tags'
+                ? <TagList items={ listItems } />
+                : (
+                  <ArticleList
+                    items={ listItems }
+                    pagination={ contentItem.pagination }
+                  />
+                )
+              }
             </Container>
           </Section.Section>
         ) }
