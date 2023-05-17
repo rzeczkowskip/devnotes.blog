@@ -1,8 +1,15 @@
 export default class Translator {
+  readonly #locale: string;
+
   readonly #messages: Record<string, string>;
 
-  constructor(messages: Record<string, string>) {
+  constructor(locale: string, messages: Record<string, string>) {
+    this.#locale = locale;
     this.#messages = messages;
+  }
+
+  get locale(): string {
+    return this.#locale;
   }
 
   public trans(key: string, replacements?: Record<string, string>, fallback?: string): string {

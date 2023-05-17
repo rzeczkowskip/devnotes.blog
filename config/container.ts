@@ -29,7 +29,10 @@ container.set('params.content_dir', (c) => {
   return path.normalize(path.join(process.cwd(), contentDir));
 });
 
-container.set('translator', (c) => new Translator(c.get<Site>('params.site_config').translations || {}));
+container.set('translator', (c) => {
+  const { locale = 'en', translations = {} } = c.get<Site>('params.site_config');
+  return new Translator(locale, translations);
+});
 
 container.set('content.repository', (c) => {
   const factory = new ContentRepositoryFactory(

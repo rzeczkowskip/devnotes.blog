@@ -8,7 +8,7 @@ import image404 from '@assets/404.gif';
 
 const NotFound = () => {
   const contentLoader = container.get<Content>('content');
-  const t = useTranslation();
+  const { t } = useTranslation();
 
   const title = t('not_found_title');
 
