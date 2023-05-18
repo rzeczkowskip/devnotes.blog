@@ -1,10 +1,13 @@
 import path from 'path';
 import Container from 'dinjectease';
+import relatedContent from './relatedContent';
 import sitesConfig from './sites';
 import Content from '@/services/content/Content';
 import ContentLoader from '@/services/content/ContentLoader';
 import ContentProcessor from '@/services/content/ContentProcessor';
+import ContentRepository from '@/services/content/ContentRepository';
 import ContentRepositoryFactory from '@/services/content/ContentRepositoryFactory';
+import RelatedContent from '@/services/content/RelatedContent';
 import RepositoryItemsGenerator from '@/services/content/RepositoryItemsGenerator';
 import ListingGenerator from '@/services/content/RepositoryItemsGenerator/ListingGenerator';
 import NullGenerator from '@/services/content/RepositoryItemsGenerator/NullGenerator';
@@ -96,5 +99,14 @@ container.set('content.repository.postprocessors', (c) => [
 container.set('content', (c) => {
   const { taxonomyCollections } = c.get<Site>('params.site_config');
 
-  return new Content(c.get('content.repository'), taxonomyCollections ? Object.keys(taxonomyCollections) : []);
+  return new Content(
+    c.get('content.repository'),
+    c.get('content.related_content_generator'),
+    taxonomyCollections ? Object.keys(taxonomyCollections) : [],
+  );
 });
+
+container.set('content.related_content_generator', (c) => new RelatedContent(
+  c.get<ContentRepository>('content.repository'),
+  relatedContent,
+));
