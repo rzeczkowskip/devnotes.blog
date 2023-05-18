@@ -1,4 +1,5 @@
 import ContentRepository from '@/services/content/ContentRepository';
+import RelatedContent from '@/services/content/RelatedContent';
 import {
   ContentItem, ListItem, Page, TaxonomyRelation,
 } from '@/types/Content';
@@ -6,22 +7,31 @@ import {
 type Cache = {
   contentItem: Record<string, ContentItem>,
   listItems: Record<string, ListItem[]>,
+  relatedItems: Record<string, ListItem[]>
   taxonomies: Record<string, Record<string, TaxonomyRelation[]>>
 };
 
 export default class Content {
   readonly #repository: ContentRepository;
 
+  readonly #relatedContentGenerator: RelatedContent;
+
   readonly #taxonomyCollections: string[];
 
   readonly #cache: Cache = {
     contentItem: {},
     listItems: {},
+    relatedItems: {},
     taxonomies: {},
   };
 
-  constructor(repository: ContentRepository, taxonomyCollections: string[]) {
+  constructor(
+    repository: ContentRepository,
+    relatedContentGenerator: RelatedContent,
+    taxonomyCollections: string[],
+  ) {
     this.#repository = repository;
+    this.#relatedContentGenerator = relatedContentGenerator;
     this.#taxonomyCollections = taxonomyCollections;
   }
 
@@ -32,11 +42,13 @@ export default class Content {
     const contentItem = this.getContentItem(itemUri);
     const taxonomies = this.getTaxonomyRelations(contentItem);
     const listItems = this.getListItems(contentItem);
+    const relatedItems = this.getRelatedContent(contentItem);
 
     return {
       contentItem,
       taxonomies,
       listItems,
+      relatedItems,
     };
   }
 
@@ -68,6 +80,7 @@ export default class Content {
         metadata: other?.metadata || {},
       },
       listItems: [],
+      relatedItems: [],
       taxonomies: {},
     };
   }
@@ -133,5 +146,14 @@ export default class Content {
     }
 
     return this.#cache.listItems[root.canonicalUri];
+  }
+
+  private getRelatedContent(root: ContentItem): ListItem[] {
+    const items = this.#relatedContentGenerator.findRelatedItems(root);
+
+    return items.map((item) => ({
+      contentItem: item,
+      taxonomies: this.getTaxonomyRelations(item),
+    }));
   }
 }

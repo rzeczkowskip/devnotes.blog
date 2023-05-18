@@ -3,8 +3,10 @@ import ArticleContent from '@/components/ArticleContent';
 import ArticleList from '@/components/ArticleList';
 import Container from '@/components/Container';
 import Hero from '@/components/Hero';
+import ProseContainer from '@/components/ProseContainer';
 import Section from '@/components/Section';
 import TagList from '@/components/TagList';
+import useTranslation from '@/hooks/useTranslation';
 import { Page } from '@/types/Content';
 
 type ContentLayoutProps = PropsWithChildren<{
@@ -12,10 +14,13 @@ type ContentLayoutProps = PropsWithChildren<{
 }>;
 
 const ContentLayout: React.FC<ContentLayoutProps> = ({
-  page: { contentItem, listItems, taxonomies },
+  page: {
+    contentItem, listItems, relatedItems, taxonomies,
+  },
   children,
 }) => {
   const title = `${contentItem.collection === 'tags' ? '#' : ''}${contentItem.title}`;
+  const { t } = useTranslation();
 
   return (
     <>
@@ -28,17 +33,20 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
 
       { children }
 
-        { contentItem.content && (
-          <Section.Section paddingY={ children ? 'both' : 'bottom' }>
-            <Container>
+      { contentItem.content && (
+        <Section.Section paddingY={ children ? 'both' : 'bottom' }>
+          <Container>
+            <ProseContainer>
               <ArticleContent markdown={ contentItem.content } />
-            </Container>
-          </Section.Section>
-        ) }
+            </ProseContainer>
+          </Container>
+        </Section.Section>
+      ) }
 
-        { listItems?.length > 0 && (
-          <Section.Section background={ 'gray' }>
-            <Container>
+      { listItems?.length > 0 && (
+        <Section.Section background={ 'gray' }>
+          <Container>
+            <ProseContainer>
               { contentItem.pagination?.collection === 'tags'
                 ? <TagList items={ listItems } />
                 : (
@@ -48,9 +56,26 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
                   />
                 )
               }
-            </Container>
-          </Section.Section>
-        ) }
+            </ProseContainer>
+          </Container>
+        </Section.Section>
+      ) }
+
+      { relatedItems?.length > 0 && (
+        <Section.Section background={ 'gray' }>
+          <Container>
+            <ProseContainer>
+              <Section.Title>
+                { t('related_content_label') }
+              </Section.Title>
+              <ArticleList
+                items={ relatedItems }
+                pagination={ contentItem.pagination }
+              />
+            </ProseContainer>
+          </Container>
+        </Section.Section>
+      ) }
     </>
   );
 };

@@ -1,11 +1,12 @@
 import React, { PropsWithChildren } from 'react';
+import ColoredTitle from '@/components/ColoredTitle/ColoredTitle';
 
 type TitleProps = PropsWithChildren<{
   tag?: 'h1' | 'h2' | 'h3',
 }>;
 
 const Title: React.FC<TitleProps> = (
-  { children, tag: TitleTag = 'h2' },
-) => (<TitleTag className="font-extrabold text-2xl mb-7">{ children }</TitleTag>);
+  { children, tag = 'h2' },
+) => (<ColoredTitle as={ tag } className="mb-12 lg:text-4xl">{ children }</ColoredTitle>);
 
 export default Title;

@@ -50,6 +50,25 @@ export default class ContentRepository {
     }).map((value) => value.uri);
   }
 
+  public findPreviousCollectionItem(item: ContentItem): string | null {
+    if (!item.date) {
+      return null;
+    }
+
+    const collectionItems = this.findCollectionItems(item.collection);
+    const index = collectionItems.indexOf(item.uri);
+
+    for (let i = index; i <= collectionItems.length; i += 1) {
+      const candidate = this.#items[collectionItems[i]];
+
+      if (candidate.date) {
+        return candidate.uri;
+      }
+    }
+
+    return null;
+  }
+
   public findCollectionPageItems(
     collection: string,
     page: number,

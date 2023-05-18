@@ -35,6 +35,7 @@ export type Page = {
   contentItem: ContentItem,
   taxonomies: Record<string, TaxonomyRelation[]>,
   listItems: ListItem[],
+  relatedItems: ListItem[],
 };
 
 export type ListItem = Pick<Page, 'contentItem' | 'taxonomies'>;

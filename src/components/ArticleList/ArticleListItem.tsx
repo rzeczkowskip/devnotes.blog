@@ -21,7 +21,7 @@ const ArticleListItem: React.FC<ArticleListItemProps> = ({
 
       { date && (<ArticleDate className="text-xs font-normal" date={ date } />) }
 
-      { summary && <p>{ summary }</p>}
+      { summary && <p className="mb-0">{ summary }</p>}
     </article>
   );
 };
