@@ -55,7 +55,7 @@ const Nav: React.FC<NavProps> = ({ items }) => {
           <Link
             key={ url }
             href={ url }
-            className={ `block p-4 hover:underline hover:text-lead-500 ${pathname === url ? 'underline' : ''}` }
+            className={ 'block p-4 hover:underline hover:text-lead-500' }
           >
             { label }
           </Link>
