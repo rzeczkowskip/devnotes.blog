@@ -12,13 +12,13 @@ type ArticleListProps = {
 
 const ArticleList: React.FC<ArticleListProps> = ({ items, pagination }) => (
     <ProseContainer>
-      <Prose as={ 'div' } className="mb-8 pb-8 content-links-reverse">
+      <Prose as={ 'div' } className="content-links-reverse">
           { items.map((item) => (
             <ArticleListItem item={ item.contentItem } key={ `${item.contentItem.uri}` } />
           )) }
       </Prose>
 
-      { (pagination?.hasNext || pagination?.hasPrevious) && <Pagination { ...pagination } /> }
+      { (pagination?.hasNext || pagination?.hasPrevious) && <Pagination { ...pagination } className="mt-20" /> }
     </ProseContainer>
 );
 
