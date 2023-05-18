@@ -7,6 +7,6 @@ type TitleProps = PropsWithChildren<{
 
 const Title: React.FC<TitleProps> = (
   { children, tag = 'h2' },
-) => (<ColoredTitle as={ tag } className="mb-12 lg:text-4xl">{ children }</ColoredTitle>);
+) => (<ColoredTitle as={ tag } className="mb-12">{ children }</ColoredTitle>);
 
 export default Title;
