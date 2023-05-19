@@ -1,7 +1,8 @@
 export type ContentItem = {
   collection: string,
   uri: string,
-  baseUri: string,
+  contentId: string,
+  assetsBaseUri: string,
   canonicalUri: string,
   title: string,
   content: string,

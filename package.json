@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "cd content && copyfiles --up 1 --exclude \"**/*.md\" \"pl/**/*\" \"../out\"",
     "start": "next start",
     "lint": "next lint"
   },
@@ -14,17 +15,20 @@
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
+    "copyfiles": "^2.4.1",
     "dinjectease": "^0.1.1",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
     "glob": "^10.2.4",
     "gray-matter": "^4.0.3",
+    "image-size": "^1.0.2",
     "next": "13.4.2",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.7",
     "remark-gfm": "^3.0.1",
+    "remark-unwrap-images": "^3.0.1",
     "slugify": "^1.6.6",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"

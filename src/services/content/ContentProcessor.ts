@@ -1,3 +1,4 @@
+import path from 'path';
 import matter from 'gray-matter';
 import SlugGenerator from '@/services/content/SlugGenerator';
 import { LoadedContent } from '@/services/content/types';
@@ -21,10 +22,10 @@ export default class ContentProcessor {
   }
 
   public process(item: LoadedContent): ContentItem {
-    const { content: loadedContent, path } = item;
+    const { content: loadedContent, path: filePath } = item;
     const { content, data: metadata } = matter(loadedContent);
 
-    const [uri, baseUri] = this.buildUris(path);
+    const [baseUri, uri, assetsBaseUri] = this.buildUris(filePath);
     const title = metadata?.title || this.getTitleFromUri(uri);
     const taxonomies = this.getTaxonomyUrisFromMetadata(metadata);
 
@@ -34,7 +35,8 @@ export default class ContentProcessor {
       collection: typeof metadata?.collection === 'string' ? metadata.collection : this.#defaultCollection,
       uri,
       canonicalUri: typeof metadata?.canonicalUrl === 'string' ? metadata?.canonicalUrl : uri,
-      baseUri,
+      contentId: baseUri,
+      assetsBaseUri,
       title,
       date: metadata?.date instanceof Date ? metadata.date.toISOString() : undefined,
       taxonomies,
@@ -44,21 +46,23 @@ export default class ContentProcessor {
     };
   }
 
-  private buildUris(path: string): [string, string] {
+  private buildUris(filePath: string): [string, string, string] {
     const slug = this.#slugGenerator.slugify(
-      path.replace(/\.md$/, ''),
+      filePath.replace(/\.md$/, ''),
     );
+
+    const assetBase = path.dirname(filePath);
 
     const deindexedSlug = slug.replace(/\/index$/, '');
 
     if (deindexedSlug === 'index') {
-      return ['/', '/'];
+      return ['/', '/', '/'];
     }
 
     const uri = `/${deindexedSlug.replace(/^\//, '')}`;
     const baseUri = slug === deindexedSlug ? uri : `${uri}/`;
 
-    return [uri, baseUri];
+    return [baseUri, uri, assetBase];
   }
 
   private getTitleFromUri(uri: string): string {

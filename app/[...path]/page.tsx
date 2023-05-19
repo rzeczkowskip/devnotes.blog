@@ -18,8 +18,9 @@ type PageProps = {
   params?: PageParams,
 };
 
-const isContentAsset = (path: string[]): boolean => {
+const isAssetPath = (path: string[]): boolean => {
   const contentDir = container.get<string>('params.content_dir');
+
   return fs.existsSync(nodePath.join(contentDir, ...path));
 };
 
@@ -37,7 +38,7 @@ const Page = async (props: PageProps) => {
     return (<ContentLayout page={page}/>);
   } catch (e) {
     if (e instanceof Error && e.message.endsWith(' not found.')) {
-      return isContentAsset(path) ? redirect(`/content-asset/${path.join('/')}`) : notFound();
+      return isAssetPath(path) ? redirect(`/content-asset/${path.join('/')}`) : notFound();
     }
 
     throw e;

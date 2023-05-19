@@ -71,7 +71,8 @@ export default class Content {
         title,
         uri,
         canonicalUri: uri,
-        baseUri: uri,
+        contentId: uri,
+        assetsBaseUri: uri,
         collection,
         content: '',
         draft: false,
@@ -123,7 +124,7 @@ export default class Content {
 
       const isTaxonomy = this.#taxonomyCollections.includes(root.collection);
       const taxonomyFilter: [string, string] | undefined = isTaxonomy
-        ? [root.collection, root.baseUri]
+        ? [root.collection, root.contentId]
         : undefined;
 
       const paths = this.#repository.findCollectionPageItems(

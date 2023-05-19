@@ -37,7 +37,7 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
         <Section.Section paddingY={ children ? 'both' : 'bottom' }>
           <Container>
             <ProseContainer>
-              <ArticleContent markdown={ contentItem.content } />
+              <ArticleContent markdown={ contentItem.content } assetBaseUri={ contentItem.assetsBaseUri }/>
             </ProseContainer>
           </Container>
         </Section.Section>
