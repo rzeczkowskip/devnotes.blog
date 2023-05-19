@@ -9,9 +9,10 @@ type ImageProps = {
   baseUri: string,
   alt?: string,
   title?: string,
+  priority?: boolean,
 };
 
-type InternalImageProps = Pick<ImageProps, 'src' | 'alt'> & {
+type InternalImageProps = Pick<ImageProps, 'src' | 'alt' | 'priority'> & {
   width?: number,
   height?: number,
 };
@@ -47,7 +48,7 @@ const getImageProps = (src: string, baseUrl: string): { src: string, width?: num
 };
 
 const InternalImage: React.FC<InternalImageProps> = ({
-  src, alt, width, height,
+  src, alt, width, height, priority,
 }) => {
   if (width && height) {
     return (
@@ -56,6 +57,7 @@ const InternalImage: React.FC<InternalImageProps> = ({
         alt={ alt || '' }
         width={ width }
         height={ height }
+        priority={ priority }
         className="mx-auto rounded"
       />
     );
@@ -68,10 +70,10 @@ const InternalImage: React.FC<InternalImageProps> = ({
 };
 
 const Image: React.FC<ImageProps> = ({
-  src, baseUri, alt = '', title,
+  src, baseUri, alt = '', title, priority,
 }) => {
   const imageProps = getImageProps(src, baseUri);
-  const ImageComponent = (<InternalImage alt={ alt } { ...imageProps } />);
+  const ImageComponent = (<InternalImage alt={ alt } priority={ priority } { ...imageProps } />);
 
   if (title) {
     return (

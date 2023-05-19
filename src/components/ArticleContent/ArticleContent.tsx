@@ -15,9 +15,17 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ markdown, assetBaseUri 
     <ReactMarkdown
       remarkPlugins={ [remarkGfm, remarkUnwrapImages] }
       components={{
-        img: ({ src, alt, title }) => (
+        img: ({
+          src, alt, title, ...props
+        }) => (
           src
-            ? <Image src={ src } alt={ alt } baseUri={ assetBaseUri } title={ title } />
+            ? <Image
+              src={ src }
+              alt={ alt }
+              baseUri={ assetBaseUri }
+              title={ title }
+              priority={ (props.node.position?.start.line || 11) < 10 }
+            />
             : null
         ),
       }}
