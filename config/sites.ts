@@ -2,7 +2,7 @@ import { Site, SiteConfig } from '@/types/SiteConfig';
 import enTranslations from '@translations/en.json';
 import plTranslations from '@translations/pl.json';
 
-const itemsPerPage = 10;
+const itemsPerPage = 8;
 const baseUrl = process.env.VERCEL_URL || `http://localhost:${process.env.PORT || 3000}`;
 
 const pl: Site = {
