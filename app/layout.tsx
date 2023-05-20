@@ -1,4 +1,5 @@
 import './globals.css';
+import './syntax.css';
 import { Mulish } from 'next/font/google';
 import React from 'react';
 import container from '../config/container';

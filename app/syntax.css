@@ -1,0 +1,144 @@
+/*!
+   Theme: Dev Notes Blog
+   Author: (c) Piotr Rzeczkowski <piotr@devnotes.blog>
+   Maintainer: @rzeczkowskip
+   Updated: 2023-05-20
+
+    #f8f8f2
+    #66d9ef
+    #ae81ff
+    #f92672
+    #e6db74
+    #939393
+    #a6e22e
+*/
+.hljs {
+  color: #f8f8f2;
+
+  .hljs- {
+    &keyword,
+    &built_in,
+    &type,
+    &literal {
+      color: #66d9ef;
+    }
+
+    &number {
+      color: #ae81ff;
+    }
+
+
+    &operator {
+      color: #f92672;
+    }
+
+    &punctuation {}
+
+    &property {
+      color: #a6e22e;
+    }
+
+    &regexp {
+      color: #e6db74;
+    }
+
+    &string {
+      color: #e6db74;
+    }
+
+    &escape {
+      color: #ae81ff;
+    }
+
+    &subst {
+      color: #f8f8f2;
+    }
+
+    &symbol {
+      color: #e6db74;
+    }
+
+    &variable {
+      &.language_ {
+        color: #66d9ef;
+      }
+
+      &.constant_ {}
+    }
+
+    &title {
+      &.class_ {
+        color: #a6e22e;
+        &.inherited_ {}
+      }
+
+      &.function_ {
+        color: #a6e22e;
+
+        &.invoke_ {}
+      }
+    }
+
+    &params {
+      color: #a6e22e;
+    }
+
+    &comment { color: #939393; }
+    &doctag { color: #e6db74; }
+
+    &meta {
+      color: #66d9ef;
+      &.prompt_ { color: #ae81ff; }
+      &.keyword_ { color: #f8f8f2; }
+      &.string_ { color: #f8f8f2; }
+    }
+
+    &tag {
+      color: #66d9ef;
+
+      .hljs-name {}
+      .hljs-attr {
+        color: #a6e22e;
+      }
+    }
+
+    &attribute {
+      color: #a6e22e;
+    }
+
+    &bullet {
+      color: #66d9ef;
+    }
+
+    &code {}
+    &code_block {}
+
+    &emphasis { font-style: italic; }
+    &strong { font-weight: bold; }
+    &formula {}
+    &link { color: #e6db74; }
+    &quote {}
+
+    &selector- {
+      &tag, &id, &class, &attr, &pseudo {
+        color: #e6db74;
+      }
+    }
+
+    &template- {
+      &tag {
+        color: #66d9ef;
+      }
+
+      &variable {}
+    }
+
+    &deletion {
+      color: #f92672;
+    }
+
+    &addition {
+      color: #a6e22e;
+    }
+  }
+}

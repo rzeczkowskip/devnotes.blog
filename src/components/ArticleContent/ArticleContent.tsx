@@ -1,6 +1,9 @@
+import hljsPowershell from 'highlight.js/lib/languages/powershell';
+import hljsTwig from 'highlight.js/lib/languages/twig';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeExternalLinks, { Options as ExternalLinksOptions } from 'rehype-external-links';
+import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { visitParents } from 'unist-util-visit-parents';
@@ -64,6 +67,12 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ markdown, assetBaseUri,
           rehypePlugins={ [
             rehypeCallout,
             [rehypeExternalLinks, { target: '_blank', rel: ['noopener'] } as ExternalLinksOptions],
+            [rehypeHighlight, {
+              languages: {
+                powershell: hljsPowershell,
+                twig: hljsTwig,
+              },
+            }],
           ] }
           components={{
             img: ({

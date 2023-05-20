@@ -49,7 +49,7 @@ I do tego konfiguracja *di.xml*
 
 A na koniec *.env*
 
-```env
+```shell
 FOO_API_TOKEN=secret
 ```
 
