@@ -26,6 +26,7 @@ export default container;
 const siteCode = process.env.SITE || 'default';
 const siteConfig = sitesConfig.sites[siteCode];
 
+container.raw('params.app_env', process.env.APP_ENV || 'prod');
 container.raw('params.site_config', siteConfig);
 container.set('params.content_dir', (c) => {
   const { contentDir } = c.get('params.site_config');
@@ -83,7 +84,7 @@ container.set('content.repository.generators', (c) => [
 
 container.set(
   'content.repository_preprocessor.exclude_drafts',
-  () => new ExcludeDraftsProcessor(process.env.NODE_ENV === 'production'),
+  (c) => new ExcludeDraftsProcessor(c.get('params.app_env') !== 'dev'),
 );
 
 container.set('content.repository_preprocessor.sort', () => new SortPostprocessor());
