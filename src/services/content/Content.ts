@@ -91,7 +91,7 @@ export default class Content {
   }
 
   private getTaxonomyRelations(root: ContentItem): Record<string, TaxonomyRelation[]> {
-    if (!this.#cache.taxonomies?.[root.canonicalUri]) {
+    if (!this.#cache.taxonomies?.[root.contentId]) {
       const entries = this.#taxonomyCollections.map((collection) => {
         const links = Object.keys(root.taxonomies?.[collection] || {});
         const relations: TaxonomyRelation[] = links.map((link) => {
@@ -109,10 +109,10 @@ export default class Content {
         return [collection, relations];
       });
 
-      this.#cache.taxonomies[root.canonicalUri] = Object.fromEntries(entries);
+      this.#cache.taxonomies[root.contentId] = Object.fromEntries(entries);
     }
 
-    return this.#cache.taxonomies[root.canonicalUri];
+    return this.#cache.taxonomies[root.contentId];
   }
 
   private getListItems(root: ContentItem): ListItem[] {
