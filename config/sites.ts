@@ -3,11 +3,10 @@ import enTranslations from '@translations/en.json';
 import plTranslations from '@translations/pl.json';
 
 const itemsPerPage = 8;
-const baseUrl = process.env.VERCEL_URL || `http://localhost:${process.env.PORT || 3000}`;
 
 const pl: Site = {
   title: 'Notatki Deva',
-  baseUrl,
+  baseUrl: 'https://notatkideva.pl',
   contentDir: 'content/pl',
   locale: 'pl',
   translations: plTranslations,
@@ -29,7 +28,7 @@ const pl: Site = {
 
 const en: Site = {
   title: 'Dev Notes',
-  baseUrl,
+  baseUrl: 'https://devnotes.blog',
   contentDir: 'content/en',
   locale: 'en',
   translations: enTranslations,
