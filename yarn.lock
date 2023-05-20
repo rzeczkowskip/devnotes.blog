@@ -3145,6 +3145,14 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+hast-util-is-element@^2.0.0:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/hast-util-is-element/-/hast-util-is-element-2.1.3.tgz#cd3279cfefb70da6d45496068f020742256fc471"
+  integrity sha512-O1bKah6mhgEq2WtVMk+Ta5K7pPMqsBBlmzysLdcwKVrqzZQ0CHqUPiIVspNhAG1rvxpvJjtGee17XfauZYKqVA==
+  dependencies:
+    "@types/hast" "^2.0.0"
+    "@types/unist" "^2.0.0"
+
 hast-util-whitespace@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/hast-util-whitespace/-/hast-util-whitespace-2.0.1.tgz#0ec64e257e6fc216c7d14c8a1b74d27d650b4557"
@@ -3258,6 +3266,11 @@ internal-slot@^1.0.3, internal-slot@^1.0.4, internal-slot@^1.0.5:
     get-intrinsic "^1.2.0"
     has "^1.0.3"
     side-channel "^1.0.4"
+
+is-absolute-url@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/is-absolute-url/-/is-absolute-url-4.0.1.tgz#16e4d487d4fded05cfe0685e53ec86804a5e94dc"
+  integrity sha512-/51/TKE88Lmm7Gc4/8btclNXWS+g50wXhYJq8HWIBAGUBnoAdRu1aXeh364t/O7wXDAcTJDP8PNuNKWUDWie+A==
 
 is-arguments@^1.1.1:
   version "1.1.1"
@@ -4775,6 +4788,19 @@ regjsparser@^0.9.1:
   integrity sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==
   dependencies:
     jsesc "~0.5.0"
+
+rehype-external-links@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/rehype-external-links/-/rehype-external-links-2.1.0.tgz#e13a2f16c3629b569baea842515b7e200f62f512"
+  integrity sha512-2YMJZVM1hxZnwl9IPkbN5Pjn78kXkAX7lq9VEtlaGA29qIls25vZN+ucNIJdbQUe+9NNFck17BiOhGmsD6oLIg==
+  dependencies:
+    "@types/hast" "^2.0.0"
+    extend "^3.0.0"
+    hast-util-is-element "^2.0.0"
+    is-absolute-url "^4.0.0"
+    space-separated-tokens "^2.0.0"
+    unified "^10.0.0"
+    unist-util-visit "^4.0.0"
 
 remark-gfm@^3.0.1:
   version "3.0.1"

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeExternalLinks, { Options as ExternalLinksOptions } from 'rehype-external-links';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { visitParents } from 'unist-util-visit-parents';
@@ -60,7 +61,10 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ markdown, assetBaseUri,
       <Prose>
         <ReactMarkdown
           remarkPlugins={ [remarkGfm, remarkUnwrapImages] }
-          rehypePlugins={ [rehypeCallout] }
+          rehypePlugins={ [
+            rehypeCallout,
+            [rehypeExternalLinks, { target: '_blank', rel: ['noopener'] } as ExternalLinksOptions],
+          ] }
           components={{
             img: ({
               src, alt, title, ...props
