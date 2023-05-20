@@ -1,21 +1,16 @@
 import path from 'path';
 import imageSize from 'image-size';
-import NextImage from 'next/image';
+import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import React from 'react';
-import container from '../../../../config/container';
+import container from '../../../config/container';
 
-type ImageProps = {
+type ContentImageProps = NextImageProps & {
   src: string,
   baseUri: string,
-  alt?: string,
   title?: string,
-  priority?: boolean,
 };
 
-type InternalImageProps = Pick<ImageProps, 'src' | 'alt' | 'priority'> & {
-  width?: number,
-  height?: number,
-};
+type InternalImageProps = Omit<ContentImageProps, 'baseUri' | 'title'>;
 
 const isExternalOrAbsolute = (src: string): boolean => src.includes('//') || src.startsWith('/');
 
@@ -48,7 +43,12 @@ const getImageProps = (src: string, baseUrl: string): { src: string, width?: num
 };
 
 const InternalImage: React.FC<InternalImageProps> = ({
-  src, alt, width, height, priority,
+  src,
+  alt,
+  className,
+  width,
+  height,
+  ...props
 }) => {
   if (width && height) {
     return (
@@ -57,23 +57,31 @@ const InternalImage: React.FC<InternalImageProps> = ({
         alt={ alt || '' }
         width={ width }
         height={ height }
-        priority={ priority }
-        className="mx-auto rounded"
+        className={ className }
+        { ...props }
       />
     );
   }
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={ src } alt={ alt } className="mx-auto rounded" />
+    <img src={ src } alt={ alt } className={ className } />
   );
 };
 
-const Image: React.FC<ImageProps> = ({
-  src, baseUri, alt = '', title, priority,
+const ContentImage: React.FC<ContentImageProps> = ({
+  src,
+  baseUri,
+  title,
+  ...props
 }) => {
   const imageProps = getImageProps(src, baseUri);
-  const ImageComponent = (<InternalImage alt={ alt } priority={ priority } { ...imageProps } />);
+
+  const ImageComponent = (
+    <InternalImage
+      { ...{ ...props, ...imageProps } }
+    />
+  );
 
   if (title) {
     return (
@@ -89,4 +97,4 @@ const Image: React.FC<ImageProps> = ({
   return ImageComponent;
 };
 
-export default Image;
+export default ContentImage;

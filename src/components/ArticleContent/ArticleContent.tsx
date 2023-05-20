@@ -4,13 +4,14 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { visitParents } from 'unist-util-visit-parents';
-import Image from '@/components/ArticleContent/MarkdownComponents/Image';
 import Callout from '@/components/Callout';
+import ContentImage from '@/components/ContentImage';
 import Prose from '@/components/Prose';
 
 type ArticleContentProps = {
   markdown: string,
   assetBaseUri: string,
+  image?: string,
 };
 
 // @ts-ignore
@@ -48,33 +49,45 @@ const rehypeCallout = () => (tree) => {
     }
   });
 };
-const ArticleContent: React.FC<ArticleContentProps> = ({ markdown, assetBaseUri }) => (
-  <Prose>
-    <ReactMarkdown
-      remarkPlugins={ [remarkGfm, remarkUnwrapImages, remarkBreaks] }
-      rehypePlugins={ [rehypeCallout] }
-      components={{
-        img: ({
-          src, alt, title, ...props
-        }) => (
-          src
-            ? <Image
-              src={ src }
-              alt={ alt }
-              baseUri={ assetBaseUri }
-              title={ title }
-              priority={ (props.node.position?.start.line || 11) < 10 }
-            />
-            : null
-        ),
-        // @ts-ignore
-        callout: ({ children, type, title }) => (<Callout type={ type || '' } title={ title }>{ children }</Callout>),
-      }}
-    >
-      { markdown }
-    </ReactMarkdown>
-  </Prose>
+const ArticleContent: React.FC<ArticleContentProps> = ({ markdown, assetBaseUri, image }) => (
+    <>
+      { image && (
+        <ContentImage
+          src={ image }
+          alt=""
+          baseUri={ assetBaseUri }
+          className="rounded mx-auto mb-8"
+          priority
+        />
+      ) }
 
+      <Prose>
+        <ReactMarkdown
+          remarkPlugins={ [remarkGfm, remarkUnwrapImages, remarkBreaks] }
+          rehypePlugins={ [rehypeCallout] }
+          components={{
+            img: ({
+              src, alt, title, ...props
+            }) => (
+              src
+                ? <ContentImage
+                  src={ src }
+                  alt={ alt || '' }
+                  baseUri={ assetBaseUri }
+                  title={ title }
+                  priority={ (props.node.position?.start.line || 11) < 10 }
+                  className="mx-auto rounded"
+                />
+                : null
+            ),
+            // @ts-ignore
+            callout: ({ children, type, title }) => (<Callout type={ type || '' } title={ title }>{ children }</Callout>),
+          }}
+        >
+          { markdown }
+        </ReactMarkdown>
+      </Prose>
+    </>
 );
 
 export default ArticleContent;
