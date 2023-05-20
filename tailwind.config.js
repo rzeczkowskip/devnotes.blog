@@ -40,6 +40,7 @@ module.exports = {
     extend: {
       colors: {
         lead: {
+          200: '#def',
           500: '#258',
           800: '#123',
         },
