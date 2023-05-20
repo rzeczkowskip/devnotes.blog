@@ -13,6 +13,8 @@ const pl: Site = {
   translations: plTranslations,
   nav: [
     { url: '/', label: 'Blog' },
+    { url: '/kategorie', label: 'Kategorie' },
+    { url: '/tagi', label: 'Tagi' },
     { url: '/o-mnie', label: 'O mnie' },
   ],
   taxonomyCollections: {
