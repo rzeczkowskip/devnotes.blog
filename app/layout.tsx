@@ -23,7 +23,7 @@ const RootLayout = async ({
 
   return (
     <html lang="en">
-    <body className={ `${mulish.className} bg-neutral-50 text-neutral-900` }>
+    <body className={ `${mulish.className} bg-slate-50 text-slate-900` }>
       <Header title={ title } nav={ nav } />
         {children}
       <Footer />

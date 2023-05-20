@@ -6,7 +6,7 @@ const colors = require('tailwindcss/colors');
 const plugin = require('tailwindcss/plugin');
 const textFillPlugin = require('tailwindcss-text-fill');
 
-const textColor = colors.neutral[900];
+const textColor = colors.slate[900];
 
 const linkStyles = (theme, reverseColors = false) => {
   let linkColor = theme('colors.lead.500');

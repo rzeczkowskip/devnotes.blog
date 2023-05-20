@@ -14,7 +14,7 @@ const ArticleListItem: React.FC<ArticleListItemProps> = ({
   } = item;
 
   return (
-    <article className="mb-8 pb-8 border-b border-b-neutral-300 last:border-0 last:mb-0 last:pb-0">
+    <article className="mb-8 pb-8 border-b border-b-slate-300 last:border-0 last:mb-0 last:pb-0">
       <h2 className="my-0 h1">
         <Link href={ uri } title={ title } className="content-link-reverse font-extrabold no-underline">{ title }</Link>
       </h2>

@@ -17,7 +17,7 @@ const Section: React.FC<SectionProps> = ({
       ${paddingY === 'bottom' ? 'pb-20' : ''}
       
       ${background === 'white' ? 'bg-white' : ''} 
-      ${background === 'gray' ? 'bg-neutral-100 border-y border-neutral-200' : ''}
+      ${background === 'gray' ? 'bg-slate-100 border-y border-slate-200' : ''}
     ` }>
         { children }
     </SectionTag>

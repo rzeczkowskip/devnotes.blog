@@ -6,7 +6,7 @@ type ProseContainerProps = PropsWithChildren<{
 }>;
 
 const Prose: React.FC<ProseContainerProps> = ({ as: ContainerTag = 'article', children, className }) => (
-  <ContainerTag className={ `prose prose-neutral mx-auto ${className || ''} `}>
+  <ContainerTag className={ `prose prose-slate mx-auto ${className || ''} `}>
     { children }
   </ContainerTag>
 );
