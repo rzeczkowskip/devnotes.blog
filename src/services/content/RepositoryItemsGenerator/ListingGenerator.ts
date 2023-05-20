@@ -56,6 +56,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
             isPaginationPage: true,
             pagination: {
               ...listConfig,
+              itemsPerPage,
               page: i,
               totalPages: pageCount,
               hasNext,
@@ -73,6 +74,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
         ...item,
         pagination: {
           ...listConfig,
+          itemsPerPage,
           page: 1,
           totalPages: pageCount,
           hasNext: pageCount > 1,
