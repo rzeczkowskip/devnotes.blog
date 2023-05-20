@@ -9,8 +9,10 @@ import { NavLink } from '@/types/SiteConfig';
 
 type NavProps = {
   items: NavLink[]
+  toggleAriaLabel?: string,
 };
-const Nav: React.FC<NavProps> = ({ items }) => {
+
+const Nav: React.FC<NavProps> = ({ items, toggleAriaLabel }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNav = () => {
@@ -30,8 +32,8 @@ const Nav: React.FC<NavProps> = ({ items }) => {
   useEffect(closeNav, [pathname]);
 
   return (
-    <nav className="flex items-center" ref={ ref }>
-      <NavToggle toggle={ toggleNav } className="lg:hidden" />
+    <nav className="flex items-center" ref={ ref } id="nav" aria-hidden={ isOpen }>
+      <NavToggle toggle={ toggleNav } className="lg:hidden" ariaLabel={ toggleAriaLabel } ariaControls={ 'nav' } />
 
       <div className={ `
         font-semibold
@@ -49,7 +51,13 @@ const Nav: React.FC<NavProps> = ({ items }) => {
         h-screen lg:h-auto
       ` }>
 
-        <NavToggle toggle={ toggleNav } isOpen={ true } className="lg:hidden ml-auto mr-0 mb-4" />
+        <NavToggle
+          toggle={ toggleNav }
+          isOpen={ true }
+          className="lg:hidden ml-auto mr-0 mb-4"
+          ariaLabel={ toggleAriaLabel }
+          ariaControls={ 'nav' }
+        />
 
         { items.map(({ label, url }) => (
           <Link

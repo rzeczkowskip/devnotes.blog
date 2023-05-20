@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import Nav from './Nav';
 import Container from '@/components/Container';
+import useTranslation from '@/hooks/useTranslation';
 import { Site } from '@/types/SiteConfig';
 import Logo from '@assets/logo.svg';
 
@@ -10,7 +11,10 @@ type HeaderProps = {
   nav: Site['nav'],
 };
 
-const Header: React.FC<HeaderProps> = ({ title, nav }) => (
+const Header: React.FC<HeaderProps> = ({ title, nav }) => {
+  const { t } = useTranslation();
+
+  return (
     <header className="py-3">
       <Container>
         <div className="flex items-center">
@@ -20,11 +24,12 @@ const Header: React.FC<HeaderProps> = ({ title, nav }) => (
           </Link>
 
           <div className="ml-auto mr-0 lg:ml-4 lg:mr-auto">
-            { nav && <Nav items={ nav } /> }
+            { nav && <Nav items={ nav } toggleAriaLabel={ t('nav_toggle_label') } /> }
           </div>
         </div>
       </Container>
     </header>
-);
+  );
+};
 
 export default Header;

@@ -26,6 +26,7 @@ const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator =
 
     return {
       title: title && title !== siteTitle ? `${title} | ${siteTitle}` : siteTitle,
+      description: !contentItem ? undefined : (contentItem?.metadata?.summary || siteTitle),
       robots: !contentItem || contentItem.draft ? 'noindex,nofollow' : undefined,
       alternates: {
         canonical: contentItem ? getCanonicalUrl(contentItem.canonicalUri, baseUrl) : undefined,

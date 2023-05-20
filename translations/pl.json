@@ -5,5 +5,6 @@
   "pagination_previous": "Poprzednia strona",
   "pagination_next_posts": "Starsze posty",
   "pagination_previous_posts": "Nowsze posty",
-  "related_content_label": "Odkryj podobne treści"
+  "related_content_label": "Odkryj podobne treści",
+  "nav_toggle_label": "Pokaż/ukryj menu"
 }
