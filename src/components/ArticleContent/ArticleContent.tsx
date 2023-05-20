@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { visitParents } from 'unist-util-visit-parents';
@@ -30,25 +29,22 @@ const rehypeCallout = () => (tree) => {
     }
 
     const value = (firstLine.value as string).trim();
-    const matches = value.match(/^\[!(\w+)] *(.*)$/);
+    const matches = value.match(/^\[!(\w+)] *(.*)\n/);
 
     if (!matches || matches.length < 3) {
       return;
     }
 
-    const [, type, title] = matches;
+    const [toRemove, type, title] = matches;
 
     // eslint-disable-next-line no-param-reassign
     node.tagName = 'callout';
     // eslint-disable-next-line no-param-reassign
     node.properties = { title, type };
-
-    children?.[0]?.children.shift();
-    if (children?.[0]?.children?.[0]?.tagName === 'br') {
-      children?.[0]?.children.shift();
-    }
+    firstLine.value = firstLine.value.replace(toRemove, '');
   });
 };
+
 const ArticleContent: React.FC<ArticleContentProps> = ({ markdown, assetBaseUri, image }) => (
     <>
       { image && (
@@ -63,7 +59,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ markdown, assetBaseUri,
 
       <Prose>
         <ReactMarkdown
-          remarkPlugins={ [remarkGfm, remarkUnwrapImages, remarkBreaks] }
+          remarkPlugins={ [remarkGfm, remarkUnwrapImages] }
           rehypePlugins={ [rehypeCallout] }
           components={{
             img: ({
