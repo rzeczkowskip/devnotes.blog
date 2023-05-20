@@ -23,7 +23,7 @@ e-commerce. Naszymi celami były:
 W skrócie: oddelegowanie wszystkich czynności, które mogą sprawić problem lub „spalić” czyjś czas. W końcu lepiej zająć
 się bezpośrednio sprzedażą niż przygotowaniem paczek.
 
-![__Diagram automatyzacji][automatyzacja-diagram]
+[![Diagram automatyzacji][automatyzacja-diagram]][automatyzacja-diagram]
 
 Korzystaliśmy z platformy Magento, dlatego może pojawić się kilka naleciałości tego systemu. Wdrożenie podobnego (może
 nawet identycznego) procesu jest możliwe również w innych systemach.
@@ -46,7 +46,7 @@ jednego z dostawców szybkich płatności. I jest to jedyny sposób płatności 
 Cała odpowiedzialność za ściągnięcie pieniędzy z klienta spada na dostawcę systemu. Interesuje nas przekazanie danych
 zamówienia i pobranie (czy otrzymanie) zwrotki ze statusem. Resztą niech zajmie się ktoś inny.
 
-Zamiast korzystać z gotowców, można skorzystać z „pół gotowców” ([Omnipay][omnipay] czy [Payum][payum]) lub napisać całość od początku.
+Zamiast korzystać z gotowców, można skorzystać z „pół gotowców” (Omnipay czy Payum) lub napisać całość od początku.
 Jednak, skoro rozwiązanie już istnieje i jest odpowiednie, to po co kombinować?
 
 Wróćmy do sposobu działania systemu płatności.

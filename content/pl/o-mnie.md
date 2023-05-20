@@ -1,32 +1,38 @@
 ---
-title: "O mnie i o blogu"
-date: 2021-03-12T13:14:34Z
+title: "Dev od notatek"
+subtitle: Czyli kto to wszystko napisał...
 collection: pages
 ---
 
+# Cześć!
+
+Jestem Piotr, miło Cię poznać.
+
 ![Dev od notatek](me.jpg "Dev od notatek")
 
-Na samym początku chciałbym Ci podziękować, za odwiedziny na blogu. Jest mi niezmiernie miło, że poświęcasz swój czas,
-aby tu przyjść i czytać, co mam do przekazania. 
+Jestem programistą. Na co dzień zajmuję się "dowożeniem" oraz projektowaniem rozwiązań, które "dowiezie" ktoś inny. 
 
-# Kim jestem
+Lata pracy w projektach, od małych wizytówek, do ogromych e-commerce, nauczyły mnie, że sześć godzin debugowania może 
+zaoszczędzić 5 minut czytania dokumentacji.
 
-No to od początku…
+# Open source
 
-Cześć!
-Jestem Piotr.
+Nieśmiało zaczynam stawiać swoje kroki w świecie open source
 
-Od kiedy pamiętam, interesowałem się IT i całą otoczką webdev. Od kilku lat spełniam się zawodowo jako programista.
-Pamiętam czasy Pajączka, programu WebMajster (hosting na republika.pl, ktoś kojarzy?), a nawet tworzenia stron WWW w 
-Wordzie :)
+## 📦 Dinjectease
 
-Prywatnie: strzelanki (Quake wiecznie żywy), koszykówka.
+Mały kontener DI oparty o pliki konfiguracyjne. Rozwiązanie zainspirowane projektem 
+[Pimple](https://github.com/silexphp/Pimple).
 
-# O blogu
+Zależało mi na możliwości zarządzania zależnościami w sposób, jaki znam z **Symfony** czy innych frameworków PHP. 
+Większość istniejących rozwiązań w mniejszym lub większym stopniu zaśmiecało kod serwisów. **Dinjectease** pozwala na 
+skonfigurowanie wszystkich zależności w niezależnym pliku konfiguracyjnym.
 
-Może zacznijmy od tego, skąd pomysł na blog. Mówią, że dawanie daje więcej radości niż branie. Nadal pamiętam pierwszy 
-feedback do paczki, którą opublikowałem. Naprawdę fajne uczucie, że ktoś zauważył i korzysta z mojego rozwiązania. 
-No i od tego się zaczęło.
+[Zobacz projekt Dinjectease](https://github.com/rzeczkowskip/dinjectease)
 
-Zamierzam pisać o wszystkim, z czym się spotykam jako programista. Nie tylko bezpośrednio o kodzie, ale też o podejściu 
-do rozwiązywania problemów, czy o zdrowiu. Cała otoczka życia developera. Nie bez powodu nazwałem blog Notatki Deva.
+# Jestem online
+
+Poza blogiem [NotatkiDeva](https://notatkideva.pl), znajdziesz mnie jeszcze na 
+[Twitterze](https://twitter.com/rzeczkowskip), gdzie od czasu do czasu powiem coś o kodzie lub koszykówce.
+Jeżeli chcesz się skontaktować, poza Twitterem, zapraszam na [LinkedIn](https://www.linkedin.com/in/rzeczkowskip/).
+Na koniec oczywiście zostaje [GitHub](https://github.com/rzeczkowskip), gdzie trzymam mniej lub bardziej przydatny kod.

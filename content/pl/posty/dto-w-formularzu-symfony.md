@@ -13,7 +13,8 @@ Budujesz swój pierwszy formularz w Symfony. Co robisz? Zaglądasz do dokumentac
 kroku. Jak stworzyć formularz w kontrolerze, jak (i dlaczego) wydzielić stworzony formularz do osobnej klasy, cały
 proces walidacji… Nic tylko czytać i budować formularze. A może lepszym sposobem będzie wykorzystanie DTO w formularzu?
 
-*Hej! Powstał wpis rozszerzający zawarte tu informacje: [DTO w formularzu Symfony – część 2][dto-w-formularzu-symfony-2]*
+> [!info]
+> Hej! Powstał wpis rozszerzający zawarte tu informacje: [DTO w formularzu Symfony – część 2][dto-w-formularzu-symfony-2]
 
 Chociaż przykłady w dokumentacji nie operują na encjach Doctrine, to można znaleźć takie sugestie. Podpinanie encji do
 formularzy jest kuszące i łatwe. Nie trzeba pisać dodatkowego kodu, aby przekazać dane z formularza do bazy danych,
@@ -149,4 +150,4 @@ Powodów jest kilka. Twój formularz i encja Doctrine są od siebie niezależne.
 poprawne dane (bo trafią poprawne). Możesz wydzielić aktualizację encji do serwisu i obsługiwać ją z kilku miejsc (
 formularz, api, konsola…).
 
-[dto-w-formularzu-symfony-2]: {{< ref "posts/2020/11/dto-w-formularzu-symfony-2" >}}
+[dto-w-formularzu-symfony-2]: /posty/dto-w-formularzu-symfony-2

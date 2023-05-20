@@ -9,10 +9,9 @@ summary: >-
     Nie pozostaje nic innego, jak zainstalować ruby samodzielnie, zbudowane specjalnie pod arm64.
 ---
 
-{{% block info %}}
-Ten wpis to przeredagowana odpowiedź na [How to run CocoaPods on Apple Silicon (M1)][so-original-answer].
-Poprawna odpowiedź nie została oznaczona jako rozwiązanie, a mało kto szuka dalej, jeżeli pierwsza odpowiedź działa.
-{{% /block %}}
+> [!info]
+> Ten wpis to przeredagowana odpowiedź na [How to run CocoaPods on Apple Silicon (M1)][so-original-answer].
+> Poprawna odpowiedź nie została oznaczona jako rozwiązanie, a mało kto szuka dalej, jeżeli pierwsza odpowiedź działa.
 
 # Błąd podczas instalacji pods
 
@@ -28,10 +27,9 @@ default, and may require you to install an additional package.
 
 Nie pozostaje nic innego, jak zainstalować ruby samodzielnie, zbudowane specjalnie pod arm64.
 
-{{% block info %}}
-Opisany proces korzysta z domyślnych ścieżek homebrew. Jeżeli korzystasz z niestandardowej konfiguracji, ścieżka
-`/opt/homebrew` będzie odpowiadać wynikowi `brew --prefix`
-{{% /block %}}
+> [!info]
+> Opisany proces korzysta z domyślnych ścieżek homebrew. Jeżeli korzystasz z niestandardowej konfiguracji, ścieżka
+> `/opt/homebrew` będzie odpowiadać wynikowi `brew --prefix`
 
 # Instalacja ruby z homebrew
 

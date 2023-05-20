@@ -96,9 +96,8 @@ W tym roku, niestety, nie odważyłem się wysłać swojej prezentacji... Może 
 
 # Podziękowanie
 
-{{% block info %}}
-Aktualizacja 13 listopada 2022
-{{% /block %}}
+> [!info]
+> Aktualizacja 13 listopada 2022
 
 Podczas konferencji była możliwość kupienia polskiego ElePHPanta "Janusza" - maskotki projektu PHP w wersji "Polska". Dwa tygodnie po konferencji przeprowadzaliśmy w biurze licytacje fantów na cele charytatywne. ElePHPant to doskonały fant... Tylko wtedy nikt o tym nie pomyślał. Po kontakcie z organizatorami, w dwie godziny, udało się ustalić wszystkie szczegóły i "załatwić" słonika na licytację.
 

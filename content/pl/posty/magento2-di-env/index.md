@@ -59,6 +59,8 @@ Proste prawda? Tyle że nie działa.
 
 Dlaczego?
 
+# Nie działa. Dlaczego?
+
 Odpowiedź okazała się tak prosta, że aż głupio się przyznać, że zleciało ponad pół dnia na jej znalezienie.
 
 Magento nie umie w `init_parameter`, jeżeli klasa nie jest częścią modułu Magento, a zamiast tego, żyje w */vendor*.

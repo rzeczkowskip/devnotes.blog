@@ -12,14 +12,11 @@ summary: >-
 Chcę ponownie poruszyć temat używania DTO do obsługi formularzy w Symfony. Okazuje się, że można kilka spraw
 doprecyzować. Format wpisu będzie odrobinę inny. Postaram skupić się na konkretnych przypadkach użycia i je opisać.
 
-*Ten wpis rozszerza informacje zawarte w jednym z poprzednich wpisów: 
-[DTO w formularzu Symfony][dto-w-formularzu-symfony].*
+> [!info]
+> Ten wpis rozszerza informacje zawarte w jednym z poprzednich wpisów:
+> [DTO w formularzu Symfony][dto-w-formularzu-symfony].
 
 # To null or not to null
-
-> asd
-> zxc
-> asd
 
 DTO to nie jest Value Object. Podlega modyfikacjom. Jest workiem na dane. Dlatego zamiast
 getterów i setterów, udostępniam w nim publiczne atrybuty. Tylko dlaczego wszystkie są inicjowane z wartością `null`? I
@@ -55,7 +52,7 @@ Zazwyczaj mam możliwość wykorzystania jednej klasy do tworzenia i edycji
 danych w encji. Jest łatwiej, dane wejściowe zawsze obsługuję za pomocą tej samej klasy. Jakiś czas korzystałem z opcji
 „1 DTO 1 akcja”, jednak w większości przypadków obie klasy wyglądały tak samo z wyjątkiem konstruktora, który jako
 argument brał encję i z niej były inicjowane dane. Dużo łatwiej jest wykorzystać mechanizm częściowej walidacji na
-podstawie grup (https://symfony.com/doc/current/form/validation_groups.html).
+podstawie grup ([dokumentacja validation groups](https://symfony.com/doc/current/form/validation_groups.html)).
 
 Zostaje jeszcze uproszenie tworzenia obiektu wypełnionego istniejącymi danymi. **Named constuctors** na ratunek! Zamiast
 przyjmować atrybuty w konstruktorze, tworzę statyczną metodę `fromEntity`:
