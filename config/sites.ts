@@ -24,6 +24,9 @@ const pl: Site = {
     pageUrlPart: 'strona',
     itemsPerPage,
   },
+  params: {
+    cfAnalyticsId: '40e215543fb64af685eefa348a70dfb8',
+  },
 };
 
 const en: Site = {

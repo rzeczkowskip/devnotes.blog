@@ -3,6 +3,7 @@ import './syntax.css';
 import { Mulish } from 'next/font/google';
 import React from 'react';
 import container from '../config/container';
+import Analytics from '@/components/Analytics/Analytics';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { Site } from '@/types/SiteConfig';
@@ -27,6 +28,8 @@ const RootLayout = async ({
       <Header title={ title } nav={ nav } />
         {children}
       <Footer />
+
+      <Analytics />
     </body>
     </html>
   );
