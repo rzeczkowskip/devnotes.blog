@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
+import { TaxonomyRelation } from '@/types/Content';
 
-type TagProps = {
-  label: string,
-  uri: string,
-};
+type TagProps = Partial<TaxonomyRelation> & Pick<TaxonomyRelation, 'uri'>;
 
-const Tag: React.FC<TagProps> = ({ label, uri }) => (
+const Tag: React.FC<TagProps> = ({ title, uri }) => (
     <Link href={ uri }>
-      #{ label }
+      #{ title }
     </Link>
 );
 

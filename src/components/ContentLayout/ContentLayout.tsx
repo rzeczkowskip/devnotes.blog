@@ -1,17 +1,59 @@
-import React, { PropsWithChildren } from 'react';
+import Link from 'next/link';
+import React, { Component, PropsWithChildren } from 'react';
 import ArticleContent from '@/components/ArticleContent';
 import ArticleList from '@/components/ArticleList';
 import Container from '@/components/Container';
 import Hero from '@/components/Hero';
 import ProseContainer from '@/components/ProseContainer';
 import Section from '@/components/Section';
+import Tag from '@/components/Tag/Tag';
 import TagList from '@/components/TagList';
 import useTranslation from '@/hooks/useTranslation';
-import { Page } from '@/types/Content';
+import { Page, TaxonomyRelation } from '@/types/Content';
 
 type ContentLayoutProps = PropsWithChildren<{
   page: Page,
 }>;
+
+type TaxonomiesProps = {
+  collection: string,
+  taxonomies: Page['taxonomies'],
+  as?: React.FC<Partial<TaxonomyRelation> & Pick<TaxonomyRelation, 'uri'>>,
+};
+
+const hasTaxonomies = (taxonomies: Page['taxonomies']) => Object.values(taxonomies)
+  .some((items) => items.length > 0);
+
+const Taxonomies: React.FC<TaxonomiesProps> = ({
+  collection,
+  taxonomies,
+  as: TaxonomyComponent,
+}) => {
+  const { t } = useTranslation();
+
+  if (taxonomies?.[collection]?.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="textsm content-links">
+      <div className="flex no-wrap mb-2">
+        <div className="mr-1 font-bold">{ t(`taxonomy_label_${collection}`, {}, collection) }:</div>
+        <div className="w-full">
+          { taxonomies[collection].map((taxonomy) => (
+            <span className="mr-1" key={ taxonomy.uri }>
+              {
+                TaxonomyComponent
+                  ? <TaxonomyComponent { ...taxonomy } />
+                  : <Link href={ taxonomy.uri }>{ taxonomy.title }</Link>
+              }
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ContentLayout: React.FC<ContentLayoutProps> = ({
   page: {
@@ -41,6 +83,17 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
               assetBaseUri={ contentItem.assetsBaseUri }
               image={ contentItem.metadata?.image }
             />
+
+            {
+              hasTaxonomies(taxonomies)
+                ? (
+                  <ProseContainer className="mt-20">
+                    <Taxonomies taxonomies={ taxonomies } collection="tags" as={ Tag } />
+                    <Taxonomies taxonomies={ taxonomies } collection="categories" />
+                  </ProseContainer>
+                )
+                : null
+            }
           </Container>
         </Section.Section>
       ) }

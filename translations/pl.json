@@ -6,5 +6,7 @@
   "pagination_next_posts": "Starsze posty",
   "pagination_previous_posts": "Nowsze posty",
   "related_content_label": "Odkryj podobne treści",
-  "nav_toggle_label": "Pokaż/ukryj menu"
+  "nav_toggle_label": "Pokaż/ukryj menu",
+  "taxonomy_label_tags": "Tagi",
+  "taxonomy_label_categories": "Kategorie"
 }
