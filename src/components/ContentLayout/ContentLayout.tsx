@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { Component, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import ArticleContent from '@/components/ArticleContent';
 import ArticleList from '@/components/ArticleList';
 import Container from '@/components/Container';
