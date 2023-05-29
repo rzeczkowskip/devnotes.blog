@@ -2,6 +2,9 @@
 title: Cloudflare Pages - deploy przez GitHub Actions
 date: 2023-05-25
 draft: true
+summary: >-
+    Przejęcie kontroli nad procesem publikowania strony na Cloudflare Pages. O konfigurowaniu akcji oraz budowaniu i
+    publikowaniu strony z poziomu GitHub Actions.
 ---
 
 Cloudflare Pages umożliwia utworzenie strony bezpośrednio z repozytorium (GitHub, GitLab). Sprawdzałem, działa dobrze,
