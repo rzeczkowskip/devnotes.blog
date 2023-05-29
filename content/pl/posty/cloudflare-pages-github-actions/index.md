@@ -4,11 +4,16 @@ date: 2023-05-25
 draft: true
 ---
 
-Cloudflare Pages umożliwia utworzenie strony bezpośrednio z repozytorium (GitHub, GitLab). Sprawdzałem, działa dobrze, ale... No właśnie, ale. Postanowiłem trzymać kilka stron w jednym repozytorium. W takim przypadku, integracja po stronie Cloudflare nie daje rady.
+Cloudflare Pages umożliwia utworzenie strony bezpośrednio z repozytorium (GitHub, GitLab). Sprawdzałem, działa dobrze,
+ale... No właśnie, ale. Postanowiłem trzymać kilka stron w jednym repozytorium. W takim przypadku, integracja po stronie
+Cloudflare nie daje rady.
 
-> Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, Direct Uploads can be used to upload a monorepo as separate Pages projects from your own computer.
+> Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab
+> integration to build multiple sites from the same repository. However, Direct Uploads can be used to upload a monorepo
+> as separate Pages projects from your own computer.
 
-Pozostało mi przejęcie kontroli nad procesem budowania i wypychania strony do CF. Wykorzystałem do tego GitHub Actions, a konkretnie akcję [cloudflare/pages-action](https://github.com/cloudflare/pages-action).
+Pozostało mi przejęcie kontroli nad procesem budowania i wypychania strony do CF. Wykorzystałem do tego GitHub Actions,
+a konkretnie akcję [cloudflare/pages-action](https://github.com/cloudflare/pages-action).
 
 Proces wygląda następująco:
 
@@ -16,13 +21,15 @@ Proces wygląda następująco:
 2. Wysyłamy do Cloudflare
 3. Profit
 
-Proste prawda? Nie ważne, czy korzystasz z Next.js, Hugo, czy innego StaticSiteGeneratorUltimate, najważniejszy jest output.
+Proste prawda? Nie ważne, czy korzystasz z Next.js, Hugo, czy innego StaticSiteGeneratorUltimate, najważniejszy jest
+output.
 
 # Konfiguracja
 
 ## Strona w Cloudflare Pages
 
-Utwórz nową stronę (Pages) w panelu Cloudflare. Zamiast wybierać opcję "Connect to Git", musisz skorzystać z "direct upload". W końcu przejmujesz kontrolę nad całym procesem.
+Utwórz nową stronę (Pages) w panelu Cloudflare. Zamiast wybierać opcję "Connect to Git", musisz skorzystać z "direct
+upload". W końcu przejmujesz kontrolę nad całym procesem.
 
 ## Klucz API i Account ID Cloudflare
 
@@ -62,9 +69,12 @@ jobs:
           directory: out
 ```
 
-Prościej się nie da. Kiedyś trzeba było ręcznie konfigurować `@cloudflare/wrangler`, jednak teraz całość sprowadza się do powyższej konfiguracji.
+Prościej się nie da. Kiedyś trzeba było ręcznie konfigurować `@cloudflare/wrangler`, jednak teraz całość sprowadza się
+do powyższej konfiguracji.
 
-Przekazane do akcji zmienne `apiToken` oraz `accountId` to są klucze utworzone w poprzednich krokach. `projectName` to nazwa projektu w panelu Cloudflare (nazwa, nie żadne ID). `directory` to katalog, w którym lądują zbudowane pliki strony do wypchnięcia (w tym przykładzie jest to `out`).
+Przekazane do akcji zmienne `apiToken` oraz `accountId` to są klucze utworzone w poprzednich krokach. `projectName` to
+nazwa projektu w panelu Cloudflare (nazwa, nie żadne ID). `directory` to katalog, w którym lądują zbudowane pliki strony
+do wypchnięcia (w tym przykładzie jest to `out`).
 
 ```yaml
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -74,4 +84,6 @@ Przekazane do akcji zmienne `apiToken` oraz `accountId` to są klucze utworzone 
 ```
 
 > [!info] Przykład z produkcji
-> Ten blog, w dniu pisania wpisu, jest obsługiwany przez tą akcję. Jeżeli chcesz zobaczyć jak to działa, zerknij na [workflow deploy.yml](https://github.com/rzeczkowskip/devnotes.blog/blob/main/.github/workflows/deploy.yml) w repozytorium DevNotes.
+> Ten blog, w dniu pisania wpisu, jest obsługiwany przez tą akcję. Jeżeli chcesz zobaczyć jak to działa, zerknij
+> na [workflow deploy.yml](https://github.com/rzeczkowskip/devnotes.blog/blob/main/.github/workflows/deploy.yml) w
+> repozytorium DevNotes.
