@@ -16,7 +16,7 @@ Proces wygląda następująco:
 2. Wysyłamy do Cloudflare
 3. Profit
 
-Proste prawda? Pominiemy krok budowania. Nie ważne, czy korzystasz z Next.js, Hugo czy innego StaticSiteGeneratorUltimate, najważniejszy jest output. W dodatku, trzymając kilka stron w jednym repozytorium, "build process" może się różnić od domyślnego.
+Proste prawda? Nie ważne, czy korzystasz z Next.js, Hugo, czy innego StaticSiteGeneratorUltimate, najważniejszy jest output.
 
 # Konfiguracja
 
@@ -39,7 +39,7 @@ Aby zacząć, potrzebujesz dwóch kluczy z Cloudflare: API Token oraz Account ID
 
 Oba klucze zapisz jako sekrety w repozytorium.
 
-## Akcja
+# Akcja
 
 ```yaml
 name: Deploy
