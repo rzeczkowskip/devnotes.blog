@@ -20,10 +20,6 @@ jobs:
           - projectName: devnotes-blog-pl
             site: default
 
-    permissions:
-      contents: read
-      deployments: write
-
     steps:
       - uses: actions/checkout@v3
 
@@ -63,4 +59,3 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ matrix.projectName }}
           directory: out
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
