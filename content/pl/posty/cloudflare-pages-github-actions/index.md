@@ -1,7 +1,6 @@
 ---
 title: Cloudflare Pages - deploy przez GitHub Actions
-date: 2023-05-25
-draft: true
+date: 2023-06-04
 categories: [tools]
 tags: [github actions, cloudflare, static site, site generators, ci/cd]
 summary: >-
