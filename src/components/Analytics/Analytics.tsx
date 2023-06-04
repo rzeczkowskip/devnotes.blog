@@ -5,8 +5,9 @@ import { Site } from '@/types/SiteConfig';
 
 const Analytics = () => {
   const { params: { cfAnalyticsId } = {} } = container.get<Site>('params.site_config');
+  const isProd = container.get('params.is_prod');
 
-  if (!cfAnalyticsId) {
+  if (!isProd || !cfAnalyticsId) {
     return null;
   }
 
