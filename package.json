@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "APP_ENV=dev next dev",
     "build": "next build",
     "postbuild": "cd content && copyfiles --up 1 --exclude \"**/*.md\" \"pl/**/*\" \"../out\"",
     "lint": "next lint",
