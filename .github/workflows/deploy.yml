@@ -25,20 +25,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            $(yarn cache dir)
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('app/**', 'assets/**', '**.[jt]s', '**.[jt]sx', '**.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn-lock.json') }}-
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install
@@ -48,6 +39,12 @@ jobs:
         if: ${{ github.ref_name != 'main' }}
         run: |
           echo "appEnv=dev" >> "$GITHUB_ENV";
+
+      - name: Setup build cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('app/**', 'assets/**', '**.[jt]s', '**.[jt]sx', '**.json') }}
 
       - name: Build
         run: yarn build
