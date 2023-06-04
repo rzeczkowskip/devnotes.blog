@@ -20,10 +20,10 @@ const RootLayout = async ({
 }: {
   children: React.ReactNode,
 }) => {
-  const { title, nav } = container.get<Site>('params.site_config');
+  const { title, nav, locale } = container.get<Site>('params.site_config');
 
   return (
-    <html lang="en">
+    <html lang={ locale }>
     <body className={ `${mulish.className} bg-slate-50 text-slate-900` }>
       <Header title={ title } nav={ nav } />
         {children}

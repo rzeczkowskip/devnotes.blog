@@ -1471,6 +1471,11 @@
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
 
+"@types/copyfiles@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@types/copyfiles/-/copyfiles-2.4.1.tgz#b0119c781457910115454bacb35f59e91145e7ec"
+  integrity sha512-v2JLxXeWUeWYWVo3/tlpxqiDCvgewSvf58HHjHYNaCi0lAthhRQ7jz8InxGzJsrMbWmWkYaxBO+BEtKjBU4ebw==
+
 "@types/debug@^4.0.0":
   version "4.1.7"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"

@@ -1,4 +1,12 @@
 {
   "not_found_title": "Not found",
-  "not_found_subtitle": "I've no idea where you got that link from, but something went wrong and nothing's here..."
+  "not_found_subtitle": "I've no idea where you got that link from, but something went wrong and nothing's here...",
+  "pagination_next": "Next page",
+  "pagination_previous": "Previous page",
+  "pagination_next_posts": "Older posts",
+  "pagination_previous_posts": "Newer posts",
+  "related_content_label": "Discover similar content",
+  "nav_toggle_label": "Toggle menu",
+  "taxonomy_label_tags": "Tags",
+  "taxonomy_label_categories": "Categories"
 }

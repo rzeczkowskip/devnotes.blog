@@ -18,7 +18,9 @@ jobs:
       matrix:
         include:
           - projectName: devnotes-blog-pl
-            site: default
+            site: pl
+          - projectName: devnotes-blog-en
+            site: en
 
     steps:
       - uses: actions/checkout@v3

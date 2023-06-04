@@ -23,11 +23,17 @@ const container = new Container();
 
 export default container;
 
-const siteCode = process.env.SITE || 'default';
-const siteConfig = sitesConfig.sites[siteCode];
-
 container.raw('params.app_env', process.env.APP_ENV || 'prod');
-container.raw('params.site_config', siteConfig);
+container.set('params.site_config', () => {
+  const siteCode = process.env.SITE;
+
+  if (!siteCode || !(siteCode in sitesConfig.sites)) {
+    throw new Error(`Invalid site provided "${siteCode}", allowed sites are ${Object.keys(sitesConfig.sites).join(', ')}`);
+  }
+
+  return sitesConfig.sites[siteCode];
+});
+
 container.set('params.content_dir', (c) => {
   const { contentDir } = c.get('params.site_config');
   return path.normalize(path.join(process.cwd(), contentDir));
