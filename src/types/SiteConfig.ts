@@ -12,7 +12,7 @@ export type Pagination = {
 export type Site = {
   title: string,
   baseUrl: string,
-  contentDir?: string,
+  contentDir: string,
   locale?: string,
   translations?: Record<string, string>,
   nav?: NavLink[],
