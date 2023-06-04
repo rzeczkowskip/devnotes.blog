@@ -51,7 +51,7 @@ const en: Site = {
 
 export default {
   sites: {
-    default: pl,
+    pl,
     en,
   },
 } as SiteConfig;
