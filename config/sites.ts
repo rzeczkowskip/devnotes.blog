@@ -37,6 +37,8 @@ const en: Site = {
   translations: enTranslations,
   nav: [
     { url: '/', label: 'Blog' },
+    { url: '/categories', label: 'Categories' },
+    { url: '/tags', label: 'Tags' },
     { url: '/about-me', label: 'About me' },
   ],
   taxonomyCollections: {
