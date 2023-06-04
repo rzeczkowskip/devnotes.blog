@@ -19,6 +19,7 @@ const getCanonicalUrl = (uri: string, baseUrl: string) => (uri.includes('://') ?
 
 const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator => {
   const { baseUrl, title: siteTitle } = container.get<Site>('params.site_config');
+  const isProd = container.get('params.is_prod');
 
   return async ({ params } = {}): Promise<Metadata> => {
     const contentItem = getContentItem(uri || params?.path || '');
@@ -27,7 +28,7 @@ const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator =
     return {
       title: title && title !== siteTitle ? `${title} | ${siteTitle}` : siteTitle,
       description: !contentItem ? undefined : (contentItem?.metadata?.summary || siteTitle),
-      robots: !contentItem || contentItem.draft ? 'noindex,nofollow' : undefined,
+      robots: !isProd || !contentItem || contentItem.draft ? 'noindex,nofollow' : undefined,
       alternates: {
         canonical: contentItem ? getCanonicalUrl(contentItem.canonicalUri, baseUrl) : undefined,
       },
