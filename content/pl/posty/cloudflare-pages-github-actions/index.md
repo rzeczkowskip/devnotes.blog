@@ -81,6 +81,4 @@ directory: out
 ```
 
 > [!info] Przykład z produkcji
-> Ten blog, w dniu pisania wpisu, jest obsługiwany przez tą akcję. Jeżeli chcesz zobaczyć jak to działa, zerknij
-> na [workflow deploy.yml](https://github.com/rzeczkowskip/devnotes.blog/blob/main/.github/workflows/deploy.yml) w
-> repozytorium DevNotes.
+> Ten blog, w dniu pisania wpisu, jest obsługiwany przez powyższą akcję. Jeżeli chcesz zobaczyć jak to działa, zerknij na [workflow deploy.yml](https://github.com/rzeczkowskip/devnotes.blog/blob/main/.github/workflows/deploy.yml) w repozytorium DevNotes.
