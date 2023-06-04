@@ -24,6 +24,7 @@ const container = new Container();
 export default container;
 
 container.raw('params.app_env', process.env.APP_ENV || 'prod');
+container.set('params.is_prod', (c) => c.get('params.app_env') === 'prod');
 container.set('params.site_config', () => {
   const siteCode = process.env.SITE;
 
