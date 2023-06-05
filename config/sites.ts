@@ -49,6 +49,9 @@ const en: Site = {
     pageUrlPart: 'page',
     itemsPerPage,
   },
+  params: {
+    cfAnalyticsId: 'd583c621836d426bb5d1282ce1791c14',
+  },
 };
 
 export default {

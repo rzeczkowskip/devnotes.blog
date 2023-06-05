@@ -24,6 +24,7 @@ const container = new Container();
 export default container;
 
 container.raw('params.app_env', process.env.APP_ENV || 'prod');
+container.set('params.is_prod', (c) => c.get('params.app_env') === 'prod');
 container.set('params.site_config', () => {
   const siteCode = process.env.SITE;
 
@@ -32,6 +33,12 @@ container.set('params.site_config', () => {
   }
 
   return sitesConfig.sites[siteCode];
+});
+
+container.set('params.lang_base_urls', () => {
+  const entries = Object.entries(sitesConfig.sites).map(([site, config]) => [site, config.baseUrl]);
+
+  return Object.fromEntries(entries);
 });
 
 container.set('params.content_dir', (c) => {

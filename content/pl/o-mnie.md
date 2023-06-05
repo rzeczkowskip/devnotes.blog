@@ -2,6 +2,8 @@
 title: "Dev od notatek"
 subtitle: Czyli kto to wszystko napisał...
 collection: pages
+langs:
+    en: /about-me
 ---
 
 # Cześć!
