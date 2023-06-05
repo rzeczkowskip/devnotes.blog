@@ -37,6 +37,7 @@ export default class RelatedContent {
     scores.sort((a, b) => b.score - a.score);
 
     return scores
+      .filter(({ score, item: scoredItem }) => score > 0 || scoredItem.collection === item.collection)
       .slice(0, count)
       .map((score) => score.item);
   }
