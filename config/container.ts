@@ -35,6 +35,12 @@ container.set('params.site_config', () => {
   return sitesConfig.sites[siteCode];
 });
 
+container.set('params.lang_base_urls', () => {
+  const entries = Object.entries(sitesConfig.sites).map(([site, config]) => [site, config.baseUrl]);
+
+  return Object.fromEntries(entries);
+});
+
 container.set('params.content_dir', (c) => {
   const { contentDir } = c.get('params.site_config');
   return path.normalize(path.join(process.cwd(), contentDir));
