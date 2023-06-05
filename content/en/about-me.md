@@ -1,16 +1,16 @@
 ---
 title: "Dev of notes"
-subtitle: The one who wrote it all...
+subtitle: The one who writes it...
 collection: pages
 langs:
-    pl: https://notatkideva.pl/o-mnie
+    pl: /o-mnie
 ---
 
 # Hi!
     
 I'm Piotr, nice to meet You.
 
-![Dev od notatek](me.jpg "Dev taking notes")
+![Dev of notes](me.jpg "Dev of notes")
                                 
 I'm a software developer. My day-to-day job is about "delivering" solutions or designing them, for someone else to deliver. 
                                                                                      
