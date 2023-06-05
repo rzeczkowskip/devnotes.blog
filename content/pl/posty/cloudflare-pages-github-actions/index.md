@@ -6,6 +6,8 @@ tags: [github actions, cloudflare, static site, site generators, ci/cd]
 summary: >-
     Przejęcie kontroli nad procesem publikowania strony na Cloudflare Pages. O konfigurowaniu akcji oraz budowaniu i
     publikowaniu strony z poziomu GitHub Actions.
+langs:
+    en: /posts/cloudflare-pages-github-actions
 ---
 
 Cloudflare Pages umożliwia utworzenie strony bezpośrednio z repozytorium (GitHub, GitLab). Sprawdzałem, działa dobrze, ale... No właśnie, ale. Postanowiłem trzymać kilka stron w jednym repozytorium. W takim przypadku, integracja po stronie Cloudflare nie daje rady.
