@@ -1,18 +1,23 @@
 import React, { PropsWithChildren } from 'react';
 
 type ContainerProps = PropsWithChildren & {
-  size?: 'small' | 'regular' | 'full',
-  className?: string,
+  size?: 'small' | 'regular' | 'full';
+  className?: string;
 };
 
-const Container: React.FC<ContainerProps> = ({ children, className, size = 'regular' }) => (
-  <div className={ `
+const Container: React.FC<ContainerProps> = ({
+  children,
+  className,
+  size = 'regular',
+}) => (
+  <div
+    className={`
     ${size === 'small' ? 'container lg:container-lg' : ''} 
     ${size === 'regular' ? 'container' : ''} 
     mx-auto px-4 ${className}
-    ` }
+    `}
   >
-    { children }
+    {children}
   </div>
 );
 

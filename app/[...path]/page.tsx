@@ -11,11 +11,11 @@ import ContentRepository from '@/services/content/ContentRepository';
 export const generateMetadata = getMetadataGenerator();
 
 type PageParams = {
-  path: string[],
+  path: string[];
 };
 
 type PageProps = {
-  params?: PageParams,
+  params?: PageParams;
 };
 
 const isAssetPath = (path: string[]): boolean => {
@@ -35,22 +35,24 @@ const Page = async (props: PageProps) => {
     const contentLoader = container.get<Content>('content');
     const page = contentLoader.getPage(path);
 
-    return (<ContentLayout page={page}/>);
+    return <ContentLayout page={page} />;
   } catch (e) {
     if (e instanceof Error && e.message.endsWith(' not found.')) {
-      return isAssetPath(path) ? redirect(`/content-asset/${path.join('/')}`) : notFound();
+      return isAssetPath(path)
+        ? redirect(`/content-asset/${path.join('/')}`)
+        : notFound();
     }
 
     throw e;
   }
 };
 
-export const generateStaticParams = async (): Promise<PageParams[]> => container
-  .get<ContentRepository>('content.repository')
-  .uris
-  .filter((uri) => uri !== '/')
-  .map((uri) => ({
-    path: uri.replace(/^\//, '').split('/'),
-  }));
+export const generateStaticParams = async (): Promise<PageParams[]> =>
+  container
+    .get<ContentRepository>('content.repository')
+    .uris.filter((uri) => uri !== '/')
+    .map((uri) => ({
+      path: uri.replace(/^\//, '').split('/'),
+    }));
 
 export default Page;

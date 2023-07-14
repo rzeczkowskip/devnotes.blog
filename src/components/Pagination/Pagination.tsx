@@ -4,7 +4,7 @@ import useTranslation from '@/hooks/useTranslation';
 import { Pagination as ContentPagination } from '@/types/Content';
 
 type PaginationProps = ContentPagination & {
-  className?: string,
+  className?: string;
 };
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -14,23 +14,31 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const previousText = t(`pagination_previous_${collection}`, {}, t('pagination_previous'));
+  const previousText = t(
+    `pagination_previous_${collection}`,
+    {},
+    t('pagination_previous'),
+  );
   const nextText = t(`pagination_next_${collection}`, {}, t('pagination_next'));
 
   return (
-      <nav className={ `text-sm sm:text-base flex justify-between items-center content-links-reverse ${className || ''}` }>
-        { links?.previous && (
-          <PaginationLink href={ links.previous } className="ml-0 mr-auto">
-            <span aria-hidden="true">←</span> { previousText }
-          </PaginationLink>
-        ) }
+    <nav
+      className={`text-sm sm:text-base flex justify-between items-center content-links-reverse ${
+        className || ''
+      }`}
+    >
+      {links?.previous && (
+        <PaginationLink href={links.previous} className="ml-0 mr-auto">
+          <span aria-hidden="true">←</span> {previousText}
+        </PaginationLink>
+      )}
 
-        { links?.next && (
-          <PaginationLink href={ links.next } className="ml-auto">
-            { nextText } <span aria-hidden="true">→</span>
-          </PaginationLink>
-        ) }
-      </nav>
+      {links?.next && (
+        <PaginationLink href={links.next} className="ml-auto">
+          {nextText} <span aria-hidden="true">→</span>
+        </PaginationLink>
+      )}
+    </nav>
   );
 };
 

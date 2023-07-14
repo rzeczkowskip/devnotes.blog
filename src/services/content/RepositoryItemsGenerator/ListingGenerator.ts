@@ -8,10 +8,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
 
   readonly #taxonomies: string[];
 
-  constructor(
-    config: Pagination,
-    taxonomies: string[],
-  ) {
+  constructor(config: Pagination, taxonomies: string[]) {
     this.#config = config;
     this.#taxonomies = taxonomies;
   }
@@ -31,9 +28,10 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
         ...(item.list || {}),
       };
 
-      const itemsPerPage = listConfig.itemsPerPage === undefined
-        ? this.#config.itemsPerPage
-        : listConfig.itemsPerPage;
+      const itemsPerPage =
+        listConfig.itemsPerPage === undefined
+          ? this.#config.itemsPerPage
+          : listConfig.itemsPerPage;
 
       const pageCount = this.getPageCount(
         repository,
@@ -63,7 +61,9 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
               hasPrevious,
               links: {
                 next: hasNext ? this.getPageUrl(item.uri, i + 1) : undefined,
-                previous: hasPrevious ? this.getPageUrl(item.uri, i - 1) : undefined,
+                previous: hasPrevious
+                  ? this.getPageUrl(item.uri, i - 1)
+                  : undefined,
               },
             },
           } as ContentItem);
@@ -107,6 +107,9 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
   }
 
   private getPageUrl(prefix: string, page: number): string {
-    return `${prefix}/${this.#config.pageUrlPart}/${page}`.replace(/\/{2,}/, '/');
+    return `${prefix}/${this.#config.pageUrlPart}/${page}`.replace(
+      /\/{2,}/,
+      '/',
+    );
   }
 }

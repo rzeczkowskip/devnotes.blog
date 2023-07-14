@@ -15,22 +15,18 @@ const mulish = Mulish({
   preload: true,
 });
 
-const RootLayout = async ({
-  children,
-}: {
-  children: React.ReactNode,
-}) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const { title, nav, locale } = container.get<Site>('params.site_config');
 
   return (
-    <html lang={ locale }>
-    <body className={ `${mulish.className} bg-slate-50 text-slate-900` }>
-      <Header title={ title } nav={ nav } />
+    <html lang={locale}>
+      <body className={`${mulish.className} bg-slate-50 text-slate-900`}>
+        <Header title={title} nav={nav} />
         {children}
-      <Footer />
+        <Footer />
 
-      <Analytics />
-    </body>
+        <Analytics />
+      </body>
     </html>
   );
 };

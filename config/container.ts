@@ -29,14 +29,21 @@ container.set('params.site_config', () => {
   const siteCode = process.env.SITE;
 
   if (!siteCode || !(siteCode in sitesConfig.sites)) {
-    throw new Error(`Invalid site provided "${siteCode}", allowed sites are ${Object.keys(sitesConfig.sites).join(', ')}`);
+    throw new Error(
+      `Invalid site provided "${siteCode}", allowed sites are ${Object.keys(
+        sitesConfig.sites,
+      ).join(', ')}`,
+    );
   }
 
   return sitesConfig.sites[siteCode];
 });
 
 container.set('params.lang_base_urls', () => {
-  const entries = Object.entries(sitesConfig.sites).map(([site, config]) => [site, config.baseUrl]);
+  const entries = Object.entries(sitesConfig.sites).map(([site, config]) => [
+    site,
+    config.baseUrl,
+  ]);
 
   return Object.fromEntries(entries);
 });
@@ -47,7 +54,8 @@ container.set('params.content_dir', (c) => {
 });
 
 container.set('translator', (c) => {
-  const { locale = 'en', translations = {} } = c.get<Site>('params.site_config');
+  const { locale = 'en', translations = {} } =
+    c.get<Site>('params.site_config');
   return new Translator(locale, translations);
 });
 
@@ -63,7 +71,10 @@ container.set('content.repository', (c) => {
   return factory.createRepository();
 });
 
-container.set('content.loader', (c) => new ContentLoader(c.get('params.content_dir')));
+container.set(
+  'content.loader',
+  (c) => new ContentLoader(c.get('params.content_dir')),
+);
 container.set('content.processor', (c) => {
   const { taxonomyCollections } = c.get<Site>('params.site_config');
 
@@ -76,9 +87,10 @@ container.set('content.processor', (c) => {
 
 container.set('content.slug_generator', () => new SlugGenerator());
 
-container.set('content.repository_generator.taxonomy', (c) => new TaxonomyGenerator(
-  c.get<ContentProcessor>('content.processor'),
-));
+container.set(
+  'content.repository_generator.taxonomy',
+  (c) => new TaxonomyGenerator(c.get<ContentProcessor>('content.processor')),
+);
 
 container.set('content.repository_generator.listing', (c) => {
   const { taxonomyCollections, pagination } = c.get<Site>('params.site_config');
@@ -87,28 +99,48 @@ container.set('content.repository_generator.listing', (c) => {
     return new NullGenerator();
   }
 
-  return new ListingGenerator(pagination, taxonomyCollections ? Object.keys(taxonomyCollections) : []);
+  return new ListingGenerator(
+    pagination,
+    taxonomyCollections ? Object.keys(taxonomyCollections) : [],
+  );
 });
 
-container.set('content.repository.generators', (c) => [
-  c.get<TaxonomyGenerator>('content.repository_generator.taxonomy'),
-  c.get<ListingGenerator>('content.repository_generator.listing'),
-] as RepositoryItemsGenerator[]);
+container.set(
+  'content.repository.generators',
+  (c) =>
+    [
+      c.get<TaxonomyGenerator>('content.repository_generator.taxonomy'),
+      c.get<ListingGenerator>('content.repository_generator.listing'),
+    ] as RepositoryItemsGenerator[],
+);
 
 container.set(
   'content.repository_preprocessor.exclude_drafts',
   (c) => new ExcludeDraftsProcessor(c.get('params.app_env') !== 'dev'),
 );
 
-container.set('content.repository_preprocessor.sort', () => new SortPostprocessor());
+container.set(
+  'content.repository_preprocessor.sort',
+  () => new SortPostprocessor(),
+);
 
-container.set('content.repository.preprocessors', (c) => [
-  c.get<ExcludeDraftsProcessor>('content.repository_preprocessor.exclude_drafts'),
-] as RepositoryItemsProcessor[]);
+container.set(
+  'content.repository.preprocessors',
+  (c) =>
+    [
+      c.get<ExcludeDraftsProcessor>(
+        'content.repository_preprocessor.exclude_drafts',
+      ),
+    ] as RepositoryItemsProcessor[],
+);
 
-container.set('content.repository.postprocessors', (c) => [
-  c.get<SortPostprocessor>('content.repository_preprocessor.sort'),
-] as RepositoryItemsProcessor[]);
+container.set(
+  'content.repository.postprocessors',
+  (c) =>
+    [
+      c.get<SortPostprocessor>('content.repository_preprocessor.sort'),
+    ] as RepositoryItemsProcessor[],
+);
 
 container.set('content', (c) => {
   const { taxonomyCollections } = c.get<Site>('params.site_config');
@@ -120,7 +152,11 @@ container.set('content', (c) => {
   );
 });
 
-container.set('content.related_content_generator', (c) => new RelatedContent(
-  c.get<ContentRepository>('content.repository'),
-  relatedContent,
-));
+container.set(
+  'content.related_content_generator',
+  (c) =>
+    new RelatedContent(
+      c.get<ContentRepository>('content.repository'),
+      relatedContent,
+    ),
+);

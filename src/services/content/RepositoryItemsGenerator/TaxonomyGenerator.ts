@@ -20,13 +20,21 @@ export default class TaxonomyGenerator implements RepositoryItemsGenerator {
     return taxonomies;
   }
 
-  private getMissingTaxonomiesFromItem(item: ContentItem, repository: ContentRepository): ContentItem[] {
+  private getMissingTaxonomiesFromItem(
+    item: ContentItem,
+    repository: ContentRepository,
+  ): ContentItem[] {
     const taxonomies: ContentItem[] = [];
 
     Object.entries(item.taxonomies).forEach(([collection, values]) => {
-      const missingValues = this.filterOutExistingTaxonomies(values, repository);
-      const missingContentItems = Object.entries(missingValues)
-        .map(([uri, title]) => this.createTaxonomyContentItem(uri, title, collection));
+      const missingValues = this.filterOutExistingTaxonomies(
+        values,
+        repository,
+      );
+      const missingContentItems = Object.entries(missingValues).map(
+        ([uri, title]) =>
+          this.createTaxonomyContentItem(uri, title, collection),
+      );
 
       taxonomies.push(...missingContentItems);
     });
@@ -38,12 +46,18 @@ export default class TaxonomyGenerator implements RepositoryItemsGenerator {
     values: Record<string, string>,
     repository: ContentRepository,
   ): Record<string, string> {
-    const filteredEntries = Object.entries(values).filter(([uri]) => !repository.has(uri));
+    const filteredEntries = Object.entries(values).filter(
+      ([uri]) => !repository.has(uri),
+    );
 
     return Object.fromEntries(filteredEntries);
   }
 
-  private createTaxonomyContentItem(path: string, title: string, collection: string): ContentItem {
+  private createTaxonomyContentItem(
+    path: string,
+    title: string,
+    collection: string,
+  ): ContentItem {
     return this.#contentProcessor.process({
       path,
       content: `---

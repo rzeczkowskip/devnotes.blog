@@ -8,8 +8,8 @@ import useOnClickOutside from '@/hooks/useOnClickOutside';
 import { NavLink } from '@/types/SiteConfig';
 
 type NavProps = {
-  items: NavLink[]
-  toggleAriaLabel?: string,
+  items: NavLink[];
+  toggleAriaLabel?: string;
 };
 
 const Nav: React.FC<NavProps> = ({ items, toggleAriaLabel }) => {
@@ -32,10 +32,16 @@ const Nav: React.FC<NavProps> = ({ items, toggleAriaLabel }) => {
   useEffect(closeNav, [pathname]);
 
   return (
-    <nav className="flex items-center" ref={ ref } id="nav" aria-hidden={ isOpen }>
-      <NavToggle toggle={ toggleNav } className="lg:hidden" ariaLabel={ toggleAriaLabel } ariaControls={ 'nav' } />
+    <nav className="flex items-center" ref={ref} id="nav" aria-hidden={isOpen}>
+      <NavToggle
+        toggle={toggleNav}
+        className="lg:hidden"
+        ariaLabel={toggleAriaLabel}
+        ariaControls={'nav'}
+      />
 
-      <div className={ `
+      <div
+        className={`
         font-semibold
         flex flex-col
         lg:justify-end lg:items-center
@@ -49,25 +55,25 @@ const Nav: React.FC<NavProps> = ({ items, toggleAriaLabel }) => {
         bg-white lg:bg-transparent
         transition-transform duration-300 ease-in-out
         h-screen lg:h-auto
-      ` }>
-
+      `}
+      >
         <NavToggle
-          toggle={ toggleNav }
-          isOpen={ true }
+          toggle={toggleNav}
+          isOpen={true}
           className="lg:hidden ml-auto mr-0 mb-4"
-          ariaLabel={ toggleAriaLabel }
-          ariaControls={ 'nav' }
+          ariaLabel={toggleAriaLabel}
+          ariaControls={'nav'}
         />
 
-        { items.map(({ label, url }) => (
+        {items.map(({ label, url }) => (
           <Link
-            key={ url }
-            href={ url }
-            className={ 'block p-4 hover:underline hover:text-lead-500' }
+            key={url}
+            href={url}
+            className={'block p-4 hover:underline hover:text-lead-500'}
           >
-            { label }
+            {label}
           </Link>
-        )) }
+        ))}
       </div>
     </nav>
   );

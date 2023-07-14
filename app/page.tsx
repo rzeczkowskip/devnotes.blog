@@ -11,13 +11,12 @@ const Homepage = async () => {
   const contentLoader = container.get<Content>('content');
   const { title } = container.get<Site>('params.site_config');
 
-  const page = contentLoader.getPageWithFallback('/', contentLoader.getDummyPage(
-    'pages',
-    title,
+  const page = contentLoader.getPageWithFallback(
     '/',
-  ));
+    contentLoader.getDummyPage('pages', title, '/'),
+  );
 
-  return (<ContentLayout page={ page } />);
+  return <ContentLayout page={page} />;
 };
 
 export default Homepage;

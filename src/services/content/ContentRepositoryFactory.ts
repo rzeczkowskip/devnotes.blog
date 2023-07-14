@@ -32,7 +32,9 @@ export default class ContentRepositoryFactory {
 
   public createRepository(): ContentRepository {
     const loadedContent = this.#loader.loadContent();
-    const items = loadedContent.map((item) => this.#contentProcessor.process(item));
+    const items = loadedContent.map((item) =>
+      this.#contentProcessor.process(item),
+    );
 
     const preprocessedItems = this.applyProcessors(this.#preprocessors, items);
 
@@ -42,12 +44,18 @@ export default class ContentRepositoryFactory {
       tempRepository.add(...generator.generate(tempRepository));
     });
 
-    const postprocessedItems = this.applyProcessors(this.#postprocessors, tempRepository.items);
+    const postprocessedItems = this.applyProcessors(
+      this.#postprocessors,
+      tempRepository.items,
+    );
 
     return new ContentRepository(postprocessedItems);
   }
 
-  private applyProcessors(processors: RepositoryItemsProcessor[], initialItems: ContentItem[]): ContentItem[] {
+  private applyProcessors(
+    processors: RepositoryItemsProcessor[],
+    initialItems: ContentItem[],
+  ): ContentItem[] {
     return processors.reduce(
       (previous, preprocessor) => preprocessor.preprocess(previous),
       initialItems,

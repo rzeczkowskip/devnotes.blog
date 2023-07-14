@@ -18,9 +18,14 @@ const NotFound = () => {
 
   return (
     <>
-      <ContentLayout page={ page }>
+      <ContentLayout page={page}>
         <Section.Section paddingY="bottom">
-          <Image src={ image404 } alt={ title } priority className="rounded mx-auto" />
+          <Image
+            src={image404}
+            alt={title}
+            priority
+            className="rounded mx-auto"
+          />
         </Section.Section>
       </ContentLayout>
     </>

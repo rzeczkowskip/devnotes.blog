@@ -11,12 +11,12 @@ const HeroDetails: React.FC<HeroDetailsProps> = ({ date, links }) => {
 
   return (
     <Container className="mt-4 text-sm uppercase font-extrabold">
-      { date && (<ArticleDate date={ date } className="font-semibold" />) }
+      {date && <ArticleDate date={date} className="font-semibold" />}
 
-      { links?.map(({ title, uri }) => (
-        <Fragment key={ uri }>
+      {links?.map(({ title, uri }) => (
+        <Fragment key={uri}>
           &nbsp;&bull;&nbsp;
-          <Link href={ uri }>{ title }</Link>
+          <Link href={uri}>{title}</Link>
         </Fragment>
       ))}
     </Container>

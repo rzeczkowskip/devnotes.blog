@@ -26,7 +26,9 @@ export default class ContentLoader {
 
   private loadRawContent(relativeFilePath: string): LoadedContent {
     const absolutePath = path.join(this.#contentDir, relativeFilePath);
-    const content = fs.readFileSync(absolutePath, { encoding: 'utf-8' }).toString();
+    const content = fs
+      .readFileSync(absolutePath, { encoding: 'utf-8' })
+      .toString();
 
     return {
       path: relativeFilePath,

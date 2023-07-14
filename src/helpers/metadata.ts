@@ -5,7 +5,9 @@ import Content from '@/services/content/Content';
 import { ContentItem } from '@/types/Content';
 import { Site } from '@/types/SiteConfig';
 
-type Generator = (params: { params?: { path?: string | string[] } }) => Promise<Metadata>;
+type Generator = (params: {
+  params?: { path?: string | string[] };
+}) => Promise<Metadata>;
 
 const getContentItem = (uri: string | string[]): ContentItem | undefined => {
   try {
@@ -16,9 +18,12 @@ const getContentItem = (uri: string | string[]): ContentItem | undefined => {
   }
 };
 
-const getCanonicalUrl = (uri: string, baseUrl: string) => (uri.includes('://') ? uri : new URL(uri, baseUrl).toString());
+const getCanonicalUrl = (uri: string, baseUrl: string) =>
+  uri.includes('://') ? uri : new URL(uri, baseUrl).toString();
 
-const getLangUrls = (langsConfig?: Record<string, unknown>): AlternateURLs['languages'] => {
+const getLangUrls = (
+  langsConfig?: Record<string, unknown>,
+): AlternateURLs['languages'] => {
   if (!langsConfig || typeof langsConfig !== 'object') {
     return undefined;
   }
@@ -43,8 +48,12 @@ const getLangUrls = (langsConfig?: Record<string, unknown>): AlternateURLs['lang
   return Object.fromEntries(entries);
 };
 
-const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator => {
-  const { baseUrl, title: siteTitle } = container.get<Site>('params.site_config');
+const getMetadataGenerator = (
+  fallbackTitle?: string,
+  uri?: string,
+): Generator => {
+  const { baseUrl, title: siteTitle } =
+    container.get<Site>('params.site_config');
   const isProd = container.get('params.is_prod');
 
   return async ({ params } = {}): Promise<Metadata> => {
@@ -52,11 +61,19 @@ const getMetadataGenerator = (fallbackTitle?: string, uri?: string): Generator =
     const title = contentItem?.title || fallbackTitle;
 
     return {
-      title: title && title !== siteTitle ? `${title} | ${siteTitle}` : siteTitle,
-      description: !contentItem ? undefined : (contentItem?.metadata?.summary || siteTitle),
-      robots: !isProd || !contentItem || contentItem.draft ? 'noindex,nofollow' : undefined,
+      title:
+        title && title !== siteTitle ? `${title} | ${siteTitle}` : siteTitle,
+      description: !contentItem
+        ? undefined
+        : contentItem?.metadata?.summary || siteTitle,
+      robots:
+        !isProd || !contentItem || contentItem.draft
+          ? 'noindex,nofollow'
+          : undefined,
       alternates: {
-        canonical: contentItem ? getCanonicalUrl(contentItem.canonicalUri, baseUrl) : undefined,
+        canonical: contentItem
+          ? getCanonicalUrl(contentItem.canonicalUri, baseUrl)
+          : undefined,
         languages: getLangUrls(contentItem?.metadata?.langs),
       },
     };

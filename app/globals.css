@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-a, button {
-    transition: all .2s ease-out;
+a,
+button {
+  transition: all 0.2s ease-out;
 }
