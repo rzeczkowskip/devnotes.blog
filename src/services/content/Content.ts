@@ -1,14 +1,12 @@
 import ContentRepository from '@/services/content/ContentRepository';
 import RelatedContent from '@/services/content/RelatedContent';
-import {
-  ContentItem, ListItem, Page, TaxonomyRelation,
-} from '@/types/Content';
+import { ContentItem, ListItem, Page, TaxonomyRelation } from '@/types/Content';
 
 type Cache = {
-  contentItem: Record<string, ContentItem>,
-  listItems: Record<string, ListItem[]>,
-  relatedItems: Record<string, ListItem[]>
-  taxonomies: Record<string, Record<string, TaxonomyRelation[]>>
+  contentItem: Record<string, ContentItem>;
+  listItems: Record<string, ListItem[]>;
+  relatedItems: Record<string, ListItem[]>;
+  taxonomies: Record<string, Record<string, TaxonomyRelation[]>>;
 };
 
 export default class Content {
@@ -36,7 +34,7 @@ export default class Content {
   }
 
   public getPage(uri: string | string[]): Page {
-    const uriString = (Array.isArray(uri) ? `/${uri.join('/')}` : uri);
+    const uriString = Array.isArray(uri) ? `/${uri.join('/')}` : uri;
     const itemUri = `/${uriString.replace(/^\/|\/$/, '')}`;
 
     const contentItem = this.getContentItem(itemUri);
@@ -64,7 +62,12 @@ export default class Content {
     }
   }
 
-  public getDummyPage(collection: string, title: string, uri: string, other?: Partial<ContentItem>): Page {
+  public getDummyPage(
+    collection: string,
+    title: string,
+    uri: string,
+    other?: Partial<ContentItem>,
+  ): Page {
     return {
       contentItem: {
         isPaginationPage: false,
@@ -90,7 +93,9 @@ export default class Content {
     return this.#repository.get(path);
   }
 
-  private getTaxonomyRelations(root: ContentItem): Record<string, TaxonomyRelation[]> {
+  private getTaxonomyRelations(
+    root: ContentItem,
+  ): Record<string, TaxonomyRelation[]> {
     if (!this.#cache.taxonomies?.[root.contentId]) {
       const entries = this.#taxonomyCollections.map((collection) => {
         const links = Object.keys(root.taxonomies?.[collection] || {});

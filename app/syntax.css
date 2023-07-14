@@ -27,12 +27,12 @@
       color: #ae81ff;
     }
 
-
     &operator {
       color: #f92672;
     }
 
-    &punctuation {}
+    &punctuation {
+    }
 
     &property {
       color: #a6e22e;
@@ -63,19 +63,22 @@
         color: #66d9ef;
       }
 
-      &.constant_ {}
+      &.constant_ {
+      }
     }
 
     &title {
       &.class_ {
         color: #a6e22e;
-        &.inherited_ {}
+        &.inherited_ {
+        }
       }
 
       &.function_ {
         color: #a6e22e;
 
-        &.invoke_ {}
+        &.invoke_ {
+        }
       }
     }
 
@@ -83,20 +86,31 @@
       color: #a6e22e;
     }
 
-    &comment { color: #939393; }
-    &doctag { color: #e6db74; }
+    &comment {
+      color: #939393;
+    }
+    &doctag {
+      color: #e6db74;
+    }
 
     &meta {
       color: #66d9ef;
-      &.prompt_ { color: #ae81ff; }
-      &.keyword_ { color: #f8f8f2; }
-      &.string_ { color: #f8f8f2; }
+      &.prompt_ {
+        color: #ae81ff;
+      }
+      &.keyword_ {
+        color: #f8f8f2;
+      }
+      &.string_ {
+        color: #f8f8f2;
+      }
     }
 
     &tag {
       color: #66d9ef;
 
-      .hljs-name {}
+      .hljs-name {
+      }
       .hljs-attr {
         color: #a6e22e;
       }
@@ -110,17 +124,31 @@
       color: #66d9ef;
     }
 
-    &code {}
-    &code_block {}
+    &code {
+    }
+    &code_block {
+    }
 
-    &emphasis { font-style: italic; }
-    &strong { font-weight: bold; }
-    &formula {}
-    &link { color: #e6db74; }
-    &quote {}
+    &emphasis {
+      font-style: italic;
+    }
+    &strong {
+      font-weight: bold;
+    }
+    &formula {
+    }
+    &link {
+      color: #e6db74;
+    }
+    &quote {
+    }
 
     &selector- {
-      &tag, &id, &class, &attr, &pseudo {
+      &tag,
+      &id,
+      &class,
+      &attr,
+      &pseudo {
         color: #e6db74;
       }
     }
@@ -130,7 +158,8 @@
         color: #66d9ef;
       }
 
-      &variable {}
+      &variable {
+      }
     }
 
     &deletion {

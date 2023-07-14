@@ -4,18 +4,21 @@ import container from '../../../config/container';
 import { Site } from '@/types/SiteConfig';
 
 const Analytics = () => {
-  const { params: { cfAnalyticsId } = {} } = container.get<Site>('params.site_config');
+  const { params: { cfAnalyticsId } = {} } =
+    container.get<Site>('params.site_config');
   const isProd = container.get('params.is_prod');
 
   if (!isProd || !cfAnalyticsId) {
     return null;
   }
 
-  return <Script
-    defer
-    src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon={ JSON.stringify({ token: cfAnalyticsId }) }
-  />;
+  return (
+    <Script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token: cfAnalyticsId })}
+    />
+  );
 };
 
 export default Analytics;

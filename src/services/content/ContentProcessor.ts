@@ -32,13 +32,22 @@ export default class ContentProcessor {
     return {
       content,
       draft: metadata?.draft === true,
-      collection: typeof metadata?.collection === 'string' ? metadata.collection : this.#defaultCollection,
+      collection:
+        typeof metadata?.collection === 'string'
+          ? metadata.collection
+          : this.#defaultCollection,
       uri,
-      canonicalUri: typeof metadata?.canonicalUrl === 'string' ? metadata?.canonicalUrl : uri,
+      canonicalUri:
+        typeof metadata?.canonicalUrl === 'string'
+          ? metadata?.canonicalUrl
+          : uri,
       contentId: baseUri,
       assetsBaseUri,
       title,
-      date: metadata?.date instanceof Date ? metadata.date.toISOString() : undefined,
+      date:
+        metadata?.date instanceof Date
+          ? metadata.date.toISOString()
+          : undefined,
       taxonomies,
       list: this.extractListingData(metadata),
       isPaginationPage: false,
@@ -47,9 +56,7 @@ export default class ContentProcessor {
   }
 
   private buildUris(filePath: string): [string, string, string] {
-    const slug = this.#slugGenerator.slugify(
-      filePath.replace(/\.md$/, ''),
-    );
+    const slug = this.#slugGenerator.slugify(filePath.replace(/\.md$/, ''));
 
     const assetBase = path.dirname(filePath);
 
@@ -66,48 +73,72 @@ export default class ContentProcessor {
   }
 
   private getTitleFromUri(uri: string): string {
-    return uri
-      .replace('/', '-')
-      .replace(/^\/|\/$/, '');
+    return uri.replace('/', '-').replace(/^\/|\/$/, '');
   }
 
-  private getTaxonomyUrisFromMetadata(metadata: Record<string, unknown>): Record<string, Record<string, string>> {
-    const entries = Object.entries(this.#taxonomyCollections).map(([taxonomy, uriPrefix]) => {
-      const taxonomyValuesIsArray = Array.isArray(metadata?.[taxonomy]);
+  private getTaxonomyUrisFromMetadata(
+    metadata: Record<string, unknown>,
+  ): Record<string, Record<string, string>> {
+    const entries = Object.entries(this.#taxonomyCollections).map(
+      ([taxonomy, uriPrefix]) => {
+        const taxonomyValuesIsArray = Array.isArray(metadata?.[taxonomy]);
 
-      if (!taxonomyValuesIsArray) {
-        return [taxonomy, []];
-      }
+        if (!taxonomyValuesIsArray) {
+          return [taxonomy, []];
+        }
 
-      const rawValues: string[] = (metadata[taxonomy] as unknown[]).filter((v) => typeof v === 'string') as string[];
-      const values = rawValues.map((value) => [`${uriPrefix}/${this.#slugGenerator.slugify(value)}`, value]);
+        const rawValues: string[] = (metadata[taxonomy] as unknown[]).filter(
+          (v) => typeof v === 'string',
+        ) as string[];
+        const values = rawValues.map((value) => [
+          `${uriPrefix}/${this.#slugGenerator.slugify(value)}`,
+          value,
+        ]);
 
-      return [taxonomy, Object.fromEntries(values)];
-    });
+        return [taxonomy, Object.fromEntries(values)];
+      },
+    );
 
     return Object.fromEntries(entries);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private extractAdditionalMetadata(metadata: Record<string, any>): Record<string, any> {
-    const filteredEntries = Object.entries(metadata)
-      .filter(([key]) => !(key in this.#taxonomyCollections) && !['title', 'date', 'draft', 'collection', 'list'].includes(key));
+  private extractAdditionalMetadata(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    metadata: Record<string, any>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Record<string, any> {
+    const filteredEntries = Object.entries(metadata).filter(
+      ([key]) =>
+        !(key in this.#taxonomyCollections) &&
+        !['title', 'date', 'draft', 'collection', 'list'].includes(key),
+    );
 
     return Object.fromEntries(filteredEntries);
   }
 
-  private extractListingData(metadata: Record<string, unknown>): ContentItem['list'] {
-    if (!('list' in metadata) || typeof metadata.list !== 'object' || !metadata.list) {
+  private extractListingData(
+    metadata: Record<string, unknown>,
+  ): ContentItem['list'] {
+    if (
+      !('list' in metadata) ||
+      typeof metadata.list !== 'object' ||
+      !metadata.list
+    ) {
       return undefined;
     }
 
     const metadataListConfig = metadata.list;
 
-    if (!('collection' in metadataListConfig) || typeof metadataListConfig.collection !== 'string') {
+    if (
+      !('collection' in metadataListConfig) ||
+      typeof metadataListConfig.collection !== 'string'
+    ) {
       return undefined;
     }
 
-    const hasItemsPerPage = 'itemsPerPage' in metadataListConfig && Number.isSafeInteger(metadataListConfig.itemsPerPage);
+    const hasItemsPerPage =
+      'itemsPerPage' in metadataListConfig &&
+      Number.isSafeInteger(metadataListConfig.itemsPerPage);
     const itemsPerPage = hasItemsPerPage
       ? Math.abs(metadataListConfig.itemsPerPage as number)
       : undefined;

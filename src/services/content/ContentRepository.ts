@@ -35,19 +35,24 @@ export default class ContentRepository {
     });
   }
 
-  public findCollectionItems(collection: string, taxonomyFilter?: [string, string]): string[] {
-    return Object.values(this.items).filter((item) => {
-      if (item.collection !== collection) {
-        return false;
-      }
+  public findCollectionItems(
+    collection: string,
+    taxonomyFilter?: [string, string],
+  ): string[] {
+    return Object.values(this.items)
+      .filter((item) => {
+        if (item.collection !== collection) {
+          return false;
+        }
 
-      if (!taxonomyFilter) {
-        return true;
-      }
+        if (!taxonomyFilter) {
+          return true;
+        }
 
-      const [taxonomy, value] = taxonomyFilter;
-      return Object.keys(item.taxonomies?.[taxonomy] || {}).includes(value);
-    }).map((value) => value.uri);
+        const [taxonomy, value] = taxonomyFilter;
+        return Object.keys(item.taxonomies?.[taxonomy] || {}).includes(value);
+      })
+      .map((value) => value.uri);
   }
 
   public findPreviousCollectionItem(item: ContentItem): string | null {

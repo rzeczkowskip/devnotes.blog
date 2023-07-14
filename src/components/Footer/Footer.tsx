@@ -10,7 +10,9 @@ const Footer: React.FC = () => {
   return (
     <footer className="py-7 text-center content-links">
       <Container>
-        <p>Copyright &copy; <Link href="/">{ title }</Link></p>
+        <p>
+          Copyright &copy; <Link href="/">{title}</Link>
+        </p>
       </Container>
     </footer>
   );

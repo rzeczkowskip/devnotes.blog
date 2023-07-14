@@ -1,13 +1,17 @@
 import React, { PropsWithChildren } from 'react';
 
 type ProseContainerProps = PropsWithChildren<{
-  className?: string,
-  as?: 'div' | 'article',
+  className?: string;
+  as?: 'div' | 'article';
 }>;
 
-const Prose: React.FC<ProseContainerProps> = ({ as: ContainerTag = 'article', children, className }) => (
-  <ContainerTag className={ `prose prose-slate mx-auto ${className || ''} `}>
-    { children }
+const Prose: React.FC<ProseContainerProps> = ({
+  as: ContainerTag = 'article',
+  children,
+  className,
+}) => (
+  <ContainerTag className={`prose prose-slate mx-auto ${className || ''} `}>
+    {children}
   </ContainerTag>
 );
 

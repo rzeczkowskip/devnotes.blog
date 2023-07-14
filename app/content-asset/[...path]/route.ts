@@ -6,7 +6,11 @@ import { NextResponse } from 'next/server';
 import container from '../../../config/container';
 //
 const getAsset = (assetPath: string): false | Buffer => {
-  if (!assetPath || !fs.existsSync(assetPath) || !fs.statSync(assetPath).isFile()) {
+  if (
+    !assetPath ||
+    !fs.existsSync(assetPath) ||
+    !fs.statSync(assetPath).isFile()
+  ) {
     return false;
   }
 
@@ -27,7 +31,9 @@ export const GET: AppRouteHandlerFn = async (req, ctx) => {
     return notFound();
   }
 
-  const assetPath = Array.isArray(pathParam) ? path.join(...pathParam) : pathParam;
+  const assetPath = Array.isArray(pathParam)
+    ? path.join(...pathParam)
+    : pathParam;
 
   const contentDir = container.get<string>('params.content_dir');
   const asset = getAsset(path.join(contentDir, assetPath));

@@ -7,7 +7,8 @@
     "plugin:@typescript-eslint/recommended",
     "airbnb-base",
     "airbnb-typescript",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "eslint-config-prettier"
   ],
   "parserOptions": {
     "project": [

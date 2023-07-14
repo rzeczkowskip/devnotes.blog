@@ -12,7 +12,11 @@ export default class Translator {
     return this.#locale;
   }
 
-  public trans(key: string, replacements?: Record<string, string>, fallback?: string): string {
+  public trans(
+    key: string,
+    replacements?: Record<string, string>,
+    fallback?: string,
+  ): string {
     const message = this.#messages?.[key] || fallback;
 
     if (!message) {
@@ -20,8 +24,10 @@ export default class Translator {
     }
 
     if (replacements) {
-      return Object.entries(replacements)
-        .reduce((text, [search, replace]) => text.replace(search, replace), message);
+      return Object.entries(replacements).reduce(
+        (text, [search, replace]) => text.replace(search, replace),
+        message,
+      );
     }
 
     return message;
