@@ -3,9 +3,9 @@ import './syntax.css';
 import { Mulish } from 'next/font/google';
 import React from 'react';
 import container from '../config/container';
-import Analytics from '@/components/Analytics/Analytics';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+import Analytics from '@/components/devnotesV2/Analytics/Analytics';
+import Footer from '@/components/devnotesV2/Footer';
+import Header from '@/components/devnotesV2/Header';
 import { Site } from '@/types/SiteConfig';
 
 const mulish = Mulish({

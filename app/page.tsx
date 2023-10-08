@@ -1,6 +1,6 @@
 import React from 'react';
 import container from '../config/container';
-import ContentLayout from '@/components/ContentLayout';
+import ContentLayout from '@/components/devnotesV2/ContentLayout';
 import getMetadataGenerator from '@/helpers/metadata';
 import Content from '@/services/content/Content';
 import { Site } from '@/types/SiteConfig';

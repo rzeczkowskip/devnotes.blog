@@ -3,7 +3,7 @@ import nodePath from 'path';
 import { notFound, redirect } from 'next/navigation';
 import React from 'react';
 import container from '../../config/container';
-import ContentLayout from '@/components/ContentLayout';
+import ContentLayout from '@/components/devnotesV2/ContentLayout';
 import getMetadataGenerator from '@/helpers/metadata';
 import Content from '@/services/content/Content';
 import ContentRepository from '@/services/content/ContentRepository';
@@ -39,7 +39,7 @@ const Page = async (props: PageProps) => {
   } catch (e) {
     if (e instanceof Error && e.message.endsWith(' not found.')) {
       return isAssetPath(path)
-        ? redirect(`/content-asset/${path.join('/')}`)
+        ? redirect(`/content-asset?path=${path.join('/')}`)
         : notFound();
     }
 
