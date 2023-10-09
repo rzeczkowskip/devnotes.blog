@@ -4,7 +4,7 @@ import { Mulish } from 'next/font/google';
 import React from 'react';
 import container from '../config/container';
 import CloudflareAnalytics from '@/components/devnotesV2/Analytics/CloudflareAnalytics';
-import Footer from '@/components/devnotesV2/Footer';
+import Footer from '@/components/devnotesV2/Footer/Footer';
 import Header from '@/components/devnotesV2/Header/Header';
 import { Site } from '@/types/SiteConfig';
 
@@ -24,9 +24,10 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     <html lang={locale}>
       <body className={`${mulish.className} bg-slate-50 text-slate-900`}>
         <Header title={title} nav={nav} />
-        {children}
-        <Footer />
 
+        {children}
+
+        <Footer title={title} href="/" />
         <CloudflareAnalytics token={params?.cfAnalyticsId} isProd={isProd} />
       </body>
     </html>
