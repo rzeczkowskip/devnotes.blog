@@ -31,7 +31,7 @@ const Taxonomies: React.FC<TaxonomiesProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  if (!taxonomies?.[collection]?.length === 0) {
+  if (!taxonomies?.[collection]?.length) {
     return null;
   }
 
