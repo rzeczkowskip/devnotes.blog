@@ -25,7 +25,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body className={`${font.className} text-slate-900`}>
         <Header title={title} nav={nav} />
 
-        {children}
+        <main className="py-20">{children}</main>
 
         <Footer title={title} href="/" />
         <CloudflareAnalytics token={params?.cfAnalyticsId} isProd={isProd} />
