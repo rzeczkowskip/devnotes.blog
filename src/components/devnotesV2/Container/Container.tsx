@@ -8,7 +8,7 @@ type ContainerProps = PropsWithChildren & {
 const Container: React.FC<ContainerProps> = ({
   children,
   className,
-  size = 'regular',
+  size = 'small',
 }) => (
   <div
     className={`

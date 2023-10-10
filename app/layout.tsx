@@ -1,6 +1,6 @@
 import './globals.css';
 import './syntax.css';
-import { Mulish } from 'next/font/google';
+import { Bitter } from 'next/font/google';
 import React from 'react';
 import container from '../config/container';
 import CloudflareAnalytics from '@/components/devnotesV2/Analytics/CloudflareAnalytics';
@@ -8,7 +8,7 @@ import Footer from '@/components/devnotesV2/Footer/Footer';
 import Header from '@/components/devnotesV2/Header/Header';
 import { Site } from '@/types/SiteConfig';
 
-const mulish = Mulish({
+const font = Bitter({
   subsets: ['latin'],
   weight: 'variable',
   display: 'swap',
@@ -22,7 +22,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang={locale}>
-      <body className={`${mulish.className} bg-slate-50 text-slate-900`}>
+      <body className={`${font.className} text-slate-900`}>
         <Header title={title} nav={nav} />
 
         {children}

@@ -5,7 +5,7 @@ type ColoredTextProps = PropsWithChildren;
 const ColoredText: React.FC<ColoredTextProps> = ({ children }) => (
   <span
     className={
-      'bg-clip-text text-fill-transparent bg-gradient-to-r from-lead-800 to-lead-500'
+      'bg-clip-text text-lead-800 text-fill-transparent bg-gradient-to-r from-lead-800 to-lead-500'
     }
   >
     {children}

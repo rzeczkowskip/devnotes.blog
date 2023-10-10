@@ -1,12 +1,11 @@
-import Link from 'next/link';
 import React, { PropsWithChildren } from 'react';
 import ArticleContent from '@/components/devnotesV2/ArticleContent';
 import ArticleList from '@/components/devnotesV2/ArticleList';
+import ArticleMeta from '@/components/devnotesV2/ArticleMeta/ArticleMeta';
 import Container from '@/components/devnotesV2/Container';
-import Hero from '@/components/devnotesV2/Hero';
+import HeroTitle from '@/components/devnotesV2/HeroTitle/HeroTitle';
 import ProseContainer from '@/components/devnotesV2/ProseContainer';
 import Section from '@/components/devnotesV2/Section';
-import Tag from '@/components/devnotesV2/Tag/Tag';
 import TagList from '@/components/devnotesV2/TagList';
 import useTranslation from '@/hooks/useTranslation';
 import { Page, TaxonomyRelation } from '@/types/Content';
@@ -21,14 +20,7 @@ type TaxonomiesProps = {
   as?: React.FC<Partial<TaxonomyRelation> & Pick<TaxonomyRelation, 'uri'>>;
 };
 
-const hasTaxonomies = (taxonomies: Page['taxonomies']) =>
-  Object.values(taxonomies).some((items) => items.length > 0);
-
-const Taxonomies: React.FC<TaxonomiesProps> = ({
-  collection,
-  taxonomies,
-  as: TaxonomyComponent,
-}) => {
+const Taxonomies: React.FC<TaxonomiesProps> = ({ collection, taxonomies }) => {
   const { t } = useTranslation();
 
   if (!taxonomies?.[collection]?.length) {
@@ -36,24 +28,10 @@ const Taxonomies: React.FC<TaxonomiesProps> = ({
   }
 
   return (
-    <div className="textsm content-links">
-      <div className="flex no-wrap mb-2">
-        <div className="mr-1 font-bold">
-          {t(`taxonomy_label_${collection}`, {}, collection)}:
-        </div>
-        <div className="w-full">
-          {taxonomies[collection].map((taxonomy) => (
-            <span className="mr-1" key={taxonomy.uri}>
-              {TaxonomyComponent ? (
-                <TaxonomyComponent {...taxonomy} />
-              ) : (
-                <Link href={taxonomy.uri}>{taxonomy.title}</Link>
-              )}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
+    <ArticleMeta
+      title={t(`taxonomy_label_${collection}`, {}, collection)}
+      links={taxonomies?.[collection]}
+    />
   );
 };
 
@@ -68,40 +46,47 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
 
   return (
     <>
-      <Hero
-        title={title}
-        subtitle={contentItem.metadata?.subtitle}
-        date={contentItem.date}
-        links={taxonomies?.categories?.slice(0, 1)}
-      />
+      {!contentItem.metadata?.noTitle ? (
+        <Container className="pb-4 mb-12">
+          <HeroTitle
+            title={title}
+            subtitle={contentItem.metadata?.subtitle}
+            date={contentItem.date}
+          />
+        </Container>
+      ) : null}
 
       {children}
 
       {contentItem.content && (
-        <Section.Section paddingY={children ? 'both' : 'bottom'}>
-          <Container>
-            <ArticleContent
-              markdown={contentItem.content}
-              assetBaseUri={contentItem.assetsBaseUri}
-              image={contentItem.metadata?.image}
-            />
-
-            {hasTaxonomies(taxonomies) ? (
-              <ProseContainer className="mt-20">
-                <Taxonomies
-                  taxonomies={taxonomies}
-                  collection="tags"
-                  as={Tag}
+        <Container>
+          <div className="grid grid-cols-4 grid-flow-row gap-8">
+            <div className="col-span-1">
+              <Taxonomies collection="tags" taxonomies={taxonomies} />
+              <Taxonomies collection="categories" taxonomies={taxonomies} />
+              {relatedItems.length > 0 && (
+                <ArticleMeta
+                  title={t('related_content_label')}
+                  links={relatedItems.map(
+                    (relatedItem) => relatedItem.contentItem,
+                  )}
+                  inlineLinks={false}
                 />
-                <Taxonomies taxonomies={taxonomies} collection="categories" />
-              </ProseContainer>
-            ) : null}
-          </Container>
-        </Section.Section>
+              )}
+            </div>
+            <div className="col-span-3">
+              <ArticleContent
+                markdown={contentItem.content}
+                assetBaseUri={contentItem.assetsBaseUri}
+                image={contentItem.metadata?.image}
+              />
+            </div>
+          </div>
+        </Container>
       )}
 
       {listItems?.length > 0 && (
-        <Section.Section background={'gray'}>
+        <Section.Section>
           <Container>
             <ProseContainer>
               {contentItem.pagination?.collection === 'tags' ? (
@@ -112,20 +97,6 @@ const ContentLayout: React.FC<ContentLayoutProps> = ({
                   pagination={contentItem.pagination}
                 />
               )}
-            </ProseContainer>
-          </Container>
-        </Section.Section>
-      )}
-
-      {relatedItems?.length > 0 && (
-        <Section.Section background={'gray'}>
-          <Container>
-            <ProseContainer>
-              <Section.Title>{t('related_content_label')}</Section.Title>
-              <ArticleList
-                items={relatedItems}
-                pagination={contentItem.pagination}
-              />
             </ProseContainer>
           </Container>
         </Section.Section>

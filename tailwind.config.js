@@ -52,7 +52,7 @@ module.exports = {
             'h1,h2,h3,h4,h5,h6': {
               marginTop: '1.5em',
               marginBottom: '1rem',
-              fontWeight: 800,
+              fontWeight: 700,
             },
             color: 'currentColor',
             a: linkStyles(theme),
@@ -62,9 +62,6 @@ module.exports = {
           },
         },
       }),
-    },
-    fontFamily: {
-      sans: ['var(--font-sans)'],
     },
   },
   plugins: [
