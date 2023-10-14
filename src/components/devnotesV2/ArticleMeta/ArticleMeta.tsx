@@ -22,9 +22,9 @@ const ArticleMeta: React.FC<ArticleMetaProps> = ({
   }
 
   return (
-    <div className={`pb-6 mb-6 border-b ${className || ''}`}>
+    <div className={`pb-4 mb-4 ${className || ''}`}>
       {title && (
-        <h2 className="text-slate-500 font-semibold mb-6 uppercase tracking-wide">
+        <h2 className="text-muted font-semibold mb-2 uppercase tracking-wide">
           {title}
         </h2>
       )}

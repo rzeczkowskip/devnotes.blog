@@ -11,7 +11,7 @@ type ArticleListProps = {
 };
 
 const ArticleList: React.FC<ArticleListProps> = ({ items, pagination }) => (
-  <ProseContainer>
+  <>
     <Prose as={'div'} className="content-links-reverse">
       {items.map((item) => (
         <ArticleListItem
@@ -24,7 +24,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ items, pagination }) => (
     {(pagination?.hasNext || pagination?.hasPrevious) && (
       <Pagination {...pagination} className="mt-20" />
     )}
-  </ProseContainer>
+  </>
 );
 
 export default ArticleList;

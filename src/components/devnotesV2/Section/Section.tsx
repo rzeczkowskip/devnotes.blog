@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from 'react';
 type SectionProps = PropsWithChildren<{
   background?: 'white' | 'gray';
   paddingY?: 'bottom' | 'both';
-  as?: 'article' | 'section';
+  as?: 'article' | 'section' | 'div';
 }>;
 
 const Section: React.FC<SectionProps> = ({
@@ -14,8 +14,8 @@ const Section: React.FC<SectionProps> = ({
 }) => (
   <SectionTag
     className={`
-      ${!paddingY || paddingY === 'both' ? 'py-20' : ''}
-      ${paddingY === 'bottom' ? 'pb-20' : ''}
+      ${!paddingY || paddingY === 'both' ? 'py-5' : ''}
+      ${paddingY === 'bottom' ? 'pb-5' : ''}
       
       ${background === 'white' ? 'bg-white' : ''} 
       ${background === 'gray' ? 'bg-slate-100 border-y border-slate-200' : ''}

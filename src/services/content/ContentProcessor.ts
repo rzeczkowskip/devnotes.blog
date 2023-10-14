@@ -28,14 +28,15 @@ export default class ContentProcessor {
     const [baseUri, uri, assetsBaseUri] = this.buildUris(filePath);
     const title = metadata?.title || this.getTitleFromUri(uri);
     const taxonomies = this.getTaxonomyUrisFromMetadata(metadata);
+    const collection =
+      typeof metadata?.collection === 'string'
+        ? metadata.collection
+        : this.#defaultCollection;
 
     return {
       content,
       draft: metadata?.draft === true,
-      collection:
-        typeof metadata?.collection === 'string'
-          ? metadata.collection
-          : this.#defaultCollection,
+      collection,
       uri,
       canonicalUri:
         typeof metadata?.canonicalUrl === 'string'
@@ -145,6 +146,8 @@ export default class ContentProcessor {
 
     return {
       collection: metadataListConfig.collection,
+      isTaxonomyList:
+        !!this.#taxonomyCollections[metadataListConfig.collection],
       itemsPerPage,
     };
   }

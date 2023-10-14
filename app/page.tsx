@@ -1,6 +1,6 @@
 import React from 'react';
 import container from '../config/container';
-import ContentLayout from '@/components/devnotesV2/ContentLayout';
+import PageContent from '@/components/devnotesV2/PageContent';
 import getMetadataGenerator from '@/helpers/metadata';
 import Content from '@/services/content/Content';
 import { Site } from '@/types/SiteConfig';
@@ -16,7 +16,7 @@ const Homepage = async () => {
     contentLoader.getDummyPage('pages', title, '/'),
   );
 
-  return <ContentLayout page={page} />;
+  return <PageContent page={page} />;
 };
 
 export default Homepage;

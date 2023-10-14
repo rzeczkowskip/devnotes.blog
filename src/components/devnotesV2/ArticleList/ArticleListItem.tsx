@@ -1,6 +1,7 @@
-import Link from 'next/link';
 import React from 'react';
-import ArticleDate from '@/components/devnotesV2/ArticleDate';
+import HeroTitle, {
+  HeroTitleSize,
+} from '@/components/devnotesV2/HeroTitle/HeroTitle';
 import { ContentItem } from '@/types/Content';
 
 type ArticleListItemProps = {
@@ -15,18 +16,13 @@ const ArticleListItem: React.FC<ArticleListItemProps> = ({ item }) => {
   } = item;
 
   return (
-    <article className="mb-8 pb-8 border-b border-b-slate-300 last:border-0 last:mb-0 last:pb-0">
-      <h2 className="my-0 h1">
-        <Link
-          href={uri}
-          title={title}
-          className="content-link-reverse font-extrabold no-underline"
-        >
-          {title}
-        </Link>
-      </h2>
-
-      {date && <ArticleDate className="text-xs font-normal" date={date} />}
+    <article className="max-w-full mb-6 pb-6 border-b border-b-slate-300 last:border-0 last:mb-0 last:pb-0">
+      <HeroTitle
+        title={title}
+        href={uri}
+        date={date}
+        size={HeroTitleSize.Small}
+      />
 
       {summary && <p className="mb-0">{summary}</p>}
     </article>

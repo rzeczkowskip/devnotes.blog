@@ -69,7 +69,7 @@ const Nav: React.FC<NavProps> = ({ items, toggleAriaLabel }) => {
           <Link
             key={url}
             href={url}
-            className={'block p-4 hover:underline hover:text-lead-500'}
+            className={'block px-4 py-2 hover:underline hover:text-lead-500'}
           >
             {label}
           </Link>

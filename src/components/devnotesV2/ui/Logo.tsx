@@ -14,7 +14,7 @@ const Logo: React.FC<LogoProps> = ({ title = '', href = '/', className }) => (
     title={title}
     className={`flex items-center text-black no-underline ${className || ''}`}
   >
-    <LogoImage className="mr-3 h-full w-auto" />
+    <LogoImage className="mr-3 h-full w-auto fill-red-500 stroke-green-500 stroke-2" />
     <span>{title}</span>
   </Link>
 );

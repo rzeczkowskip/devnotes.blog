@@ -1,7 +1,8 @@
 import hljsPowershell from 'highlight.js/lib/languages/powershell';
 import hljsTwig from 'highlight.js/lib/languages/twig';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { HeadingProps } from 'react-markdown/lib/ast-to-react';
 import rehypeExternalLinks, {
   Options as ExternalLinksOptions,
 } from 'rehype-external-links';
@@ -10,6 +11,7 @@ import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { visitParents } from 'unist-util-visit-parents';
 import Callout from '@/components/devnotesV2/Callout';
+import ColoredText from '@/components/devnotesV2/ColoredText/ColoredText';
 import ContentImage from '@/components/devnotesV2/ContentImage';
 import Prose from '@/components/devnotesV2/Prose';
 
@@ -65,17 +67,17 @@ const ArticleContent: React.FC<ArticleContentProps> = ({
   image,
 }) => (
   <>
-    {image && (
-      <ContentImage
-        src={image}
-        alt=""
-        baseUri={assetBaseUri}
-        className="rounded mx-auto mb-8"
-        priority
-      />
-    )}
-
     <Prose>
+      {image && (
+        <ContentImage
+          src={image}
+          alt=""
+          baseUri={assetBaseUri}
+          className="rounded mx-auto mb-8"
+          priority
+        />
+      )}
+
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkUnwrapImages]}
         rehypePlugins={[

@@ -23,8 +23,9 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
         return;
       }
 
-      const listConfig = {
+      const listConfig: ContentItem['list'] = {
         collection: 'posts',
+        isTaxonomyList: false,
         ...(item.list || {}),
       };
 

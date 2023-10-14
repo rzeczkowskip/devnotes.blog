@@ -1,7 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import React from 'react';
 import container from '../../config/container';
-import ContentLayout from '@/components/devnotesV2/ContentLayout';
+import PageContent from '@/components/devnotesV2/PageContent';
 import getMetadataGenerator from '@/helpers/metadata';
 import {
   convertPathToParam,
@@ -36,7 +36,7 @@ const Page = async (props: PageProps) => {
     const contentLoader = container.get<Content>('content');
     const page = contentLoader.getPage(path);
 
-    return <ContentLayout page={page} />;
+    return <PageContent page={page} />;
   } catch (e) {
     if (e instanceof Error && e.message.endsWith(' not found.')) {
       return notFound();

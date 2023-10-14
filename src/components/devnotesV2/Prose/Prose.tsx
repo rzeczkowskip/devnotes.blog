@@ -7,16 +7,11 @@ type ProseContainerProps = PropsWithChildren<{
 }>;
 
 const Prose: React.FC<ProseContainerProps> = ({
-  as: ContainerTag = 'article',
+  as: ContainerTag = 'div',
   children,
   className,
-  fullWidth = true,
 }) => (
-  <ContainerTag
-    className={`prose prose-slate mx-auto ${fullWidth ? 'max-w-none' : ''} ${
-      className || ''
-    } `}
-  >
+  <ContainerTag className={`prose prose-slate ${className || ''} `}>
     {children}
   </ContainerTag>
 );

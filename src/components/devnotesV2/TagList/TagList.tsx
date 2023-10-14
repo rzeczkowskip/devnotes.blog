@@ -9,9 +9,9 @@ type TagListProps = {
 
 const TagList: React.FC<TagListProps> = ({ items }) => (
   <Container size="small">
-    <div className="flex flex-wrap justify-center text-lg font-extrabold content-links-reverse">
+    <div className="flex flex-wrap justify-center text-lg font-bold content-links-reverse">
       {items.map((item) => (
-        <div className="mx-2 my-4" key={item.contentItem.uri}>
+        <div className="mx-2 my-2" key={item.contentItem.uri}>
           <Tag
             title={item.contentItem.title}
             uri={item.contentItem.canonicalUri}

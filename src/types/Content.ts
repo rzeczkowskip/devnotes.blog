@@ -13,6 +13,7 @@ export type ContentItem = {
   draft: boolean;
   list?: {
     collection: string;
+    isTaxonomyList: boolean;
     itemsPerPage?: number;
   };
   isPaginationPage: boolean;

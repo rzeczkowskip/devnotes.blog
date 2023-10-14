@@ -1,24 +1,10 @@
 import React, { PropsWithChildren } from 'react';
+import className from '@/helpers/className';
 
-type ContainerProps = PropsWithChildren & {
-  size?: 'small' | 'regular' | 'full';
-  className?: string;
-};
+type ContainerProps = PropsWithChildren;
 
-const Container: React.FC<ContainerProps> = ({
-  children,
-  className,
-  size = 'small',
-}) => (
-  <div
-    className={`
-    ${size === 'small' ? 'container lg:container-lg' : ''} 
-    ${size === 'regular' ? 'container' : ''} 
-    mx-auto px-4 ${className}
-    `}
-  >
-    {children}
-  </div>
+const Container: React.FC<ContainerProps> = ({ children }) => (
+  <div className={className('container-lg mx-auto px-4')}>{children}</div>
 );
 
 export default Container;

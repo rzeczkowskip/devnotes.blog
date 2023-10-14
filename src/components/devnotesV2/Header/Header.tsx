@@ -15,20 +15,16 @@ const Header: React.FC<HeaderProps> = ({ title, nav }) => {
   const { t } = useTranslation();
 
   return (
-    <header className="py-5 border-b-2 border-dotted">
-      <Container size="full">
+    <Container>
+      <header className="py-4 border-b-2 border-dashed">
         <div className="flex items-center">
-          <Logo
-            title={title}
-            href="/"
-            className="h-16 text-2xl font-extrabold"
-          />
+          <Logo title={title} href="/" className="h-10 text-xl font-semibold" />
           <div className="ml-auto mr-0">
             {nav && <Nav items={nav} toggleAriaLabel={t('nav_toggle_label')} />}
           </div>
         </div>
-      </Container>
-    </header>
+      </header>
+    </Container>
   );
 };
 
