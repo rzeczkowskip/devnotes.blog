@@ -7,7 +7,7 @@ import CloudflareAnalytics from '@/components/devnotesV2/Analytics/CloudflareAna
 import Footer from '@/components/devnotesV2/Footer/Footer';
 import Header from '@/components/devnotesV2/Header/Header';
 import TailwindDebug from '@/components/devnotesV2/TailwindDebug';
-import className from '@/helpers/className';
+import cn from '@/helpers/cn';
 import { Site } from '@/types/SiteConfig';
 
 const font = Bitter({
@@ -25,7 +25,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang={locale}>
-      <body className={className(font.className, 'text-slate-900')}>
+      <body className={cn(font.className, 'text-slate-900')}>
         {isDev && <TailwindDebug />}
         <Header title={title} nav={nav} />
 
