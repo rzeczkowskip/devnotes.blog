@@ -1,8 +1,7 @@
-import Link from 'next/link';
 import React from 'react';
 import Nav from './Nav';
 import Container from '@/components/devnotesV2/Container';
-import Logo from '@/components/devnotesV2/ui/Logo';
+import Logo from '@/components/devnotesV2/Header/Logo';
 import useTranslation from '@/hooks/useTranslation';
 import { Site } from '@/types/SiteConfig';
 

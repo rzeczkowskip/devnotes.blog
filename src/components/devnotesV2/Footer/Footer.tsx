@@ -8,7 +8,7 @@ type FooterProps = {
 };
 
 const Footer: React.FC<FooterProps> = ({ title, href = '#' }) => (
-  <footer className="py-7 text-center content-links">
+  <footer className="py-8 text-center content-links">
     <Container>
       <p>
         Copyright &copy; <Link href={href}>{title}</Link>
