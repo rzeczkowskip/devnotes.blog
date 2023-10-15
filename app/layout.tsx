@@ -29,7 +29,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         {isDev && <TailwindDebug />}
         <Header title={title} nav={nav} />
 
-        <main className="mt-10">{children}</main>
+        <main className="my-12">{children}</main>
 
         <Footer title={title} href="/" />
         <CloudflareAnalytics token={params?.cfAnalyticsId} isProd={isProd} />
