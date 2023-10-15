@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import React, { PropsWithChildren } from 'react';
 import ArticleContent from '@/components/ArticleContent';
+import ArticleDate from '@/components/devnotesV2/ArticleDate';
 import ColoredText from '@/components/devnotesV2/ColoredText';
 import Container from '@/components/devnotesV2/Container';
-import ArticleDate from '@/components/devnotesV2/Content/ArticleDate';
 import cn from '@/helpers/cn';
 import useTranslation from '@/hooks/useTranslation';
 import { ContentItem, Page, TaxonomyRelation } from '@/types/Content';
@@ -65,6 +65,7 @@ const Taxonomies: React.FC<TaxonomiesProps> = ({ collection, taxonomies }) => {
 const PageContent: React.FC<PageContentProps> = ({ page }) => {
   const { contentItem, relatedItems, listItems, taxonomies } = page;
   const pageType = getPageType(contentItem);
+  const { locale } = useTranslation();
 
   if (pageType === PageType.ContentList) {
     return <div></div>;
@@ -95,6 +96,7 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
                     <ArticleDate
                       date={contentItem.date}
                       className={cn('text-muted')}
+                      locale={locale}
                     />
                   </p>
                 )}
