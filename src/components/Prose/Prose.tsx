@@ -10,7 +10,7 @@ const Prose: React.FC<ProseContainerProps> = ({
   children,
   className,
 }) => (
-  <ContainerTag className={`prose prose-slate mx-auto ${className || ''} `}>
+  <ContainerTag className={`prose prose-slate ${className || ''} `}>
     {children}
   </ContainerTag>
 );

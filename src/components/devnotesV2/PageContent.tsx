@@ -37,11 +37,7 @@ type TaxonomiesProps = {
   as?: React.FC<Partial<TaxonomyRelation> & Pick<TaxonomyRelation, 'uri'>>;
 };
 
-const Taxonomies: React.FC<TaxonomiesProps> = ({
-  collection,
-  taxonomies,
-  as: TaxonomyComponent,
-}) => {
+const Taxonomies: React.FC<TaxonomiesProps> = ({ collection, taxonomies }) => {
   const { t } = useTranslation();
 
   if (taxonomies?.[collection]?.length === 0) {
@@ -49,23 +45,19 @@ const Taxonomies: React.FC<TaxonomiesProps> = ({
   }
 
   return (
-    <div className="prose">
-      <div className="flex no-wrap">
-        <div className="mr-1 font-semibold">
+    <div>
+      <dl className="flex no-wrap m-0">
+        <dt className="mr-1 font-semibold m-0">
           {t(`taxonomy_label_${collection}`, {}, collection)}:
-        </div>
-        <div className="w-full">
+        </dt>
+        <dl className="w-full m-0">
           {taxonomies[collection].map((taxonomy) => (
             <span className="mr-1" key={taxonomy.uri}>
-              {TaxonomyComponent ? (
-                <TaxonomyComponent {...taxonomy} />
-              ) : (
-                <Link href={taxonomy.uri}>{taxonomy.title}</Link>
-              )}
+              <Link href={taxonomy.uri}>{taxonomy.title}</Link>
             </span>
           ))}
-        </div>
-      </div>
+        </dl>
+      </dl>
     </div>
   );
 };
@@ -90,12 +82,12 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
       <Container>
         <article>
           {!contentItem.metadata.noTitle && (
-            <header className="prose prose-sm max-w-full md:max-w-full md:prose mb-6 border-b">
+            <header className="prose prose-sm md:prose mb-6 border-b">
               <h1 className={cn('mt-0 mb-6')}>
                 <ColoredText>{contentItem.title}</ColoredText>
               </h1>
 
-              <div className="container-prose">
+              <div className="prose-container">
                 {subtitle && <p>{subtitle}</p>}
 
                 {contentItem.date && (
@@ -111,7 +103,7 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
           )}
 
           {hasTaxonomies(taxonomies) && (
-            <footer className="my-6 pb-6 border-b">
+            <footer className="my-6 pb-6 border-b prose">
               <Taxonomies collection={'categories'} taxonomies={taxonomies} />
               <Taxonomies collection={'tags'} taxonomies={taxonomies} />
             </footer>

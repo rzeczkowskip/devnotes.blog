@@ -50,10 +50,10 @@ module.exports = {
           800: '#123',
         },
       },
-
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            maxWidth: 'none',
             'h1,h2,h3,h4,h5,h6': {
               marginTop: '1.5em',
               marginBottom: '1rem',
@@ -85,7 +85,7 @@ module.exports = {
         '.container-lg': {
           maxWidth: theme('screens.lg'),
         },
-        '.container-prose': {
+        '.prose-container': {
           maxWidth: theme('maxWidth.prose'),
         },
         '.text-muted': {
