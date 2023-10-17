@@ -21,7 +21,7 @@ enum PageType {
 }
 
 const getPageType = (contentItem: ContentItem): PageType => {
-  if (contentItem.list?.collection) {
+  if (contentItem.list?.collection || contentItem.isTaxonomy) {
     return contentItem.list?.isTaxonomyList
       ? PageType.TaxonomiesList
       : PageType.ContentList;
@@ -88,9 +88,26 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
 
   if (pageType === PageType.ContentList) {
     const { pagination } = contentItem;
+    const subtitle =
+      contentItem.metadata?.subtitle || contentItem.metadata?.summary;
 
     return (
       <Container>
+        {contentItem.isTaxonomy && (
+          <header className="prose prose-sm md:prose mb-6 border-b">
+            <h1 className={cn('mt-0 mb-6')}>
+              <ColoredText>
+                {contentItem.collection === 'tags' && '#'}
+                {contentItem.title}
+              </ColoredText>
+            </h1>
+
+            <div className="prose-container">
+              {subtitle && <p>{subtitle}</p>}
+            </div>
+          </header>
+        )}
+
         <div className={'grid sm:grid-cols-2 lg:grid-cols-3 gap-8'}>
           {listItems.map((item) => (
             <article
