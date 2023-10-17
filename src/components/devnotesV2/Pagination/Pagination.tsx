@@ -1,5 +1,5 @@
 import React from 'react';
-import PaginationLink from '@/components/Pagination/PaginationLink';
+import PaginationLink from '@/components/devnotesV2/Pagination/PaginationLink';
 import useTranslation from '@/hooks/useTranslation';
 import { Pagination as ContentPagination } from '@/types/Content';
 
