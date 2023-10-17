@@ -4,6 +4,7 @@ import ArticleDate from '@/components/devnotesV2/ArticleDate';
 import ColoredText from '@/components/devnotesV2/ColoredText';
 import Container from '@/components/devnotesV2/Container';
 import ContentList from '@/components/devnotesV2/ContentList/ContentList';
+import TaxonomiesList from '@/components/devnotesV2/ContentList/TaxonomiesList';
 import Header from '@/components/devnotesV2/Header';
 import Image from '@/components/devnotesV2/Image';
 import MarkdownContent from '@/components/devnotesV2/MarkdownContent/MarkdownContent';
@@ -43,6 +44,13 @@ const ContentMapper: React.FC<PageContentProps> = ({ page }) => {
           pagination={page.contentItem?.pagination}
         />
       );
+    case PageType.TaxonomiesList:
+      return (
+        <TaxonomiesList
+          collection={page.contentItem.list?.collection || ''}
+          listItems={page.listItems}
+        />
+      );
     default:
       throw new Error(`Unsupported page type ${pageType}`);
   }
@@ -73,40 +81,6 @@ const PageContent: React.FC<PageContentProps> = ({ page, children }) => {
       <ContentMapper page={page} />
     </Container>
   );
-
-  if (pageType === PageType.TaxonomiesList) {
-    return (
-      <Container>
-        <Header
-          title={contentItem.title}
-          subtitle={subtitle}
-          date={contentItem.date}
-        />
-
-        <ul
-          className={cn(
-            'list-none prose',
-            contentItem.list?.collection === 'tags' &&
-              'flex flex-wrap justify-center',
-          )}
-        >
-          {listItems.map((item) => (
-            <li key={item.contentItem.uri} className="m-2 p-0">
-              <Link href={item.contentItem.canonicalUri}>
-                {item.contentItem.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <Taxonomies
-          collection={'tags'}
-          taxonomies={taxonomies}
-          labelPrefix="#"
-        />
-      </Container>
-    );
-  }
 
   if (pageType === PageType.Content) {
     const image = contentItem.metadata?.image;
