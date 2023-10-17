@@ -4,13 +4,13 @@ import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import React from 'react';
 import container from '../../../config/container';
 
-type ContentImageProps = Omit<NextImageProps, 'src'> & {
+type ImageProps = Omit<NextImageProps, 'src'> & {
   src?: NextImageProps['src'];
   baseUri: string;
   title?: string;
 };
 
-type InternalImageProps = Omit<ContentImageProps, 'baseUri' | 'title'> & {
+type InternalImageProps = Omit<ImageProps, 'baseUri' | 'title'> & {
   src: string;
 };
 
@@ -75,12 +75,7 @@ const InternalImage: React.FC<InternalImageProps> = ({
   );
 };
 
-const ContentImage: React.FC<ContentImageProps> = ({
-  src,
-  baseUri,
-  title,
-  ...props
-}) => {
+const Image: React.FC<ImageProps> = ({ src, baseUri, title, ...props }) => {
   if (!src) {
     return null;
   }
@@ -104,4 +99,4 @@ const ContentImage: React.FC<ContentImageProps> = ({
   return img;
 };
 
-export default ContentImage;
+export default Image;
