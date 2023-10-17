@@ -3,9 +3,10 @@ import React, { PropsWithChildren } from 'react';
 import ArticleDate from '@/components/devnotesV2/ArticleDate';
 import ColoredText from '@/components/devnotesV2/ColoredText';
 import Container from '@/components/devnotesV2/Container';
+import ContentList from '@/components/devnotesV2/ContentList/ContentList';
+import Header from '@/components/devnotesV2/Header';
 import Image from '@/components/devnotesV2/Image';
 import MarkdownContent from '@/components/devnotesV2/MarkdownContent/MarkdownContent';
-import Header from '@/components/devnotesV2/Page/Header';
 import Pagination from '@/components/devnotesV2/Pagination/Pagination';
 import cn from '@/helpers/cn';
 import useTranslation from '@/hooks/useTranslation';
@@ -31,138 +32,47 @@ const getPageType = (contentItem: ContentItem): PageType => {
   return PageType.Content;
 };
 
-const hasTaxonomies = (
-  taxonomies: Page['taxonomies'],
-  taxonomyCollection?: string,
-) =>
-  Object.entries(taxonomies).some(([taxonomy, items]) => {
-    if (taxonomyCollection && taxonomyCollection !== taxonomy) {
-      return false;
-    }
+const ContentMapper: React.FC<PageContentProps> = ({ page }) => {
+  const pageType = getPageType(page.contentItem);
 
-    return items.length > 0;
-  });
-
-type TaxonomiesProps = {
-  collection: string;
-  taxonomies: Page['taxonomies'];
-  hideLabel?: boolean;
-  labelPrefix?: string;
-  as?: React.FC<Partial<TaxonomyRelation> & Pick<TaxonomyRelation, 'uri'>>;
-};
-
-const Taxonomies: React.FC<TaxonomiesProps> = ({
-  collection,
-  taxonomies,
-  hideLabel,
-  labelPrefix,
-}) => {
-  const { t } = useTranslation();
-
-  if (taxonomies?.[collection]?.length === 0) {
-    return null;
+  switch (pageType) {
+    case PageType.ContentList:
+      return (
+        <ContentList
+          items={page.listItems}
+          pagination={page.contentItem?.pagination}
+        />
+      );
+    default:
+      throw new Error(`Unsupported page type ${pageType}`);
   }
-
-  return (
-    <div>
-      <span className={cn('font-semibold m-0 mr-1', hideLabel && 'sr-only')}>
-        {t(`taxonomy_label_${collection}`, {}, collection)}:
-      </span>
-      {taxonomies[collection].map((taxonomy) => (
-        <Link
-          href={taxonomy.uri}
-          key={taxonomy.uri}
-          className={'mr-1 inline-block whitespace-nowrap'}
-        >
-          {labelPrefix || ''}
-          {taxonomy.title}
-        </Link>
-      ))}
-    </div>
-  );
 };
 
-const PageContent: React.FC<PageContentProps> = ({ page }) => {
+const PageContent: React.FC<PageContentProps> = ({ page, children }) => {
   const { contentItem, relatedItems, listItems, taxonomies } = page;
   const pageType = getPageType(contentItem);
-  const { locale } = useTranslation();
 
   const subtitle =
     contentItem.metadata?.subtitle || contentItem.metadata?.summary;
+  const shouldShowHeader = !contentItem.metadata.noTitle;
 
-  if (pageType === PageType.ContentList) {
-    const { pagination } = contentItem;
-
-    return (
-      <Container>
-        {contentItem.isTaxonomy && (
-          <Header title={contentItem.title} subtitle={subtitle} />
-        )}
-
-        <div className={'grid sm:grid-cols-2 lg:grid-cols-3 gap-8'}>
-          {listItems.map((item) => (
-            <article
-              className={cn(
-                'mb-6 pb-6 border-b-8 flex flex-col items-start justify-start',
-              )}
-              key={item.contentItem.contentId}
-            >
-              <Link
-                href={item.contentItem.uri}
-                className="hover:underline block"
-              >
-                <h1 className={cn('mt-0 mb-4 text-2xl font-semibold')}>
-                  <ColoredText>{item.contentItem.title}</ColoredText>
-                </h1>
-
-                {item.contentItem.metadata?.image && (
-                  <Image
-                    src={item.contentItem.metadata?.image}
-                    alt=""
-                    baseUri={item.contentItem.assetsBaseUri}
-                    className="rounded mx-auto mb-6"
-                    priority
-                  />
-                )}
-              </Link>
-
-              <div className="prose">
-                {item.contentItem.metadata?.summary && (
-                  <div className={'mb-6'}>
-                    {item.contentItem.metadata?.summary}
-                  </div>
-                )}
-
-                {hasTaxonomies(item.taxonomies, 'tags') && (
-                  <div className={'mb-6'}>
-                    <Taxonomies
-                      collection={'tags'}
-                      taxonomies={item.taxonomies}
-                      hideLabel
-                      labelPrefix="#"
-                    />
-                  </div>
-                )}
-              </div>
-
-              <div className={'mt-auto mb-0'}>
-                {item.contentItem.date && (
-                  <ArticleDate
-                    date={item.contentItem.date}
-                    locale={locale}
-                    className={cn('text-muted')}
-                  />
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
-        {(pagination?.hasNext || pagination?.hasPrevious) && (
-          <Pagination {...pagination} className="mt-20" />
-        )}
-      </Container>
-    );
+  if (children) {
+    return children;
   }
+
+  return (
+    <Container>
+      {shouldShowHeader && (
+        <Header
+          title={contentItem.title}
+          subtitle={subtitle}
+          date={contentItem.date}
+        />
+      )}
+
+      <ContentMapper page={page} />
+    </Container>
+  );
 
   if (pageType === PageType.TaxonomiesList) {
     return (
@@ -240,8 +150,6 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
       </Container>
     );
   }
-
-  throw new Error(`Unsupported page type ${pageType}`);
 };
 
 export default PageContent;
