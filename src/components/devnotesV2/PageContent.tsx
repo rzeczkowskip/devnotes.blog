@@ -5,6 +5,7 @@ import ColoredText from '@/components/devnotesV2/ColoredText';
 import Container from '@/components/devnotesV2/Container';
 import Image from '@/components/devnotesV2/Image';
 import MarkdownContent from '@/components/devnotesV2/MarkdownContent/MarkdownContent';
+import Header from '@/components/devnotesV2/Page/Header';
 import Pagination from '@/components/devnotesV2/Pagination/Pagination';
 import cn from '@/helpers/cn';
 import useTranslation from '@/hooks/useTranslation';
@@ -86,26 +87,16 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
   const pageType = getPageType(contentItem);
   const { locale } = useTranslation();
 
+  const subtitle =
+    contentItem.metadata?.subtitle || contentItem.metadata?.summary;
+
   if (pageType === PageType.ContentList) {
     const { pagination } = contentItem;
-    const subtitle =
-      contentItem.metadata?.subtitle || contentItem.metadata?.summary;
 
     return (
       <Container>
         {contentItem.isTaxonomy && (
-          <header className="prose prose-sm md:prose mb-6 border-b">
-            <h1 className={cn('mt-0 mb-6')}>
-              <ColoredText>
-                {contentItem.collection === 'tags' && '#'}
-                {contentItem.title}
-              </ColoredText>
-            </h1>
-
-            <div className="prose-container">
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-          </header>
+          <Header title={contentItem.title} subtitle={subtitle} />
         )}
 
         <div className={'grid sm:grid-cols-2 lg:grid-cols-3 gap-8'}>
@@ -174,30 +165,13 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
   }
 
   if (pageType === PageType.TaxonomiesList) {
-    const subtitle =
-      contentItem.metadata?.subtitle || contentItem.metadata?.summary;
-
     return (
       <Container>
-        <header className="prose prose-sm md:prose mb-6 border-b">
-          <h1 className={cn('mt-0 mb-6')}>
-            <ColoredText>{contentItem.title}</ColoredText>
-          </h1>
-
-          <div className="prose-container">
-            {subtitle && <p>{subtitle}</p>}
-
-            {contentItem.date && (
-              <p>
-                <ArticleDate
-                  date={contentItem.date}
-                  className={cn('text-muted')}
-                  locale={locale}
-                />
-              </p>
-            )}
-          </div>
-        </header>
+        <Header
+          title={contentItem.title}
+          subtitle={subtitle}
+          date={contentItem.date}
+        />
 
         <ul
           className={cn(
@@ -225,61 +199,43 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
   }
 
   if (pageType === PageType.Content) {
-    const subtitle =
-      contentItem.metadata?.subtitle || contentItem.metadata?.summary;
     const image = contentItem.metadata?.image;
 
     return (
       <Container>
-        <div>
-          {!contentItem.metadata.noTitle && (
-            <header className="prose prose-sm md:prose mb-6 border-b">
-              <h1 className={cn('mt-0 mb-6')}>
-                <ColoredText>{contentItem.title}</ColoredText>
-              </h1>
+        {!contentItem.metadata.noTitle && (
+          <Header
+            title={contentItem.title}
+            subtitle={subtitle}
+            date={contentItem.date}
+          />
+        )}
 
-              <div className="prose-container">
-                {subtitle && <p>{subtitle}</p>}
-
-                {contentItem.date && (
-                  <p>
-                    <ArticleDate
-                      date={contentItem.date}
-                      className={cn('text-muted')}
-                      locale={locale}
-                    />
-                  </p>
-                )}
-              </div>
-            </header>
-          )}
-
-          {hasTaxonomies(taxonomies) && (
-            <footer className="my-6 pb-6 border-b prose prose-container">
-              <Taxonomies
-                collection={'tags'}
-                taxonomies={taxonomies}
-                labelPrefix="#"
-              />
-            </footer>
-          )}
-
-          <div className={cn('prose', 'prose-container')}>
-            {image && (
-              <Image
-                src={image}
-                alt=""
-                baseUri={contentItem.assetsBaseUri}
-                className="rounded mx-auto mb-8"
-                priority
-              />
-            )}
-
-            <MarkdownContent
-              markdown={contentItem.content}
-              assetBaseUri={contentItem.assetsBaseUri}
+        {hasTaxonomies(taxonomies) && (
+          <footer className="my-6 pb-6 border-b prose prose-container">
+            <Taxonomies
+              collection={'tags'}
+              taxonomies={taxonomies}
+              labelPrefix="#"
             />
-          </div>
+          </footer>
+        )}
+
+        <div className={cn('prose', 'prose-container')}>
+          {image && (
+            <Image
+              src={image}
+              alt=""
+              baseUri={contentItem.assetsBaseUri}
+              className="rounded mx-auto mb-8"
+              priority
+            />
+          )}
+
+          <MarkdownContent
+            markdown={contentItem.content}
+            assetBaseUri={contentItem.assetsBaseUri}
+          />
         </div>
       </Container>
     );
