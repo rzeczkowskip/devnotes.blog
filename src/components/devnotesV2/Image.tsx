@@ -4,13 +4,15 @@ import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import React from 'react';
 import container from '../../../config/container';
 
-type ContentImageProps = NextImageProps & {
-  src: string;
+type ContentImageProps = Omit<NextImageProps, 'src'> & {
+  src?: NextImageProps['src'];
   baseUri: string;
   title?: string;
 };
 
-type InternalImageProps = Omit<ContentImageProps, 'baseUri' | 'title'>;
+type InternalImageProps = Omit<ContentImageProps, 'baseUri' | 'title'> & {
+  src: string;
+};
 
 const isExternalOrAbsolute = (src: string): boolean =>
   src.includes('//') || src.startsWith('/');
@@ -79,20 +81,27 @@ const ContentImage: React.FC<ContentImageProps> = ({
   title,
   ...props
 }) => {
-  const imageProps = getImageProps(src, baseUri);
+  if (!src) {
+    return null;
+  }
 
-  const ImageComponent = <InternalImage {...{ ...props, ...imageProps }} />;
+  const img =
+    typeof src === 'object' ? (
+      <NextImage src={src} {...props} />
+    ) : (
+      <InternalImage {...props} {...getImageProps(src, baseUri)} />
+    );
 
   if (title) {
     return (
       <figure className="figure">
-        {ImageComponent}
+        {img}
         <figcaption className="figure-caption text-center">{title}</figcaption>
       </figure>
     );
   }
 
-  return ImageComponent;
+  return img;
 };
 
 export default ContentImage;
