@@ -9,6 +9,7 @@ import Header from '@/components/devnotesV2/Header';
 import Image from '@/components/devnotesV2/Image';
 import MarkdownContent from '@/components/devnotesV2/MarkdownContent/MarkdownContent';
 import Pagination from '@/components/devnotesV2/Pagination/Pagination';
+import TextPage from '@/components/devnotesV2/TextPage';
 import cn from '@/helpers/cn';
 import useTranslation from '@/hooks/useTranslation';
 import { ContentItem, Page, TaxonomyRelation } from '@/types/Content';
@@ -51,14 +52,15 @@ const ContentMapper: React.FC<PageContentProps> = ({ page }) => {
           listItems={page.listItems}
         />
       );
+    case PageType.Content:
+      return <TextPage item={page.contentItem} taxonomies={page.taxonomies} />;
     default:
       throw new Error(`Unsupported page type ${pageType}`);
   }
 };
 
 const PageContent: React.FC<PageContentProps> = ({ page, children }) => {
-  const { contentItem, relatedItems, listItems, taxonomies } = page;
-  const pageType = getPageType(contentItem);
+  const { contentItem } = page;
 
   const subtitle =
     contentItem.metadata?.subtitle || contentItem.metadata?.summary;
@@ -81,49 +83,6 @@ const PageContent: React.FC<PageContentProps> = ({ page, children }) => {
       <ContentMapper page={page} />
     </Container>
   );
-
-  if (pageType === PageType.Content) {
-    const image = contentItem.metadata?.image;
-
-    return (
-      <Container>
-        {!contentItem.metadata.noTitle && (
-          <Header
-            title={contentItem.title}
-            subtitle={subtitle}
-            date={contentItem.date}
-          />
-        )}
-
-        {hasTaxonomies(taxonomies) && (
-          <footer className="my-6 pb-6 border-b prose prose-container">
-            <Taxonomies
-              collection={'tags'}
-              taxonomies={taxonomies}
-              labelPrefix="#"
-            />
-          </footer>
-        )}
-
-        <div className={cn('prose', 'prose-container')}>
-          {image && (
-            <Image
-              src={image}
-              alt=""
-              baseUri={contentItem.assetsBaseUri}
-              className="rounded mx-auto mb-8"
-              priority
-            />
-          )}
-
-          <MarkdownContent
-            markdown={contentItem.content}
-            assetBaseUri={contentItem.assetsBaseUri}
-          />
-        </div>
-      </Container>
-    );
-  }
 };
 
 export default PageContent;
