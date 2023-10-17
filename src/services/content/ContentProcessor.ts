@@ -52,6 +52,7 @@ export default class ContentProcessor {
       taxonomies,
       list: this.extractListingData(metadata),
       isPaginationPage: false,
+      isTaxonomy: !!this.#taxonomyCollections[collection],
       metadata: this.extractAdditionalMetadata(metadata),
     };
   }

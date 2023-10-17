@@ -17,7 +17,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
     const listingItems: ContentItem[] = [];
 
     repository.items.forEach((item) => {
-      const isTaxonomy = this.#taxonomies.includes(item.collection);
+      const { isTaxonomy } = item;
 
       if (!isTaxonomy && !item?.list) {
         return;
@@ -67,7 +67,7 @@ export default class ListingGenerator implements RepositoryItemsGenerator {
                   : undefined,
               },
             },
-          } as ContentItem);
+          });
         }
       }
 

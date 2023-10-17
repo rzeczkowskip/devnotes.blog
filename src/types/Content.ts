@@ -17,6 +17,7 @@ export type ContentItem = {
     itemsPerPage?: number;
   };
   isPaginationPage: boolean;
+  isTaxonomy: boolean;
   pagination?: NonNullable<ContentItem['list']> & {
     page: number;
     totalPages: number;
