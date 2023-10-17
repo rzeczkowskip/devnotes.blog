@@ -13,6 +13,7 @@ import ListingGenerator from '@/services/content/RepositoryItemsGenerator/Listin
 import NullGenerator from '@/services/content/RepositoryItemsGenerator/NullGenerator';
 import TaxonomyGenerator from '@/services/content/RepositoryItemsGenerator/TaxonomyGenerator';
 import ExcludeDraftsProcessor from '@/services/content/RepositoryItemsPreprocessor/ExcludeDraftsProcessor';
+import LambdaPostprocessor from '@/services/content/RepositoryItemsPreprocessor/LambdaPostprocessor';
 import SortPostprocessor from '@/services/content/RepositoryItemsPreprocessor/SortPostprocessor';
 import RepositoryItemsProcessor from '@/services/content/RepositoryItemsProcessor';
 import SlugGenerator from '@/services/content/SlugGenerator';
@@ -139,6 +140,10 @@ container.set(
   (c) =>
     [
       c.get<SortPostprocessor>('content.repository_preprocessor.sort'),
+      new LambdaPostprocessor((item) => ({
+        ...item,
+        title: item.collection === 'tags' ? `#${item.title}` : item.title,
+      })),
     ] as RepositoryItemsProcessor[],
 );
 

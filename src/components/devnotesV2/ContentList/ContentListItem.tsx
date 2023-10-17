@@ -53,7 +53,6 @@ const ContentListItem: React.FC<ContentListItemProps> = ({ item }) => {
               collection={'tags'}
               taxonomies={getTaxonomies('tags')}
               hideLabel
-              labelPrefix="#"
             />
           </div>
         )}

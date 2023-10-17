@@ -8,15 +8,12 @@ type TaxonomiesProps = {
   collection: string;
   taxonomies: TaxonomyRelation[];
   hideLabel?: boolean;
-  labelPrefix?: string;
-  as?: React.FC<Partial<TaxonomyRelation> & Pick<TaxonomyRelation, 'uri'>>;
 };
 
 const Taxonomies: React.FC<TaxonomiesProps> = ({
   collection,
   taxonomies,
   hideLabel,
-  labelPrefix,
 }) => {
   const { t } = useTranslation();
 
@@ -35,7 +32,6 @@ const Taxonomies: React.FC<TaxonomiesProps> = ({
           key={taxonomy.uri}
           className={'mr-1 inline-block whitespace-nowrap'}
         >
-          {labelPrefix || ''}
           {taxonomy.title}
         </Link>
       ))}
