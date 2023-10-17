@@ -157,7 +157,54 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
   }
 
   if (pageType === PageType.TaxonomiesList) {
-    return <div></div>;
+    const subtitle =
+      contentItem.metadata?.subtitle || contentItem.metadata?.summary;
+
+    return (
+      <Container>
+        <header className="prose prose-sm md:prose mb-6 border-b">
+          <h1 className={cn('mt-0 mb-6')}>
+            <ColoredText>{contentItem.title}</ColoredText>
+          </h1>
+
+          <div className="prose-container">
+            {subtitle && <p>{subtitle}</p>}
+
+            {contentItem.date && (
+              <p>
+                <ArticleDate
+                  date={contentItem.date}
+                  className={cn('text-muted')}
+                  locale={locale}
+                />
+              </p>
+            )}
+          </div>
+        </header>
+
+        <ul
+          className={cn(
+            'list-none prose',
+            contentItem.list?.collection === 'tags' &&
+              'flex flex-wrap justify-center',
+          )}
+        >
+          {listItems.map((item) => (
+            <li key={item.contentItem.uri} className="m-2 p-0">
+              <Link href={item.contentItem.canonicalUri}>
+                {item.contentItem.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <Taxonomies
+          collection={'tags'}
+          taxonomies={taxonomies}
+          labelPrefix="#"
+        />
+      </Container>
+    );
   }
 
   if (pageType === PageType.Content) {
