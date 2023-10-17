@@ -19,15 +19,15 @@ type PageContentProps = PropsWithChildren<{
 
 enum PageType {
   Content = 'content',
-  ContentList = 'contentList',
-  TaxonomiesList = 'taxonomies',
+  List = 'contentList',
+  Taxonomies = 'taxonomies',
 }
 
 const getPageType = (contentItem: ContentItem): PageType => {
   if (contentItem.list?.collection || contentItem.isTaxonomy) {
     return contentItem.list?.isTaxonomyList
-      ? PageType.TaxonomiesList
-      : PageType.ContentList;
+      ? PageType.Taxonomies
+      : PageType.List;
   }
 
   return PageType.Content;
@@ -37,14 +37,14 @@ const ContentMapper: React.FC<PageContentProps> = ({ page }) => {
   const pageType = getPageType(page.contentItem);
 
   switch (pageType) {
-    case PageType.ContentList:
+    case PageType.List:
       return (
         <ContentList
           items={page.listItems}
           pagination={page.contentItem?.pagination}
         />
       );
-    case PageType.TaxonomiesList:
+    case PageType.Taxonomies:
       return (
         <TaxonomiesList
           collection={page.contentItem.list?.collection || ''}
