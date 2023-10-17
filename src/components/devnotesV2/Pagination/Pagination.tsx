@@ -14,6 +14,10 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  if (!links?.next && !links.previous) {
+    return null;
+  }
+
   const previousText = t(
     `pagination_previous_${collection}`,
     {},
