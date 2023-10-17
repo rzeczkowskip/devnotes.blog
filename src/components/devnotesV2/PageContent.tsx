@@ -5,6 +5,7 @@ import ColoredText from '@/components/devnotesV2/ColoredText';
 import Container from '@/components/devnotesV2/Container';
 import Image from '@/components/devnotesV2/Image';
 import MarkdownContent from '@/components/devnotesV2/MarkdownContent/MarkdownContent';
+import Pagination from '@/components/devnotesV2/Pagination/Pagination';
 import cn from '@/helpers/cn';
 import useTranslation from '@/hooks/useTranslation';
 import { ContentItem, Page, TaxonomyRelation } from '@/types/Content';
@@ -29,16 +30,32 @@ const getPageType = (contentItem: ContentItem): PageType => {
   return PageType.Content;
 };
 
-const hasTaxonomies = (taxonomies: Page['taxonomies']) =>
-  Object.values(taxonomies).some((items) => items.length > 0);
+const hasTaxonomies = (
+  taxonomies: Page['taxonomies'],
+  taxonomyCollection?: string,
+) =>
+  Object.entries(taxonomies).some(([taxonomy, items]) => {
+    if (taxonomyCollection && taxonomyCollection !== taxonomy) {
+      return false;
+    }
+
+    return items.length > 0;
+  });
 
 type TaxonomiesProps = {
   collection: string;
   taxonomies: Page['taxonomies'];
+  hideLabel?: boolean;
+  labelPrefix?: string;
   as?: React.FC<Partial<TaxonomyRelation> & Pick<TaxonomyRelation, 'uri'>>;
 };
 
-const Taxonomies: React.FC<TaxonomiesProps> = ({ collection, taxonomies }) => {
+const Taxonomies: React.FC<TaxonomiesProps> = ({
+  collection,
+  taxonomies,
+  hideLabel,
+  labelPrefix,
+}) => {
   const { t } = useTranslation();
 
   if (taxonomies?.[collection]?.length === 0) {
@@ -47,18 +64,19 @@ const Taxonomies: React.FC<TaxonomiesProps> = ({ collection, taxonomies }) => {
 
   return (
     <div>
-      <dl className="flex no-wrap m-0">
-        <dt className="mr-1 font-semibold m-0">
-          {t(`taxonomy_label_${collection}`, {}, collection)}:
-        </dt>
-        <dl className="w-full m-0">
-          {taxonomies[collection].map((taxonomy) => (
-            <span className="mr-1" key={taxonomy.uri}>
-              <Link href={taxonomy.uri}>{taxonomy.title}</Link>
-            </span>
-          ))}
-        </dl>
-      </dl>
+      <span className={cn('font-semibold m-0 mr-1', hideLabel && 'sr-only')}>
+        {t(`taxonomy_label_${collection}`, {}, collection)}:
+      </span>
+      {taxonomies[collection].map((taxonomy) => (
+        <Link
+          href={taxonomy.uri}
+          key={taxonomy.uri}
+          className={'mr-1 inline-block whitespace-nowrap'}
+        >
+          {labelPrefix || ''}
+          {taxonomy.title}
+        </Link>
+      ))}
     </div>
   );
 };
@@ -69,7 +87,73 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
   const { locale } = useTranslation();
 
   if (pageType === PageType.ContentList) {
-    return <div></div>;
+    const { pagination } = contentItem;
+
+    return (
+      <Container>
+        <div className={'grid sm:grid-cols-2 lg:grid-cols-3 gap-8'}>
+          {listItems.map((item) => (
+            <article
+              className={cn(
+                'mb-6 pb-6 border-b-8 flex flex-col items-start justify-start',
+              )}
+              key={item.contentItem.contentId}
+            >
+              <Link
+                href={item.contentItem.uri}
+                className="hover:underline block"
+              >
+                <h1 className={cn('mt-0 mb-4 text-2xl font-semibold')}>
+                  <ColoredText>{item.contentItem.title}</ColoredText>
+                </h1>
+
+                {item.contentItem.metadata?.image && (
+                  <Image
+                    src={item.contentItem.metadata?.image}
+                    alt=""
+                    baseUri={item.contentItem.assetsBaseUri}
+                    className="rounded mx-auto mb-6"
+                    priority
+                  />
+                )}
+              </Link>
+
+              <div className="prose">
+                {item.contentItem.metadata?.summary && (
+                  <div className={'mb-6'}>
+                    {item.contentItem.metadata?.summary}
+                  </div>
+                )}
+
+                {hasTaxonomies(item.taxonomies, 'tags') && (
+                  <div className={'mb-6'}>
+                    <Taxonomies
+                      collection={'tags'}
+                      taxonomies={item.taxonomies}
+                      hideLabel
+                      labelPrefix="#"
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className={'mt-auto mb-0'}>
+                {item.contentItem.date && (
+                  <ArticleDate
+                    date={item.contentItem.date}
+                    locale={locale}
+                    className={cn('text-muted')}
+                  />
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+        {(pagination?.hasNext || pagination?.hasPrevious) && (
+          <Pagination {...pagination} className="mt-20" />
+        )}
+      </Container>
+    );
   }
 
   if (pageType === PageType.TaxonomiesList) {
@@ -108,8 +192,11 @@ const PageContent: React.FC<PageContentProps> = ({ page }) => {
 
           {hasTaxonomies(taxonomies) && (
             <footer className="my-6 pb-6 border-b prose prose-container">
-              <Taxonomies collection={'categories'} taxonomies={taxonomies} />
-              <Taxonomies collection={'tags'} taxonomies={taxonomies} />
+              <Taxonomies
+                collection={'tags'}
+                taxonomies={taxonomies}
+                labelPrefix="#"
+              />
             </footer>
           )}
 
