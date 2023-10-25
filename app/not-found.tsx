@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import container from '../config/container';
-import ContentLayout from '@/components/ContentLayout';
-import Section from '@/components/Section';
+import PageContent from '@/components/devnotesV2/PageContent';
 import useTranslation from '@/hooks/useTranslation';
 import Content from '@/services/content/Content';
 import image404 from '@assets/404.gif';
@@ -18,16 +17,14 @@ const NotFound = () => {
 
   return (
     <>
-      <ContentLayout page={page}>
-        <Section.Section paddingY="bottom">
-          <Image
-            src={image404}
-            alt={title}
-            priority
-            className="rounded mx-auto"
-          />
-        </Section.Section>
-      </ContentLayout>
+      <PageContent page={page}>
+        <Image
+          src={image404}
+          alt={title}
+          priority
+          className="rounded mx-auto"
+        />
+      </PageContent>
     </>
   );
 };

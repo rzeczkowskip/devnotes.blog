@@ -3,6 +3,7 @@
 
 const typographyPlugin = require('@tailwindcss/typography');
 const colors = require('tailwindcss/colors');
+const defaultTheme = require('tailwindcss/defaultTheme');
 const plugin = require('tailwindcss/plugin');
 const textFillPlugin = require('tailwindcss-text-fill');
 
@@ -33,6 +34,10 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      ...defaultTheme.screens,
+      sm: '680px',
+    },
     container: {
       center: true,
       padding: '1rem',
@@ -45,14 +50,14 @@ module.exports = {
           800: '#123',
         },
       },
-
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            maxWidth: 'none',
             'h1,h2,h3,h4,h5,h6': {
               marginTop: '1.5em',
               marginBottom: '1rem',
-              fontWeight: 800,
+              fontWeight: 600,
             },
             color: 'currentColor',
             a: linkStyles(theme),
@@ -62,9 +67,6 @@ module.exports = {
           },
         },
       }),
-    },
-    fontFamily: {
-      sans: ['var(--font-sans)'],
     },
   },
   plugins: [
@@ -83,8 +85,11 @@ module.exports = {
         '.container-lg': {
           maxWidth: theme('screens.lg'),
         },
-        '.container-prose': {
+        '.prose-container': {
           maxWidth: theme('maxWidth.prose'),
+        },
+        '.text-muted': {
+          color: theme('colors.slate.500'),
         },
       });
     }),

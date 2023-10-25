@@ -6,19 +6,17 @@ const contentDir = path.relative(
   process.cwd(),
   container.get('params.content_dir'),
 );
-const up = contentDir.replace(/^\/*|\/*$/, '').split('/').length;
 
-copyfiles(
-  [`${contentDir}/**/*`, 'out'],
-  {
-    exclude: ['**/*.md'],
-    up,
-  },
-  (error?: Error) => {
-    if (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      process.exit(1);
-    }
-  },
-);
+const paths = [`${contentDir}/**/*`, 'out'];
+const options = {
+  exclude: ['**/*.md'],
+  up: contentDir.replace(/^\/*|\/*$/, '').split('/').length,
+};
+
+copyfiles(paths, options, (error?: Error) => {
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.error(error, { paths, options });
+    process.exit(1);
+  }
+});

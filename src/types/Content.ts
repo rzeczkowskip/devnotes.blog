@@ -13,9 +13,11 @@ export type ContentItem = {
   draft: boolean;
   list?: {
     collection: string;
+    isTaxonomyList: boolean;
     itemsPerPage?: number;
   };
   isPaginationPage: boolean;
+  isTaxonomy: boolean;
   pagination?: NonNullable<ContentItem['list']> & {
     page: number;
     totalPages: number;

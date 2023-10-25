@@ -1,10 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { AppRouteHandlerFn } from 'next/dist/server/future/route-modules/app-route/module';
+import { AppRouteRouteHandlerContext } from 'next/dist/server/future/route-modules/app-route/module';
 import { notFound } from 'next/navigation';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import container from '../../../config/container';
-//
+import { convertPathToParam, getAssetPaths } from '@/helpers/staticParams';
+
 const getAsset = (assetPath: string): false | Buffer => {
   if (
     !assetPath ||
@@ -24,10 +25,13 @@ const getAsset = (assetPath: string): false | Buffer => {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export const GET: AppRouteHandlerFn = async (req, ctx) => {
+export const GET = async (
+  req: NextRequest,
+  ctx: AppRouteRouteHandlerContext,
+): Promise<void | Response> => {
   const { path: pathParam } = ctx?.params || {};
 
-  if (!pathParam) {
+  if (!pathParam || pathParam === '_') {
     return notFound();
   }
 
@@ -43,4 +47,12 @@ export const GET: AppRouteHandlerFn = async (req, ctx) => {
   }
 
   return new NextResponse(asset);
+};
+
+export const generateStaticParams = async () => {
+  if (container.get('params.is_dev')) {
+    return getAssetPaths().map((p) => convertPathToParam(p));
+  }
+
+  return [{ path: ['_'] }];
 };

@@ -1,14 +1,16 @@
 import './globals.css';
 import './syntax.css';
-import { Mulish } from 'next/font/google';
+import { Bitter } from 'next/font/google';
 import React from 'react';
 import container from '../config/container';
-import Analytics from '@/components/Analytics/Analytics';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+import CloudflareAnalytics from '@/components/devnotesV2/Analytics/CloudflareAnalytics';
+import Footer from '@/components/devnotesV2/Footer/Footer';
+import Header from '@/components/devnotesV2/Header/Header';
+import TailwindDebug from '@/components/devnotesV2/TailwindDebug';
+import cn from '@/helpers/cn';
 import { Site } from '@/types/SiteConfig';
 
-const mulish = Mulish({
+const font = Bitter({
   subsets: ['latin'],
   weight: 'variable',
   display: 'swap',
@@ -16,16 +18,21 @@ const mulish = Mulish({
 });
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const { title, nav, locale } = container.get<Site>('params.site_config');
+  const { title, nav, locale, params } =
+    container.get<Site>('params.site_config');
+  const isProd = container.get('params.is_prod');
+  const isDev = container.get('params.is_dev');
 
   return (
     <html lang={locale}>
-      <body className={`${mulish.className} bg-slate-50 text-slate-900`}>
+      <body className={cn(font.className, 'text-slate-900')}>
+        {isDev && <TailwindDebug />}
         <Header title={title} nav={nav} />
-        {children}
-        <Footer />
 
-        <Analytics />
+        <main className="my-12">{children}</main>
+
+        <Footer title={title} href="/" />
+        {isProd && <CloudflareAnalytics token={params?.cfAnalyticsId} />}
       </body>
     </html>
   );

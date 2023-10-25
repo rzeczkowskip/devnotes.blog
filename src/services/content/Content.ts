@@ -82,6 +82,7 @@ export default class Content {
         ...(other || {}),
         taxonomies: other?.taxonomies || {},
         metadata: other?.metadata || {},
+        isTaxonomy: this.#taxonomyCollections.includes(collection),
       },
       listItems: [],
       relatedItems: [],
