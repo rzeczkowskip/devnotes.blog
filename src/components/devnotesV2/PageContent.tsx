@@ -1,18 +1,10 @@
-import Link from 'next/link';
 import React, { PropsWithChildren } from 'react';
-import ArticleDate from '@/components/devnotesV2/ArticleDate';
-import ColoredText from '@/components/devnotesV2/ColoredText';
 import Container from '@/components/devnotesV2/Container';
 import ContentList from '@/components/devnotesV2/ContentList/ContentList';
 import TaxonomiesList from '@/components/devnotesV2/ContentList/TaxonomiesList';
 import Header from '@/components/devnotesV2/Header';
-import Image from '@/components/devnotesV2/Image';
-import MarkdownContent from '@/components/devnotesV2/MarkdownContent/MarkdownContent';
-import Pagination from '@/components/devnotesV2/Pagination/Pagination';
 import TextPage from '@/components/devnotesV2/TextPage';
-import cn from '@/helpers/cn';
-import useTranslation from '@/hooks/useTranslation';
-import { ContentItem, Page, TaxonomyRelation } from '@/types/Content';
+import { ContentItem, Page } from '@/types/Content';
 
 type PageContentProps = PropsWithChildren<{
   page: Page;
@@ -40,20 +32,30 @@ const ContentMapper: React.FC<PageContentProps> = ({ page }) => {
   switch (pageType) {
     case PageType.List:
       return (
-        <ContentList
-          items={page.listItems}
-          pagination={page.contentItem?.pagination}
-        />
+        <Container>
+          <ContentList
+            items={page.listItems}
+            pagination={page.contentItem?.pagination}
+          />
+        </Container>
       );
     case PageType.Taxonomies:
       return (
-        <TaxonomiesList
-          collection={page.contentItem.list?.collection || ''}
-          listItems={page.listItems}
-        />
+        <Container>
+          <TaxonomiesList
+            collection={page.contentItem.list?.collection || ''}
+            listItems={page.listItems}
+          />
+        </Container>
       );
     case PageType.Content:
-      return <TextPage item={page.contentItem} taxonomies={page.taxonomies} />;
+      return (
+        <TextPage
+          item={page.contentItem}
+          taxonomies={page.taxonomies}
+          relatedItems={page.relatedItems}
+        />
+      );
     default:
       throw new Error(`Unsupported page type ${pageType}`);
   }
@@ -66,22 +68,20 @@ const PageContent: React.FC<PageContentProps> = ({ page, children }) => {
     contentItem.metadata?.subtitle || contentItem.metadata?.summary;
   const shouldShowHeader = !contentItem.metadata.noTitle;
 
-  if (children) {
-    return children;
-  }
-
   return (
-    <Container>
+    <>
       {shouldShowHeader && (
-        <Header
-          title={contentItem.title}
-          subtitle={subtitle}
-          date={contentItem.date}
-        />
+        <Container>
+          <Header
+            title={contentItem.title}
+            subtitle={subtitle}
+            date={contentItem.date}
+          />
+        </Container>
       )}
 
-      <ContentMapper page={page} />
-    </Container>
+      {children || <ContentMapper page={page} />}
+    </>
   );
 };
 
