@@ -38,7 +38,7 @@ jobs:
         id: setup-app-env
         if: ${{ github.ref_name != 'main' }}
         run: |
-          echo "appEnv=dev" >> "$GITHUB_ENV";
+          echo "appEnv=test" >> "$GITHUB_ENV";
 
       - name: Setup build cache
         uses: actions/cache@v3

@@ -21,7 +21,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const { title, nav, locale, params } =
     container.get<Site>('params.site_config');
   const isProd = container.get('params.is_prod');
-  const isDev = container.get('params.app_env') === 'dev';
+  const isDev = container.get('params.is_dev');
 
   return (
     <html lang={locale}>
@@ -32,7 +32,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <main className="my-12">{children}</main>
 
         <Footer title={title} href="/" />
-        <CloudflareAnalytics token={params?.cfAnalyticsId} isProd={isProd} />
+        {isProd && <CloudflareAnalytics token={params?.cfAnalyticsId} />}
       </body>
     </html>
   );

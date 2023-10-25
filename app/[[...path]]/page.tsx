@@ -45,6 +45,6 @@ const Page = async (props: PageProps) => {
 export const generateStaticParams = async (): Promise<PageParams[]> =>
   [
     ...getContentPagesPaths(),
-    ...(container.get('params.is_prod') ? [] : getAssetPaths()),
+    ...(container.get('params.is_dev') ? getAssetPaths() : []),
   ].map((p) => convertPathToParam(p)) as PageParams[];
 export default Page;

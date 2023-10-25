@@ -2,15 +2,11 @@ import Script from 'next/script';
 import React from 'react';
 
 type CloudflareAnalyticsProps = {
-  isProd: boolean;
   token?: string;
 };
 
-const CloudflareAnalytics: React.FC<CloudflareAnalyticsProps> = ({
-  isProd,
-  token,
-}) => {
-  if (!isProd || !token) {
+const CloudflareAnalytics: React.FC<CloudflareAnalyticsProps> = ({ token }) => {
+  if (!token) {
     return null;
   }
 

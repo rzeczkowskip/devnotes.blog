@@ -50,9 +50,9 @@ export const GET = async (
 };
 
 export const generateStaticParams = async () => {
-  if (container.get('params.is_prod')) {
-    return [{ path: ['_'] }];
+  if (container.get('params.is_dev')) {
+    return getAssetPaths().map((p) => convertPathToParam(p));
   }
 
-  return getAssetPaths().map((p) => convertPathToParam(p));
+  return [{ path: ['_'] }];
 };
