@@ -22,11 +22,7 @@ type PageProps = {
 };
 
 const Page = async (props: PageProps) => {
-  if (!props?.params?.path) {
-    return notFound();
-  }
-
-  const { path } = props.params;
+  const { params: { path = [] } = {} } = props;
 
   if (isAssetPath(path)) {
     return redirect(`/content-asset/${path.join('/')}`);

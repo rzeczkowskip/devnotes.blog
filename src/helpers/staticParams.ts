@@ -21,9 +21,7 @@ export const convertPathToParam = (
 });
 
 export const getContentPagesPaths = (): string[] =>
-  container
-    .get<ContentRepository>('content.repository')
-    .uris.filter((uri) => uri !== '/');
+  container.get<ContentRepository>('content.repository').uris;
 
 export const getAssetPaths = (): string[] => {
   const contentDir = container.get<string>('params.content_dir');
