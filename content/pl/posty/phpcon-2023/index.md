@@ -24,7 +24,7 @@ Drugiego dnia, jedna z hotelowych sal została przeznaczona na Unconference, czy
 
 # Integracja
 
-Jednego dnia mecz Polska-Czechy, ping-pong i kręgle, drugiego darmowe jedzenie, piwo i koncert grupy [Kołdra](https://www.youtube.com/@koldrateam "https://www.youtube.com/@koldrateam"). Do tego hotelowa strefa SPA dostępna przez cały czas trwania konferencji Organizatorzy zadbali o to, żebyśmy mogli się lepiej poznać i wymienić opiniami na temat prelekcji.
+Jednego dnia mecz Polska-Czechy, ping-pong i kręgle, drugiego darmowe jedzenie, piwo i koncert grupy [Kołdra](https://www.youtube.com/@koldrateam "https://www.youtube.com/@koldrateam"). Do tego hotelowa strefa SPA dostępna przez cały czas trwania konferencji. Organizatorzy zadbali o to, żebyśmy mogli się lepiej poznać i wymienić opiniami na temat prelekcji.
 
 ![Grupa Kołdra](koldra.jpg "Grupa Kołdra")
 
