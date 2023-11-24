@@ -4,7 +4,7 @@ date: 2023-11-23
 tags: [php, phpcon]
 categories: [konferencje]
 image: ./phpcon23.jpg
-draft: true
+draft: false
 summary: >-
     Miałem przyjemność uczestniczyć w kolejnej edycji PHPCon. Kilka słów o organizacji, warsztatach i prelekcjach. 
 ---
