@@ -165,7 +165,24 @@ const handleApiEvent: Handler = async (
 
 ## Pełna implementacja
 
-Kilka funkcji później nasza implementacja wygląda tak:
+Kilka funkcji później nasza implementacja wygląda jak poniżej. Najpierw konfiguracja uprawnień:
+
+```json
+{
+  "Statement": [
+    {
+      "Action": ["lambda:InvokeFunction"],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:lambda:*:*:function:devnotes-demo-lambda"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+```
+
+Mają uprawnienia, można aktualizować kod:
 
 ```ts
 import { APIGatewayProxyEventV2, Context, Handler } from 'aws-lambda';
