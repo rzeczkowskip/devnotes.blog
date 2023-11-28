@@ -20,7 +20,7 @@ Jak wygląda procesowanie danych w lambdzie z API GW?
 
 1. API GW dostaje request
 2. API GW wywołuje Lambdę
-3. <magic>
+3. \<magic\>
 4. Lambda zwraca response, a API GW przekierowuje wynik do użytkownika
 
 ![Request flow](flow1.png "Request flow")
@@ -41,7 +41,7 @@ const entrypoint: Handler<APIGatewayProxyEventV2, { statusCode: number }> = asyn
 export default entrypoint;
 ```
 
-Schody zaczynają się, gdy _<magic>_ trwa dłużej niż 30 sekund. Response 5xx, proces przerwany, w logach też za dużo się nie dzieje. Uruchomienie procesu lokalnie zwraca poprawne dane itd. Źródłem problemu jest maksymalny czas zapytania do API Gateway.
+Schody zaczynają się, gdy _\<magic\>_ trwa dłużej niż 30 sekund. Response 5xx, proces przerwany, w logach też za dużo się nie dzieje. Uruchomienie procesu lokalnie zwraca poprawne dane itd. Źródłem problemu jest maksymalny czas zapytania do API Gateway.
 
 Na nic sztuczki w postaci uruchomienia długiego procesu asynchronicznie i wczesny response. Gdy odpowiedź dociera do gateway lambda umiera.
 
@@ -51,10 +51,10 @@ Jest kilka możliwości obejścia tego problemu. Puszczenie wiadomości na SQS, 
 
 1. API GW dostaje request
 2. API GW wywołuje Lambdę
-3. <magic>
+3. \<magic\>
 4. Lambda zwraca response, a API GW przekierowuje wynik do użytkownika
 
-Dobra, proces jest identyczny, ale _<magic>_ zaczyna się od warunku (to się `if`em zaklei).
+Dobra, proces jest identyczny, ale _\<magic\>_ zaczyna się od warunku (to się `if`em zaklei).
 
 Minusy takiego rozwiązania? Status-code może kłamać. API GW zwróci 202 zamiast 200, a magia stanie się w tle.
 
