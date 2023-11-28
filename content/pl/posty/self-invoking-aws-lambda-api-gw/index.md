@@ -22,7 +22,7 @@ Jak wygląda procesowanie danych w lambdzie z API GW?
 3. <magic>
 4. Lambda zwraca response, a API GW przekierowuje wynik do użytkownika
 
-![](http://localhost:9425/images/214cd6a8-c164-4f92-8f83-6cafb6b14663.png)
+![Request flow](flow1.png "Request flow")
 
 ```ts
 import { APIGatewayProxyEventV2, Context, Handler } from 'aws-lambda';
@@ -57,7 +57,7 @@ Dobra, proces jest identyczny, ale _<magic>_ zaczyna się od warunku (to się `i
 
 Minusy takiego rozwiązania? Status-code może kłamać. API GW zwróci 202 zamiast 200, a magia stanie się w tle.
 
-![](http://localhost:9425/images/f919741d-e6bd-4710-be85-8f299dbb0440.png)
+![Self-invoke request flow](flow2.png "Self-invoke request flow")
 
 ## Krok po kroku
 
