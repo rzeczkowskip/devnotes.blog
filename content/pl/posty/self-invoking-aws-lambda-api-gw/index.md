@@ -231,4 +231,6 @@ export default entrypoint;
 
 Jak już wspomniałem, takie rozwiązanie jest przydatne przy małych lambdach. Nada się również, gdy tylko jeden z kilku endpointów wymaga dłuższego procesowania. Jest to o tyle wygodne, że cały kod żyje w jednym miejscu.
 
+Największym minusem wydaje się brak odpowiedzi bezpośrednio po wywołaniu funkcji. Aby się do niej dobrać trzeba albo grzebać w logach. Oczywiście możliwe jest też wysłanie powiadomienia na Slack czy zapis do DynamoDB.
+
 W przypadku większej ilości takich funkcji raczej kierowałbym się w stronę osobnych implementacji dla każdej z nich.
