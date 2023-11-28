@@ -11,6 +11,9 @@ Lambda w AWS może pracować do 15 minut. Po tym czasie się wyłącza. 15 minut
 
 Poniżej postaram się zaprezentować jeden ze sposobów obejścia powyższego problemu. 
 
+> [!info] 
+> Jeżeli nie interesuje cię droga do problemu, a samo rozwiązanie, to na końcu wpisu jest gotowiec
+
 # Podstawowy request
 
 Jak wygląda procesowanie danych w lambdzie z API GW?
