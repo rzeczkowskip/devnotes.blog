@@ -63,7 +63,7 @@ Minusy takiego rozwiązania? Status-code może kłamać. API GW zwróci 202 zami
 
 Załóżmy, że nasza lambda nazywa się `devnotes-demo-lambda`. Trzeba teraz ustawić na niej odpowiednie uprawnienia. Poniższy fragment kodu zezwala na wywołanie `devnotes-demo-lambda` z procesu lambdy.
 
-```ts
+```json
 {
   "Statement": [
     {
