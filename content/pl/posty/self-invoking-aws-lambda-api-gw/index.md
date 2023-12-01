@@ -7,9 +7,9 @@ draft: true
 summary: Jedna z możliwości obsługi długotrwałych procesów w AWS Lambda gdy korzystasz z API Gateway.
 ---
 
-Lambda w AWS może pracować do 15 minut. Po tym czasie się wyłącza. 15 minut. Przecież mi wystarczy. Puszczę request na API Gateway i... No właśnie. API GW ma swoje nieprzekraczalne limity. 30 sekund i koniec!
+Lambda w AWS może pracować do 15 minut. Po tym czasie się wyłącza. 15 minut. Przecież mi wystarczy. Puszczę request na API Gateway i... No właśnie. API GW ma swoje nieprzekraczalne limity. 30 sekund i koniec.
 
-Poniżej postaram się zaprezentować jeden ze sposobów obejścia powyższego problemu. 
+Poniżej postaram się zaprezentować jeden ze sposobów obejścia powyższego problemu.
 
 > [!info] 
 > Jeżeli nie interesuje cię droga do problemu, a samo rozwiązanie, to na końcu wpisu jest gotowiec
@@ -41,9 +41,9 @@ const entrypoint: Handler<APIGatewayProxyEventV2, { statusCode: number }> = asyn
 export default entrypoint;
 ```
 
-Schody zaczynają się, gdy _\<magic\>_ trwa dłużej niż 30 sekund. Response 5xx, proces przerwany, w logach też za dużo się nie dzieje. Uruchomienie procesu lokalnie zwraca poprawne dane itd. Źródłem problemu jest maksymalny czas zapytania do API Gateway.
+Schody zaczynają się, gdy _\<magic\>_ trwa dłużej niż 30 sekund. Response 5xx, proces przerwany, w logach też za dużo się nie dzieje. Co gorsze, uruchomienie procesu lokalnie działa bez zarzutu. Źródłem problemu jest maksymalny czas zapytania do API Gateway.
 
-Na nic sztuczki w postaci uruchomienia długiego procesu asynchronicznie i wczesny response. Gdy odpowiedź dociera do gateway lambda umiera.
+Na nic sztuczki w postaci uruchomienia długiego procesu asynchronicznie i wczesny response. Proces umiera z chwilą wysłania odpowiedzi.
 
 # Self-invoke na ratunek
 
@@ -56,7 +56,7 @@ Jest kilka możliwości obejścia tego problemu. Puszczenie wiadomości na SQS, 
 
 Dobra, proces jest identyczny, ale _\<magic\>_ zaczyna się od warunku (to się `if`em zaklei).
 
-Minusy takiego rozwiązania? Status-code może kłamać. API GW zwróci 202 zamiast 200, a magia stanie się w tle.
+Minusy takiego rozwiązania? Status-code ~~może~~ będzie kłamać. API GW zwróci 202 zamiast 200, a magia stanie się w tle.
 
 ![Self-invoke request flow](flow2.png "Self-invoke request flow")
 
@@ -97,7 +97,7 @@ const isCustomEvent = (event: HandlerEvent): event is CustomEvent =>
   'eventType' in event && event?.eventType === 'DevNotesCustomEvent';
 ```
 
-Teraz kosmetyczne zmiany w `entrypoint` . Zmieniamy typ eventu i dodajemy obsługę `CustomEvent` . W ten sposób, 1 handler jest w stanie obsłużyć 2 różne eventy:
+Teraz kosmetyczne zmiany w `entrypoint`. Zmieniamy typ eventu i dodajemy obsługę `CustomEvent`. W ten sposób, 1 handler jest w stanie obsłużyć 2 różne eventy:
 
 ```ts
 const entrypoint: Handler<HandlerEvent, { statusCode: number }> = async (
@@ -138,11 +138,11 @@ const triggerCustomEventFromApi = async (context: Context) => {
 };
 ```
 
-Co tu się dzieje? Tworzymy klienta `LambdaClient` . Zmienna środowiskowa `AWS_REGION` jest ustawiana przez AWS. Następnie wywołujemy lambdę pobierając jej nazwę z kontekstu: `FunctionName: context.functionName` . Dzięki temu, niezależnie od regionu czy nazwy funkcji, wywołanie zadziała.
+Co tu się dzieje? Tworzymy klienta `LambdaClient`. Zmienna środowiskowa `AWS_REGION` jest ustawiana przez AWS. Następnie wywołujemy lambdę pobierając jej nazwę z kontekstu: `FunctionName: context.functionName`. Dzięki temu, niezależnie od regionu czy nazwy funkcji, wywołanie zadziała.
 
 ### Obsługa z poziomu API
 
-Skoro mamy trigger, czas na obsługę z poziomu API. Gdy otrzymamy request ze ścieżką `/triggerCustomEvent` , uruchamiamy trigger i zwracamy status `202 Accepted` . Każda inna ścieżka może być obsłużona niezależnie.
+Skoro mamy trigger, czas na obsługę z poziomu API. Gdy otrzymamy request ze ścieżką `/triggerCustomEvent` , uruchamiamy trigger i zwracamy status `202 Accepted`. Każda inna ścieżka może być obsłużona niezależnie.
 
 ```ts
 const handleApiEvent: Handler = async (
@@ -218,7 +218,7 @@ const handleApiEvent: Handler = async (event, context, callback) => {
     return { statusCode: 202 };
   }
 
-  // other routes <magic>
+  // other routes' <magic>
 
   // no route matched? 404!
   return { statusCode: 404 };
