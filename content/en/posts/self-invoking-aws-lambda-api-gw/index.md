@@ -3,7 +3,7 @@ title: Self-invoking AWS Lambda using API Gateway
 date: 2023-11-27
 tags: [aws, lambda]
 categories: [devops]
-draft: true
+draft: false
 summary: One of possible solutions to handle long-running AWS Lambda processes using API Gateway.
 langs:
     pl: /posty/self-invoking-aws-lambda-api-gw/
