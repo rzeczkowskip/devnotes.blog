@@ -5,6 +5,8 @@ tags: [aws, lambda]
 categories: [devops]
 draft: true
 summary: One of possible solutions to handle long-running AWS Lambda processes using API Gateway.
+langs:
+    pl: /posty/self-invoking-aws-lambda-api-gw/
 ---
 
 AWS Lambda can run up to 15 minutes. Then it turns off. 15 minutes. It will be enough. I’ll throw a request to API Gateway and... Yeah. API GW has it own limits. 30 seconds and you’re done.

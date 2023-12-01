@@ -5,6 +5,8 @@ tags: [aws, lambda]
 categories: [devops]
 draft: true
 summary: Jedna z możliwości obsługi długotrwałych procesów w AWS Lambda gdy korzystasz z API Gateway.
+langs:
+    en: /posts/self-invoking-aws-lambda-api-gw/
 ---
 
 Lambda w AWS może pracować do 15 minut. Po tym czasie się wyłącza. 15 minut. Przecież mi wystarczy. Puszczę request na API Gateway i... No właśnie. API GW ma swoje nieprzekraczalne limity. 30 sekund i koniec.
