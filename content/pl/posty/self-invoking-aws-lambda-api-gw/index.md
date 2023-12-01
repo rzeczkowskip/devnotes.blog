@@ -1,6 +1,6 @@
 ---
 title: Self-invoking AWS Lambda z API Gateway
-date: 2023-11-27
+date: 2023-12-01
 tags: [aws, lambda]
 categories: [devops]
 draft: false
