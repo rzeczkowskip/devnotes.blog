@@ -2,7 +2,7 @@
 title: Cloudflare Pages - deploy przez GitHub Actions
 date: 2023-06-04
 categories: [tools]
-tags: [github actions, cloudflare, static site, site generators, ci/cd]
+tags: [github actions, cloudflare, static site, site generators, ci-cd]
 summary: >-
     Przejęcie kontroli nad procesem publikowania strony na Cloudflare Pages. O konfigurowaniu akcji oraz budowaniu i
     publikowaniu strony z poziomu GitHub Actions.
