@@ -8,33 +8,41 @@ type HeaderProps = {
   title: string;
   subtitle?: string;
   date?: string;
+  proseWidth?: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({ title, subtitle, date }) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  subtitle,
+  date,
+  proseWidth,
+}) => {
   const { locale } = useTranslation();
 
   return (
-    <header className="prose prose-sm md:prose mb-6 border-b">
-      <h1 className={cn('mt-0 mb-6')}>
-        <ColoredText>{title}</ColoredText>
-      </h1>
+    <div className={cn(proseWidth && 'prose-container mx-auto')}>
+      <header className="prose prose-sm md:prose mb-6 border-b">
+        <h1 className={cn('mt-0 mb-6')}>
+          <ColoredText>{title}</ColoredText>
+        </h1>
 
-      {(subtitle || date) && (
-        <div className="prose-container">
-          {subtitle && <p>{subtitle}</p>}
+        {(subtitle || date) && (
+          <div className="prose-container">
+            {subtitle && <p>{subtitle}</p>}
 
-          {date && (
-            <p>
-              <ArticleDate
-                date={date}
-                className={cn('text-muted')}
-                locale={locale}
-              />
-            </p>
-          )}
-        </div>
-      )}
-    </header>
+            {date && (
+              <p>
+                <ArticleDate
+                  date={date}
+                  className={cn('text-muted')}
+                  locale={locale}
+                />
+              </p>
+            )}
+          </div>
+        )}
+      </header>
+    </div>
   );
 };
 

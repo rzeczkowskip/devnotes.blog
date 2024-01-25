@@ -29,7 +29,7 @@ const TextPage: React.FC<ContentProps> = ({
     <>
       <Container>
         {hasTaxonomies() && (
-          <footer className="my-6 pb-6 border-b prose prose-container">
+          <footer className="my-6 pb-6 border-b prose prose-container mx-auto">
             <Taxonomies
               collection={'tags'}
               taxonomies={getTaxonomies('tags')}
@@ -41,7 +41,7 @@ const TextPage: React.FC<ContentProps> = ({
           </footer>
         )}
 
-        <div className={cn('prose', 'prose-container')}>
+        <div className={cn('prose', 'prose-container', 'mx-auto')}>
           {image && (
             <Image
               src={image}

@@ -16,6 +16,10 @@ enum PageType {
   Taxonomies = 'taxonomies',
 }
 
+type ContentMapperProps = PageContentProps & {
+  pageType: PageType;
+};
+
 const getPageType = (contentItem: ContentItem): PageType => {
   if (contentItem.list?.collection || contentItem.isTaxonomy) {
     return contentItem.list?.isTaxonomyList
@@ -26,9 +30,7 @@ const getPageType = (contentItem: ContentItem): PageType => {
   return PageType.Content;
 };
 
-const ContentMapper: React.FC<PageContentProps> = ({ page }) => {
-  const pageType = getPageType(page.contentItem);
-
+const ContentMapper: React.FC<ContentMapperProps> = ({ page, pageType }) => {
   switch (pageType) {
     case PageType.List:
       return (
@@ -63,6 +65,7 @@ const ContentMapper: React.FC<PageContentProps> = ({ page }) => {
 
 const PageContent: React.FC<PageContentProps> = ({ page, children }) => {
   const { contentItem } = page;
+  const pageType = getPageType(page.contentItem);
 
   const subtitle =
     contentItem.metadata?.subtitle || contentItem.metadata?.summary;
@@ -76,11 +79,12 @@ const PageContent: React.FC<PageContentProps> = ({ page, children }) => {
             title={contentItem.title}
             subtitle={subtitle}
             date={contentItem.date}
+            proseWidth={pageType === PageType.Content}
           />
         </Container>
       )}
 
-      {children || <ContentMapper page={page} />}
+      {children || <ContentMapper page={page} pageType={pageType} />}
     </>
   );
 };
